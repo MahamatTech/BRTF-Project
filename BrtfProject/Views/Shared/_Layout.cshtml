@@ -11,7 +11,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BrtfProject</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/Images/Mind Tech Workforce.png" height="35" class="img-responsive" />
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,7 +25,24 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Index">Info</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Booking<b class="caret"></b>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="TV production " asp-action="Index">TV production</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Film Production " asp-action="PlacementSummary">Film Production</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Radio/On-air " asp-action="Index">Radio/On-air</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Acting for TV & Film " asp-action="Index">Acting for TV & Film</a>
+                                @if (User.IsInRole("Security"))
+                                {
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="" asp-controller="UserRoles" asp-action="Index">Manage User Roles</a>
+                                }
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -36,9 +55,11 @@
         </main>
     </div>
 
+
+
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - BrtfProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; Brtf <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -47,3 +68,4 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
