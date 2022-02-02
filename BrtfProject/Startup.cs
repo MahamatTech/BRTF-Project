@@ -14,12 +14,13 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace BrtfProject
+    // new changes
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
