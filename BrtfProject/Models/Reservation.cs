@@ -22,8 +22,15 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You cannot leave the reserved by blank.")]
         [StringLength(50, ErrorMessage = "Reserved by name cannot be more than 50 characters long.")]
         public string ReservedBy { get; set; }
-        public int UserId { get; set; }
-        public int RoomId { get; set; }
+        
+
+        
+        public int room_ID { get; set; }
+
+        public Room Room { get; set; }
+        public int User_ID { get; set; }
+
+        public User User { get; set; }
 
 
     }

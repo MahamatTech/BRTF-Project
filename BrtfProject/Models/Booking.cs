@@ -9,8 +9,14 @@ namespace BrtfProject.Models
     public class Booking
     {
         public int ID { get; set; }
-        public string room_ID{ get; set; }
+        public int room_ID{ get; set; }
+
+        public Room Room { get; set; }
         public int User_ID { get; set; }
+
+        public User User { get; set; }
+
+        
 
         [Required(ErrorMessage = "You cannot leave the date for the StartdateTime blank.")]
         [Display(Name = "StartdateTime")]

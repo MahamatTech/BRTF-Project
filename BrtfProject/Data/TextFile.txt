@@ -1,2 +1,2 @@
-﻿Add-Migration -Context BrtfProjectContext -o Data\BRMigrations Initial
-Update-Database -Context BrtfProjectContext
+﻿Add-Migration -Context BrtfDbContext -o Data\BRMigrations Initial
+Update-Database -Context BrtfDbContext

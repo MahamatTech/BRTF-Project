@@ -11,6 +11,10 @@ namespace BrtfProject.Models
         public User()
         {
             Purge = false;
+
+            Bookings = new HashSet<Booking>();
+
+            Reservations = new HashSet<Reservation>();
         }
 
         public int ID { get; set; }
@@ -58,5 +62,9 @@ namespace BrtfProject.Models
         public string Email { get; set; }
 
         public bool Purge { get; set; }
+
+        public ICollection<Booking> Bookings { get; set; }
+
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }
