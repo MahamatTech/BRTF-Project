@@ -8,6 +8,7 @@ namespace BrtfProject.Models
 {
     public class Reservation
     {
+        
         public int id { get; set; }
 
         [Required(ErrorMessage = "You must enter the start date.")]

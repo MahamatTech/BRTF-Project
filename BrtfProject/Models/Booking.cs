@@ -41,7 +41,7 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You must select a Booker.")]
         [Display(Name = "Booker")]
         public int BookerID { get; set; }
-        public ICollection<Room> Rooms { get; set; }
+        //public ICollection<Room> Rooms { get; set; }
 
     }
 }
