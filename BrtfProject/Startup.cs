@@ -18,6 +18,7 @@ namespace BrtfProject
 {
     public class Startup
     {
+        // some changes here.
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
