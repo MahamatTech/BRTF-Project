@@ -8,7 +8,7 @@ namespace BrtfProject.Models
 {
     public class Room_usage
     {
-        public int User_ID { get; set; }
+        public int  ID { get; set; }
 
         [Display(Name = "Room_usage")]
         public string FullName
@@ -77,6 +77,7 @@ namespace BrtfProject.Models
         public string Usertype { get; set; }
 
         public bool IsActive { get; set; }
+
 
 
 

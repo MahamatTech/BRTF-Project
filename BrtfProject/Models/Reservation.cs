@@ -25,6 +25,6 @@ namespace BrtfProject.Models
         public int UserId { get; set; }
         public int RoomId { get; set; }
 
-
+        public ICollection<ReservationRoomDetails> ReservationRoomDetails { get; set; }
     }
 }

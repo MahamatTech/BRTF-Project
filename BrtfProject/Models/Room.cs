@@ -47,6 +47,9 @@ namespace BrtfProject.Models
         public DateTime RepeatEndDate { get; set; }
 
 
+        public ICollection<RoomRules> RoomRules { get; set; }
+        public ICollection<Room_usage> Room_usages { get; set; }
+
 
     }
 }
