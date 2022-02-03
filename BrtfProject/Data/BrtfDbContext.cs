@@ -37,25 +37,25 @@ namespace CanadaGames.Data
             modelBuilder.Entity<Room>()
                 .HasMany<Booking>(d => d.Bookings)
                 .WithOne(p => p.Room)
-                .HasForeignKey(p => p.room_ID)
+                .HasForeignKey(p => p.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany<Booking>(d => d.Bookings)
                 .WithOne(p => p.User)
-                .HasForeignKey(p => p.room_ID)
+                .HasForeignKey(p => p.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Room>()
                 .HasMany<Reservation>(d => d.Reservations)
                 .WithOne(p => p.Room)
-                .HasForeignKey(p => p.room_ID)
+                .HasForeignKey(p => p.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany<Reservation>(d => d.Reservations)
                 .WithOne(p => p.User)
-                .HasForeignKey(p => p.room_ID)
+                .HasForeignKey(p => p.RoomId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             
