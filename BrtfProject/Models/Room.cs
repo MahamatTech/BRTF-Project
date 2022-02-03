@@ -45,5 +45,11 @@ namespace BrtfProject.Models
         public string[] Type => new string[] { "internal", "external" };
         public string[] RepeatType => new string[] { "None", "Daily", "weakly", "Monthly", "Yearly" };
         public DateTime RepeatEndDate { get; set; }
+
+
+
+        public virtual List<Room> Rooms => new ApplicationDbContext().Room.ToList();
+
+        public virtual List<Room_Usage> Usages => new ApplicationDbContext().Room_Usage.ToList().Where(x => x.Id == Id).ToList
     }
 }

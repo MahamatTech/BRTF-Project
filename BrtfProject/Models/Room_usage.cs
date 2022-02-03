@@ -9,6 +9,7 @@ namespace BrtfProject.Models
     public class Room_usage
     {
         public int User_ID { get; set; }
+
         [Display(Name = "Room_usage")]
         public string FullName
         {

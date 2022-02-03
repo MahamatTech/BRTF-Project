@@ -17,8 +17,10 @@ namespace BrtfProject.Data
             : base(options)
         {
         }
-        public DbSet<BrtfProject.Models.Booking> Student { get; set; }
-        public DbSet<BrtfProject.Models.Room> Room { get; set; }
-        public DbSet<BrtfProject.Models.Room_usage> Room_Usage { get; set; }
+       
+
+
+
+
     }
 }
