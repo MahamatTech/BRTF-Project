@@ -48,8 +48,5 @@ namespace BrtfProject.Models
 
 
 
-        public virtual List<Room> Rooms => new ApplicationDbContext().Room.ToList();
-
-        public virtual List<Room_Usage> Usages => new ApplicationDbContext().Room_Usage.ToList().Where(x => x.Id == Id).ToList
     }
 }

@@ -17,6 +17,8 @@ namespace BrtfProject.Data
             : base(options)
         {
         }
+
+        public DbSet<BrtfProject.Models.Booking> Booking { get; set; }
        
 
 
