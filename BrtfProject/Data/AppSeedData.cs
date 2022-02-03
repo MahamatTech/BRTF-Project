@@ -31,6 +31,7 @@ namespace BrtfProject.Data
                 {
                     UserName = "admin1@outlook.com",
                     Email = "admin1@outlook.com"
+
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, "password").Result;

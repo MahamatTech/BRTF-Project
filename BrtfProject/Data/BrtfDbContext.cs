@@ -30,6 +30,8 @@ namespace CanadaGames.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Schema for Azure
+            //modelBuilder.HasDefaultSchema("BR");
             modelBuilder.Entity<User>()
             .HasIndex(u => u.StudentID)
             .IsUnique();
