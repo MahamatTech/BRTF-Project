@@ -27,10 +27,10 @@ namespace BrtfProject.Models
         
 
         
-        public int room_ID { get; set; }
+        public int RoomId { get; set; }
 
         public Room Room { get; set; }
-        public int User_ID { get; set; }
+        public int UserId { get; set; }
 
         public User User { get; set; }
 
