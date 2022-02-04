@@ -15,8 +15,6 @@ namespace BrtfProject.Models
         {
             Bookings = new HashSet<Booking>();
 
-            Reservations = new HashSet<Reservation>();
-
         }
         public int ID { get; set; }
 
@@ -58,7 +56,6 @@ namespace BrtfProject.Models
 
         public ICollection<Booking> Bookings { get; set; }
 
-        public ICollection<Reservation> Reservations { get; set; }
 
 
         public ICollection<RoomRules> RoomRules { get; set; }
