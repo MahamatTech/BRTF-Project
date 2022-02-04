@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220203211421_Initial")]
+    [Migration("20220204005819_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,10 +24,10 @@ namespace BrtfProject.Data.BRMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("BookerID")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("EndDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Reservation")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("RoomId")
@@ -46,86 +46,10 @@ namespace BrtfProject.Data.BRMigrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("BrtfProject.Models.RepeatRoom", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Duration")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("id");
-
-                    b.ToTable("RepeatRooms");
-                });
-
-            modelBuilder.Entity("BrtfProject.Models.Reservation", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ReservedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Reservations");
-                });
-
-            modelBuilder.Entity("BrtfProject.Models.ReservationRoomDetails", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("NumberOfRoomsBooked")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ReservationStatus")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("ReservationRoomDetails");
-                });
-
             modelBuilder.Entity("BrtfProject.Models.Room", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("BookingID")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("EMail")
@@ -153,8 +77,6 @@ namespace BrtfProject.Data.BRMigrations
                         .HasMaxLength(100);
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BookingID");
 
                     b.ToTable("Rooms");
                 });
@@ -289,37 +211,6 @@ namespace BrtfProject.Data.BRMigrations
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BrtfProject.Models.Reservation", b =>
-                {
-                    b.HasOne("BrtfProject.Models.Room", "Room")
-                        .WithMany("Reservations")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BrtfProject.Models.User", "User")
-                        .WithMany("Reservations")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BrtfProject.Models.ReservationRoomDetails", b =>
-                {
-                    b.HasOne("BrtfProject.Models.Reservation", null)
-                        .WithMany("ReservationRoomDetails")
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BrtfProject.Models.Room", b =>
-                {
-                    b.HasOne("BrtfProject.Models.Booking", null)
-                        .WithMany("Rooms")
-                        .HasForeignKey("BookingID");
                 });
 
             modelBuilder.Entity("BrtfProject.Models.RoomRules", b =>

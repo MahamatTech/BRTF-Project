@@ -38,10 +38,8 @@ namespace BrtfProject.Models
         public string[] Type => new string[] { "internal", "external" };
 
 
-        [Required(ErrorMessage = "You must select a Booker.")]
-        [Display(Name = "Booker")]
-        public int BookerID { get; set; }
-        //public ICollection<Room> Rooms { get; set; }
+        public string Reservation { get; set; }
+
 
     }
 }
