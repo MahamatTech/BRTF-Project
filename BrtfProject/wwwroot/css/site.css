@@ -10,7 +10,6 @@ a.navbar-brand {
 /* Provide sufficient contrast against white background */
 a {
     color: rgb(55 65 81);
-    
 }
 
 .btn-primary {
@@ -59,9 +58,13 @@ html {
   min-height: 100%;
 }
 
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+}
+body {
+    background-color: #C19A6B;
 }
 .footer {
   position: absolute;

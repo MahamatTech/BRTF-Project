@@ -1,0 +1,19 @@
+﻿body {
+    background-color: lightblue;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.form-1 {
+    padding: 14px 16px;
+    width:  100%;
+}
+.navbar-nav flex-grow-1container {
+    color: black;
+}
+
+.navbar-nav flex-grow-1 {
+    padding: 20px 80px;
+}

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
+    <header class="form-1">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
@@ -31,13 +31,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="create">Room</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Index">Admin Reporting</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Admin Reporting</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Info" asp-action="Index">Calendar</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Calendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <h6>Search</h6>
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" asp-action="Index">
+
                         </li>
 
                     </ul>
+
                 </div>
             </div>
         </nav>
