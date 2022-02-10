@@ -31,15 +31,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="create">Room</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Admin Reporting</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Calendar</a>
                         </li>
+                        @if (User.IsInRole("Admin") | User.IsInRole("Super-Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="UserIdentity" asp-action="Index">Admin Reporting</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <h6>Search</h6>
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" asp-action="Index">
-
                         </li>
 
                     </ul>

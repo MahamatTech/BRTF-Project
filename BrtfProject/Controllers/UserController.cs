@@ -57,9 +57,8 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,Term")] User user)
+        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,Term,Email")] User user)
         {
-
             user.Email = User.Identity.Name;
             try
             {
@@ -67,7 +66,6 @@ namespace BrtfProject.Controllers
                 {
                     _context.Add(user);
                     await _context.SaveChangesAsync();
-                    UpdateUserNameCookie(user.FullName);
                     return RedirectToAction(nameof(Details));
                 }
             }

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BrtfProject.Models;
 using CanadaGames.Data;
 using BrtfProject.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrtfProject.Controllers
 {
@@ -23,6 +24,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: UserIdentity
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users.ToListAsync());
@@ -47,6 +49,7 @@ namespace BrtfProject.Controllers
         //}
 
         // GET: UserIdentity/Edit/5
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -67,6 +70,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Edit(int id, bool Purge)
         {
             var userToUpdate = await _context.Users
