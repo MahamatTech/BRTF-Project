@@ -31,19 +31,7 @@ namespace CanadaGames.Data
             .HasIndex(u => u.StudentID)
             .IsUnique();
 
-            modelBuilder.Entity<Room>()
-                .HasMany<Booking>(d => d.Bookings)
-                .WithOne(p => p.Room)
-                .HasForeignKey(p => p.RoomId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<User>()
-                .HasMany<Booking>(d => d.Bookings)
-                .WithOne(p => p.User)
-                .HasForeignKey(p => p.RoomId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-           
+                 
 
             
 
