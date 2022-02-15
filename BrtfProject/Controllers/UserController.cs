@@ -101,7 +101,7 @@ namespace BrtfProject.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (await TryUpdateModelAsync<User>(userToUpdate, "",
-                c => c.FirstName, c => c.LastName,  c => c.StudentID, c => c.Term, c => c.Purge))
+                c => c.FirstName, c => c.LastName,  c => c.StudentID, c => c.ProgramTerm.Term, c => c.Purge))
             {
                 try
                 {

@@ -23,6 +23,11 @@ namespace CanadaGames.Data
         public DbSet<RoomRules> RoomRules { get; set; }
         public DbSet<Booking> Bookings { get; set; }
 
+        public DbSet<ProgramTerm> ProgramTerms { get; set; }
+
+        public DbSet<Area> Areas { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Schema for Azure
@@ -31,10 +36,17 @@ namespace CanadaGames.Data
             .HasIndex(u => u.StudentID)
             .IsUnique();
 
-                 
+            modelBuilder.Entity<User>()
+                .HasMany<Booking>(d => d.Bookings)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            
-
+            modelBuilder.Entity<Room>()
+                .HasMany<Booking>(d => d.Bookings)
+                .WithOne(p => p.Room)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
     }

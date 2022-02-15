@@ -23,10 +23,11 @@ namespace BrtfProject.Data
         public DbSet<BrtfProject.Models.Room> Room { get; set; }
 
         public DbSet<BrtfProject.Models.RoomRules> RoomRules { get; set; }
+        public DbSet<ProgramTerm> ProgramTerms { get; set; }
 
-       
-        public DbSet<BrtfProject.Models.Room_usage> Room_usage { get; set; }
-       
+        public DbSet<Area> Areas { get; set; }
+
+
 
 
 
