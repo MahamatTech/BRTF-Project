@@ -30,6 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.RepeatEndDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -53,6 +56,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RepeatEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area.AreaName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

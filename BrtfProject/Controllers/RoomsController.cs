@@ -22,7 +22,8 @@ namespace BrtfProject.Controllers
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Room.ToListAsync());
+            var applicationDbContext = _context.Room.Include(r => r.Area);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Rooms/Details/5
@@ -34,6 +35,7 @@ namespace BrtfProject.Controllers
             }
 
             var room = await _context.Room
+                .Include(r => r.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (room == null)
             {
@@ -46,6 +48,7 @@ namespace BrtfProject.Controllers
         // GET: Rooms/Create
         public IActionResult Create()
         {
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate")] Room room)
+        public async Task<IActionResult> Create([Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace BrtfProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", room.AreaId);
             return View(room);
         }
 
@@ -78,6 +82,7 @@ namespace BrtfProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", room.AreaId);
             return View(room);
         }
 
@@ -86,7 +91,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate")] Room room)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (id != room.ID)
             {
@@ -113,6 +118,7 @@ namespace BrtfProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", room.AreaId);
             return View(room);
         }
 
@@ -125,6 +131,7 @@ namespace BrtfProject.Controllers
             }
 
             var room = await _context.Room
+                .Include(r => r.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (room == null)
             {
