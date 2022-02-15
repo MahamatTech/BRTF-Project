@@ -49,10 +49,10 @@ namespace BrtfProject.Models
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
         public string LastName { get; set; }
 
-        [Display(Name = "Term and Program")]
-        [Required(ErrorMessage = "You cannot leave the term and/or program blank.")]
-        [StringLength(50, ErrorMessage = "Term and/or program name cannot be more than 50 characters long.")]
-        public string Term { get; set; }
+        [Display(Name = "ProgramTerm")]
+        public int ProgramTermId { get; set; }
+
+        public ProgramTerm ProgramTerm { get; set; }
 
         [Required(ErrorMessage = "Email Address is required.")]
         [StringLength(255)]

@@ -55,6 +55,10 @@ namespace BrtfProject.Models
         public string[] RepeatType => new string[] { "None", "Daily", "weakly", "Monthly", "Yearly" };
         public DateTime RepeatEndDate { get; set; }
 
+        public int AreaId { get; set; }
+
+        public Area Area { get; set; }
+
         public ICollection<Booking> Bookings { get; set; }
 
 
