@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using CanadaGames.Data;
 
 namespace BrtfProject.Controllers
 {
     public class BookingsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BrtfDbContext _context;
 
-        public BookingsController(ApplicationDbContext context)
+        public BookingsController(BrtfDbContext context)
         {
             _context = context;
         }
@@ -22,7 +23,7 @@ namespace BrtfProject.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Booking.ToListAsync());
+            return View(await _context.Bookings.ToListAsync());
         }
 
         // GET: Bookings/Details/5
@@ -33,7 +34,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (booking == null)
             {
@@ -73,7 +74,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
                 return NotFound();
@@ -124,7 +125,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (booking == null)
             {
@@ -139,15 +140,15 @@ namespace BrtfProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var booking = await _context.Booking.FindAsync(id);
-            _context.Booking.Remove(booking);
+            var booking = await _context.Bookings.FindAsync(id);
+            _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BookingExists(int id)
         {
-            return _context.Booking.Any(e => e.ID == id);
+            return _context.Bookings.Any(e => e.ID == id);
         }
     }
 }

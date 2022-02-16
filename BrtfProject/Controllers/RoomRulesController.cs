@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using CanadaGames.Data;
 
 namespace BrtfProject.Controllers
 {
     public class RoomRulesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BrtfDbContext _context;
 
-        public RoomRulesController(ApplicationDbContext context)
+        public RoomRulesController(BrtfDbContext context)
         {
             _context = context;
         }
