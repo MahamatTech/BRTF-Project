@@ -28,6 +28,7 @@ namespace BrtfProject
                 {
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     AppSeedData.SeedAsync(identityContext, services).Wait();
+
                     var context = services.GetRequiredService <BrtfDbContext> ();
                     identityContext.Database.Migrate();
                     context.Database.Migrate();
