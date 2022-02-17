@@ -20,10 +20,9 @@ namespace BrtfProject.Models
         [StringLength(50, ErrorMessage = "Area name cannot be more than 50 characters long.")]
         public string AreaName { get; set; }
 
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
         public bool IsEnabled { get; set; }
+
+
 
 
         public ICollection<Room> Rooms { get; set; }

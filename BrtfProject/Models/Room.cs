@@ -16,6 +16,9 @@ namespace BrtfProject.Models
             Bookings = new HashSet<Booking>();
             RoomRules = new HashSet<RoomRules>();
 
+
+
+
         }
         public int ID { get; set; }
 
@@ -55,8 +58,10 @@ namespace BrtfProject.Models
         public string[] RepeatType => new string[] { "None", "Daily", "weakly", "Monthly", "Yearly" };
         public DateTime RepeatEndDate { get; set; }
 
-        public int AreaId { get; set; }
+       
 
+
+        public int AreaId { get; set; }
         public Area Area { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }

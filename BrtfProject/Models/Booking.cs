@@ -20,14 +20,14 @@ namespace BrtfProject.Models
 
         
 
-        [Required(ErrorMessage = "You cannot leave the date for the StartdateTime blank.")]
+        [Required(ErrorMessage = "You cannot leave the StartdateTime blank.")]
         [Display(Name = "StartdateTime")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartdateTime { get; set; }
 
 
-        [Required(ErrorMessage = "You cannot leave the date for the EndDateTime blank.")]
+        [Required(ErrorMessage = "You cannot leave the EndDateTime blank.")]
         [Display(Name = "EndDateTime")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -40,7 +40,7 @@ namespace BrtfProject.Models
         public string[] Type => new string[] { "internal", "external" };
 
 
-        public string Reservation { get; set; }
+        //public string Reservaton { get; set; }
 
 
     }
