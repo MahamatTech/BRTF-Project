@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
-using CanadaGames.Data;
 
 namespace BrtfProject.Controllers
 {
