@@ -12,9 +12,9 @@ namespace BrtfProject.Controllers
 {
     public class RoomsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly BrtfDbContext _context;
 
-        public RoomsController(ApplicationDbContext context)
+        public RoomsController(BrtfDbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace BrtfProject.Controllers
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Room.Include(r => r.Area);
+            var applicationDbContext = _context.Rooms.Include(r => r.Area);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Room
+            var room = await _context.Rooms
                 .Include(r => r.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (room == null)
@@ -77,7 +77,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Room.FindAsync(id);
+            var room = await _context.Rooms.FindAsync(id);
             if (room == null)
             {
                 return NotFound();
@@ -130,7 +130,7 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Room
+            var room = await _context.Rooms
                 .Include(r => r.Area)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (room == null)
@@ -146,15 +146,15 @@ namespace BrtfProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var room = await _context.Room.FindAsync(id);
-            _context.Room.Remove(room);
+            var room = await _context.Rooms.FindAsync(id);
+            _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool RoomExists(int id)
         {
-            return _context.Room.Any(e => e.ID == id);
+            return _context.Rooms.Any(e => e.ID == id);
         }
     }
 }

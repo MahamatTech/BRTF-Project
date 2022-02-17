@@ -1,5 +1,4 @@
 using BrtfProject.Data;
-using CanadaGames.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +19,8 @@ namespace BrtfProject
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            
-            using(var scope = host.Services.CreateScope())
+
+            using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
@@ -29,11 +28,14 @@ namespace BrtfProject
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     AppSeedData.SeedAsync(identityContext, services).Wait();
 
-                    var context = services.GetRequiredService <BrtfDbContext> ();
+                    var context = services.GetRequiredService<BrtfDbContext>();
+                    BrtfSeedData.Initialize(services);
+
+
                     identityContext.Database.Migrate();
                     context.Database.Migrate();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occured while seeding data.");

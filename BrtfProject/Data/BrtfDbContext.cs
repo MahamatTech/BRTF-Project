@@ -7,15 +7,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CanadaGames.Data
+namespace BrtfProject.Data
 {
-    public class BrtfDbContext : DbContext
-    {
-        public BrtfDbContext(DbContextOptions<BrtfDbContext> options, IHttpContextAccessor httpContextAccessor)
-            : base(options)
+      public class BrtfDbContext : DbContext
+       {
+        //public BrtfDbContext(DbContextOptions<BrtfDbContext> options, IHttpContextAccessor httpContextAccessor)
+        //     : base(options)
+        //{
+        //}public class BrtfDbContext : DbContext
+
+        public BrtfDbContext(DbContextOptions<BrtfDbContext> options)
+             : base(options)
         {
         }
-
         public DbSet<User> Users { get; set; }
 
         public DbSet<Room> Rooms { get; set; }

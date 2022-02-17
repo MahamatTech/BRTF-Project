@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Models;
-using CanadaGames.Data;
 using BrtfProject.Data;
 using Microsoft.AspNetCore.Authorization;
 
