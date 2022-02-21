@@ -51,6 +51,8 @@ namespace BrtfProject.Controllers
         [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+
             if (id == null)
             {
                 return NotFound();
@@ -86,7 +88,7 @@ namespace BrtfProject.Controllers
             }
 
             if (await TryUpdateModelAsync<User>(userToUpdate, "", 
-                u => u.FirstName, u => u.LastName, c => c.StudentID, c => c.ProgramTerm.Term, c => c.Purge))
+                u => u.FirstName, u => u.LastName, u => u.StudentID, u => u.ProgramTermId, u => u.Purge))
             {
                 try
                 {

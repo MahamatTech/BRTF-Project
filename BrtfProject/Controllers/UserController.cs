@@ -49,6 +49,7 @@ namespace BrtfProject.Controllers
         // GET: UserAccount/Create
         public IActionResult Create()
         {
+            ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
             return View();
         }
 
@@ -57,7 +58,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,Term,Email")] User user)
+        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,ProgramTermId,Email")] User user)
         {
             user.Email = User.Identity.Name;
             try
@@ -80,6 +81,8 @@ namespace BrtfProject.Controllers
         // GET: UserAccount/Edit/5
         public async Task<IActionResult> Edit()
         {
+            ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+
             var user = await _context.Users
                 .Where(c => c.Email == User.Identity.Name)
                 .FirstOrDefaultAsync();
@@ -101,7 +104,7 @@ namespace BrtfProject.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (await TryUpdateModelAsync<User>(userToUpdate, "",
-                c => c.FirstName, c => c.LastName,  c => c.StudentID, c => c.ProgramTerm.Term, c => c.Purge))
+                c => c.FirstName, c => c.LastName,  c => c.StudentID, c => c.ProgramTermId, c => c.Purge))
             {
                 try
                 {
