@@ -35,7 +35,7 @@ namespace BrtfProject.Models
 
 
 
-        [Required(ErrorMessage = "You cannot leave the Type of Booker blank.")]
+       // [Required(ErrorMessage = "You cannot leave the Type of Booker blank.")]
         [Display(Name = "BookingType")]
         public string[] Type => new string[] { "internal", "external" };
 

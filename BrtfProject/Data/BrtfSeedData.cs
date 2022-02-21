@@ -415,7 +415,7 @@ namespace BrtfProject.Data
                         
 
                     });
-
+                    context.SaveChanges();
                 }
 
             }

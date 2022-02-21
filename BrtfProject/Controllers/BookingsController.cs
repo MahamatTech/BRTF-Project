@@ -55,7 +55,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,room_ID,User_ID,StartdateTime,EndDateTime,BookerID")] Booking booking)
+        public async Task<IActionResult> Create([Bind("ID,RoomId,UserId,StartdateTime,EndDateTime,BookerID")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,room_ID,User_ID,StartdateTime,EndDateTime,BookerID")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,RoomId,UserId,StartdateTime,EndDateTime,BookerID")] Booking booking)
         {
             if (id != booking.ID)
             {
