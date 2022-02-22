@@ -15,6 +15,8 @@ namespace BrtfProject.Models
         }
         public int ID { get; set; }
 
+        [Display(Name = "Program Info")]
+        [Required(ErrorMessage = "You cannot leave the program info blank.")]
         public string ProgramInfo { get; set; }
 
         [Display(Name = "Term and Program")]

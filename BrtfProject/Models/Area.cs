@@ -15,7 +15,7 @@ namespace BrtfProject.Models
         }
         public int ID { get; set; }
 
-        [Display(Name = "Area Name")]
+        [Display(Name = "Area")]
         [Required(ErrorMessage = "You cannot leave the Area name blank.")]
         [StringLength(50, ErrorMessage = "Area name cannot be more than 50 characters long.")]
         public string AreaName { get; set; }

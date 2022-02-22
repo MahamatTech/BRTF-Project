@@ -1,2 +1,8 @@
 ﻿Add-Migration -Context BrtfDbContext -o Data\BRMigrations Initial
+
 Update-Database -Context BrtfDbContext
+----------------------------------------------------------------------
+
+Add-Migration -Context ApplicationDbContext -o Data\Migrations Initial
+
+Update-Database -Context ApplicationDbContext

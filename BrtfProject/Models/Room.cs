@@ -22,15 +22,17 @@ namespace BrtfProject.Models
         }
         public int ID { get; set; }
 
-        [Display(Name = "name")]
+        [Display(Name = "Name")]
         [Required(ErrorMessage = "You cannot leave the room name blank.")]
         [StringLength(100, ErrorMessage = "Too Big!")]
         public string name { get; set; }
 
 
-        [Display(Name = "description ")]
+        [Display(Name = "Description")]
         [Required(ErrorMessage = "You cannot leave the description blank.")]
         public string[] Description => new string[] { "Edit 13", "Edit 15", "Edit 6", "Edit 8 V204i" };
+
+        [Display(Name = "Description")]
         public string description
         {
             get; set;
@@ -41,24 +43,13 @@ namespace BrtfProject.Models
 
 
         [Required(ErrorMessage = "You cannot leave the room capacity blank.")]
-        [Display(Name = "capacity.")]
+        [Display(Name = "Capacity.")]
         [StringLength(100, ErrorMessage = "Too many!")]
         [DisplayFormat(NullDisplayText = "Empty")]
         public string capacity { get; set; }
 
 
-        [Required(ErrorMessage = "Email Address is required.")]
-        [StringLength(255)]
-        [DataType(DataType.EmailAddress)]
-        public string EMail { get; set; }
-
-
         public string[] Areas => new string[] { "Edit 13", "Edit 15", "Edit 6", "Edit 8 V204i" };
-        public string[] Type => new string[] { "internal", "external" };
-        public string[] RepeatType => new string[] { "None", "Daily", "weakly", "Monthly", "Yearly" };
-        public DateTime RepeatEndDate { get; set; }
-
-       
 
 
         public int AreaId { get; set; }

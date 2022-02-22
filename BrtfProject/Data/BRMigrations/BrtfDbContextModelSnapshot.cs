@@ -44,9 +44,6 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Reservation")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("RoomId")
                         .HasColumnType("INTEGER");
 
@@ -91,16 +88,8 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("AreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("EMail")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(255);
-
                     b.Property<bool>("IsEnable")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("RepeatEndDate")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("capacity")
                         .IsRequired()

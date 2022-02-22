@@ -45,8 +45,6 @@ namespace BrtfProject.Data.BRMigrations
                     description = table.Column<string>(nullable: true),
                     IsEnable = table.Column<bool>(nullable: false),
                     capacity = table.Column<string>(maxLength: 100, nullable: false),
-                    EMail = table.Column<string>(maxLength: 255, nullable: false),
-                    RepeatEndDate = table.Column<DateTime>(nullable: false),
                     AreaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -114,8 +112,7 @@ namespace BrtfProject.Data.BRMigrations
                     RoomId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     StartdateTime = table.Column<DateTime>(nullable: false),
-                    EndDateTime = table.Column<DateTime>(nullable: false),
-                    Reservation = table.Column<string>(nullable: true)
+                    EndDateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
