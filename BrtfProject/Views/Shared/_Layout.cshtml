@@ -30,8 +30,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="Index">Room</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Areas" asp-action="Index">Areas</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Look Ups<b class="caret"></b>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Areas" asp-action="Index">Areas</a>
+
+                                <div class="dropdown-divider"></div>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ProgramTerms" asp-action="Index">Program Terms</a>
+                            </div>
                         </li>
                         @if (User.IsInRole("Admin") | User.IsInRole("Super-Admin"))
                         {
@@ -39,7 +47,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="UserIdentity" asp-action="Index">Admin Reporting</a>
                             </li>
                         }
-                      
+
 
                     </ul>
 
