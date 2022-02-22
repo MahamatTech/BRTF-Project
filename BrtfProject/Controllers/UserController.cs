@@ -58,7 +58,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,LastName,ProgramTermId,Email")] User user)
+        public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,Email")] User user)
         {
             user.Email = User.Identity.Name;
             try
@@ -104,7 +104,7 @@ namespace BrtfProject.Controllers
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (await TryUpdateModelAsync<User>(userToUpdate, "",
-                c => c.FirstName, c => c.LastName,  c => c.StudentID, c => c.ProgramTermId, c => c.Purge))
+                c => c.FirstName, c => c.MiddleName, c => c.LastName,  c => c.StudentID, c => c.ProgramTermId, c => c.Purge))
             {
                 try
                 {

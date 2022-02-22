@@ -339,50 +339,11 @@ namespace BrtfProject.Data
                     context.ProgramTerms.AddRange(
                     new ProgramTerm
                     {
+                        ID = 1,
                         ProgramInfo = "music",
-                        Term = "1"
+                        Term = "1402"
                     });
 
-                }
-
-                if (!context.Users.Any())
-                {
-                    context.Users.AddRange(
-                    new User
-                    {
-                        FirstName = "Fred",
-                        LastName = "Flintstone",
-                        StudentID = "1231231234",
-                        ProgramTermId = 1,
-                        Email = "fflintstone@outlook.com"
-
-                    },
-                    new User
-                    {
-                        FirstName = "Wilma",
-                        LastName = "Flintstone",
-                        StudentID = "1321321324",
-                        ProgramTermId = 1,
-                        Email = "wflintstone@outlook.com"
-                    },
-                    new User
-                    {
-                        FirstName = "Barney",
-                        LastName = "Rubble",
-                        StudentID = "3213213214",
-                        ProgramTermId = 1,
-                        Email = "brubble@outlook.com"
-                    },
-                    new User
-                    {
-                        FirstName = "Jane",
-                        LastName = "Doe",
-                        StudentID = "4124124123",
-                        ProgramTermId = 1,
-                        Email = "jdoe@outlook.com"
-                    }
-                    );
-                    context.SaveChanges();
                 }
                 if (!context.Bookings.Any())
                 {

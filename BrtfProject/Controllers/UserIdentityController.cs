@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using BrtfProject.Models;
 using BrtfProject.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
+using System.IO;
 
 namespace BrtfProject.Controllers
 {
@@ -119,6 +123,51 @@ namespace BrtfProject.Controllers
                 await _identityContext.SaveChangesAsync();
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
+        {
+            //Note: This is a very basic example and has 
+            //no ERROR HANDLING.  It also assumes that
+            //duplicate values are allowed, both in the 
+            //uploaded data and the DbSet.
+            ExcelPackage excel;
+            if(theExcel != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await theExcel.CopyToAsync(memoryStream);
+                    excel = new ExcelPackage(memoryStream);
+                }
+                var workSheet = excel.Workbook.Worksheets[0];
+                var start = workSheet.Dimension.Start;
+                var end = workSheet.Dimension.End;
+
+                //Start a new list to hold imported objects
+                List<User> users = new List<User>();
+
+                for (int row = start.Row; row <= end.Row; row++)
+                {
+                    if (workSheet.Cells[row, 1].Text != "" && workSheet.Cells[row, 2].Text != "" && workSheet.Cells[row, 3].Text != "" && workSheet.Cells[row, 4].Text != "" && workSheet.Cells[row, 7].Text != "" && workSheet.Cells[row, 10].Text != "")
+                    {
+                        // Row by row...
+                        User a = new User
+                        {
+                            StudentID = workSheet.Cells[row, 1].Text,
+                            FirstName = workSheet.Cells[row, 2].Text,
+                            MiddleName = workSheet.Cells[row, 3].Text,
+                            LastName = workSheet.Cells[row, 4].Text,
+                            Email = workSheet.Cells[row, 7].Text
+                        };
+                        users.Add(a);
+                    }
+                }
+                _context.Users.AddRange(users);
+                _context.SaveChanges();
+                
+            }
+            return RedirectToAction("Index", "UserIdentity");
+        }
+
 
         private bool UserExists(int id)
         {

@@ -22,7 +22,10 @@ namespace BrtfProject.Models
         {
             get
             {
-                return FirstName + " " + LastName;
+                return FirstName
+                    + (string.IsNullOrEmpty(MiddleName) ? " " :
+                        (" " + (char?)MiddleName[0] + ". ").ToUpper())
+                    + LastName;
             }
         }
         [Display(Name = "Formal Name")]
@@ -30,7 +33,9 @@ namespace BrtfProject.Models
         {
             get
             {
-                return LastName + ", " + FirstName;
+                return LastName + ", " + FirstName
+                    + (string.IsNullOrEmpty(MiddleName) ? "" :
+                        (" " + (char?)MiddleName[0] + ".").ToUpper());
             }
         }
 
@@ -44,6 +49,10 @@ namespace BrtfProject.Models
         [StringLength(50, ErrorMessage = "First name cannot be more than 50 characters long.")]
         public string FirstName { get; set; }
 
+        [Display(Name = "Middle Name")]
+        [StringLength(50, ErrorMessage = "Middle name cannot be more than 50 characters long.")]
+        public string MiddleName { get; set; }
+
         [Display(Name = "Last Name")]
         [Required(ErrorMessage = "You cannot leave the last name blank.")]
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
@@ -51,11 +60,10 @@ namespace BrtfProject.Models
 
         [Display(Name = "ProgramTerm")]
         public int ProgramTermId { get; set; }
-
         public ProgramTerm ProgramTerm { get; set; }
 
-        [Required(ErrorMessage = "Email Address is required.")]
-        [StringLength(255)]
+        [Required(ErrorMessage = "Email Address is required, you cannot leave it blank.")]
+        [StringLength(255, ErrorMessage = "Email address is too lengthy, must be less than 255 characters.")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

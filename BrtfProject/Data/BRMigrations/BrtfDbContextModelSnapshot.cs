@@ -156,6 +156,10 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
                     b.Property<int>("ProgramTermId")
                         .HasColumnType("INTEGER");
 
