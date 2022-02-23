@@ -20,10 +20,23 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? AreaId)
         {
-            var applicationDbContext = _context.Rooms.Include(r => r.Area);
-            return View(await applicationDbContext.ToListAsync());
+            PopulateDropDownLists();
+
+            var rooms =from r in _context.Rooms
+                .Include(r => r.Area)
+                .AsNoTracking()
+                select r;
+            if (AreaId.HasValue)
+            {
+                rooms = rooms.Where(p => p.AreaId == AreaId);
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                rooms = rooms.Where(p => p.name.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            return View(await rooms.ToListAsync());
         }
 
         // GET: Rooms/Details/5
@@ -150,6 +163,16 @@ namespace BrtfProject.Controllers
             _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private SelectList AreaSelectList(int? selectedId)
+        {
+            return new SelectList(_context.Areas
+                .OrderBy(d => d.AreaName), "ID", "AreaName", selectedId);
+        }
+        private void PopulateDropDownLists(Room room = null)
+        {
+            ViewData["AreaId"] = AreaSelectList(room?.AreaId);
         }
 
         private bool RoomExists(int id)
