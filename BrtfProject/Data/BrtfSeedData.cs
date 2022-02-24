@@ -115,7 +115,8 @@ namespace BrtfProject.Data
                         IsEnabled = true
 
 
-                    }, new Area
+                    }, 
+                    new Area
                     {
                         AreaName = "",
                         IsEnabled = true
@@ -128,7 +129,8 @@ namespace BrtfProject.Data
                         IsEnabled = true
 
 
-                    }, new Area
+                    }, 
+                    new Area
                     {
                         AreaName = "Edit 13 BRTF1435 & 3Yr TV",
                         IsEnabled = true
@@ -154,7 +156,287 @@ namespace BrtfProject.Data
                         IsEnabled = true
 
 
-                    }
+                    },
+                     new Area
+                     {
+                         AreaName = "Edit 8 Inside Niagara",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                      new Area
+                      {
+                          AreaName = "Edit 9, 10 & 14 2nd Years",
+                          IsEnabled = true
+
+
+                      },
+                        new Area
+                        {
+                            AreaName = "",
+                            IsEnabled = true
+
+
+                        },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                       new Area
+                       {
+                           AreaName = "Edits 1-5 3rd Year Film",
+                           IsEnabled = true
+
+
+                       },
+                         new Area
+                         {
+                             AreaName = "",
+                             IsEnabled = true
+
+
+                         },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                        new Area
+                        {
+                            AreaName = "Film Studio V001",
+                            IsEnabled = true
+
+
+                        },
+                          new Area
+                          {
+                              AreaName = "Green Room",
+                              IsEnabled = true
+
+
+                          },
+                    new Area
+                    {
+                        AreaName = "MAC Lab V106",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "Mixing Theatre V105",
+                         IsEnabled = true
+
+
+                     },
+                      new Area
+                      {
+                          AreaName = "",
+                          IsEnabled = true
+
+
+                      },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "Radio Edit Suites V109",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "Radio Recording Studios V109",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "TV Studio V002",
+                        IsEnabled = true
+
+
+                    },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       },
+                    new Area
+                    {
+                        AreaName = "V110",
+                        IsEnabled = true
+
+
+                    },
+                     new Area
+                     {
+                         AreaName = "V110 Acting Lab",
+                         IsEnabled = true
+
+
+                     },
+                       new Area
+                       {
+                           AreaName = "",
+                           IsEnabled = true
+
+
+                       }
 
                     );
                     context.SaveChanges();
