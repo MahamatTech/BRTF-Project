@@ -67,6 +67,7 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ProgramInfo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Term")

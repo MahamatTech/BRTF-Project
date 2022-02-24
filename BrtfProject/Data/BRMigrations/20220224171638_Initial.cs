@@ -27,7 +27,7 @@ namespace BrtfProject.Data.BRMigrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProgramInfo = table.Column<string>(nullable: true),
+                    ProgramInfo = table.Column<string>(nullable: false),
                     Term = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -66,6 +66,7 @@ namespace BrtfProject.Data.BRMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StudentID = table.Column<string>(maxLength: 50, nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     ProgramTermId = table.Column<int>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),

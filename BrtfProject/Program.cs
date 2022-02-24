@@ -26,14 +26,12 @@ namespace BrtfProject
                 try
                 {
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
+                    identityContext.Database.Migrate();
                     AppSeedData.SeedAsync(identityContext, services).Wait();
 
                     var context = services.GetRequiredService<BrtfDbContext>();
-                    BrtfSeedData.Initialize(services);
-
-
-                    identityContext.Database.Migrate();
                     context.Database.Migrate();
+                    BrtfSeedData.Initialize(services);
                 }
                 catch (Exception ex)
                 {
