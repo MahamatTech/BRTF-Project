@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -20,12 +22,37 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms
-        public async Task<IActionResult> Index()
+       [Authorize(Roles = "User")]
+        public async Task<IActionResult> Index(string SearchStringInfo,
+            int? page, int? pageSizeID, string actionButton, string SearchStringTerm)
         {
-            return View(await _context.ProgramTerms.ToListAsync());
-        }
+            var terms = from r in _context.ProgramTerms
+                 .AsNoTracking()
+                        select r;
+            if (!String.IsNullOrEmpty(SearchStringInfo))
+            {
+                terms = terms.Where(p => p.ProgramInfo.ToUpper().Contains(SearchStringInfo.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchStringTerm))
+            {
+                terms = terms.Where(p => p.Term.ToUpper().Contains(SearchStringTerm.ToUpper()));
+            }
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<ProgramTerm>.CreateAsync(terms.AsNoTracking(), page ?? 1, pageSize);
 
+            return View(pagedData);
+           // return View(await _context.ProgramTerms.ToListAsync());
+        }
+        
+       
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
+        }
         // GET: ProgramTerms/Details/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +71,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Create
+       [Authorize(Roles = "User")]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +82,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Create([Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
         {
             if (ModelState.IsValid)
@@ -66,6 +95,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Edit/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +116,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
         {
             if (id != programTerm.ID)
@@ -117,6 +148,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Delete/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

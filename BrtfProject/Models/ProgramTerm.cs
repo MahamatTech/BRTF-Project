@@ -19,9 +19,9 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You cannot leave the program info blank.")]
         public string ProgramInfo { get; set; }
 
-        [Display(Name = "Term and Program")]
-        [Required(ErrorMessage = "You cannot leave the term and/or program blank.")]
-        [StringLength(50, ErrorMessage = "Term and/or program name cannot be more than 50 characters long.")]
+        [Display(Name = "Term")]
+        [Required(ErrorMessage = "You cannot leave the term blank.")]
+        [StringLength(50, ErrorMessage = "Term cannot be more than 50 characters long.")]
         public string Term { get; set; }
 
         public ICollection<User> Users { get; set; }

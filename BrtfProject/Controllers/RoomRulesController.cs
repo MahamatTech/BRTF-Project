@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -20,12 +22,43 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules
-        public async Task<IActionResult> Index()
+     [Authorize(Roles = "User")]
+        public async Task<IActionResult> Index(string SearchString,
+            int? page, int? pageSizeID, string actionButton, int? RoomId)
         {
-            return View(await _context.RoomRules.ToListAsync());
+            PopulateDropDownLists();
+            var roomRules = from r in _context.RoomRules
+                            .Include(p=>p.Room)
+                 .AsNoTracking()
+                        select r;
+            if (RoomId.HasValue)
+            {
+                roomRules = roomRules.Where(p => p.RoomId == RoomId);
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                roomRules = roomRules.Where(p => p.RuleName.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<RoomRules>.CreateAsync(roomRules.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+            //return View(await _context.RoomRules.ToListAsync());
+        }
+        private void PopulateDropDownLists()
+        {
+            ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable == true), "ID", "name");
+        }
+      
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
         }
 
         // GET: RoomRules/Details/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,8 +77,10 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Create
+     [Authorize(Roles = "User")]
         public IActionResult Create()
         {
+            ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable==true), "ID", "name");
             return View();
         }
 
@@ -54,6 +89,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     [Authorize(Roles = "User")]
         public async Task<IActionResult> Create([Bind("id,RoomId,RuleName,RuleDescription")] RoomRules roomRules)
         {
             if (ModelState.IsValid)
@@ -62,10 +98,12 @@ namespace BrtfProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable == true), "ID", "name",roomRules.RoomId);
             return View(roomRules);
         }
 
         // GET: RoomRules/Edit/5
+     [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,6 +116,8 @@ namespace BrtfProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable == true), "ID", "name", roomRules.RoomId);
+
             return View(roomRules);
         }
 
@@ -86,6 +126,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int id, [Bind("id,RoomId,RuleName,RuleDescription")] RoomRules roomRules)
         {
             if (id != roomRules.id)
@@ -117,6 +158,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Delete/5
+     [Authorize(Roles = "User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

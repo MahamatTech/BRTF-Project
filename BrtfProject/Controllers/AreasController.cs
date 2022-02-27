@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -20,12 +22,46 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Areas
-        public async Task<IActionResult> Index()
+       [Authorize(Roles = "User")]
+        public async Task<IActionResult> Index(string SearchString,
+            int? page, int? pageSizeID, string actionButton, int? AreaId)
         {
-            return View(await _context.Areas.ToListAsync());
-        }
+            PopulateDropDownLists();
+            var areas = from r in _context.Areas
+                 .AsNoTracking()
+                        select r;
+            if (AreaId.HasValue)
+            {
+                areas = areas.Where(p => p.ID == AreaId);
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                areas = areas.Where(p => p.AreaName.ToUpper().Contains(SearchString.ToUpper()));
+            }
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Area>.CreateAsync(areas.AsNoTracking(), page ?? 1, pageSize);
 
+            return View(pagedData);
+
+            //return View(await areas.ToListAsync());
+        }
+        private void PopulateDropDownLists(Room room = null)
+        {
+            ViewData["AreaId"] = AreaSelectList(room?.AreaId);
+        }
+        private SelectList AreaSelectList(int? selectedId)
+        {
+            return new SelectList(_context.Areas
+                .OrderBy(d => d.AreaName), "ID", "AreaName", selectedId);
+        }
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
+        }
         // GET: Areas/Details/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,6 +80,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Areas/Create
+       [Authorize(Roles = "User")]
         public IActionResult Create()
         {
             return View();
@@ -52,6 +89,7 @@ namespace BrtfProject.Controllers
         // POST: Areas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       [Authorize(Roles = "User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,AreaName")] Area area)
@@ -66,6 +104,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Areas/Edit/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -86,6 +125,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,AreaName")] Area area)
         {
             if (id != area.ID)
@@ -117,6 +157,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Areas/Delete/5
+       [Authorize(Roles = "User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +178,7 @@ namespace BrtfProject.Controllers
         // POST: Areas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var area = await _context.Areas.FindAsync(id);
