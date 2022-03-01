@@ -41,11 +41,48 @@ namespace BrtfProject.Data.BRMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("EndDateTime")
+                    b.Property<string>("AreaName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("EndDateTime")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoomId")
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("RepeatEndDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoomName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("SpecialNote")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartdateTime")
                         .HasColumnType("TEXT");
@@ -122,7 +159,9 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("RuleDescription")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
 
                     b.Property<string>("RuleName")
                         .IsRequired()
@@ -208,7 +247,7 @@ namespace BrtfProject.Data.BRMigrations
 
             modelBuilder.Entity("BrtfProject.Models.RoomRules", b =>
                 {
-                    b.HasOne("BrtfProject.Models.Room", null)
+                    b.HasOne("BrtfProject.Models.Room", "Room")
                         .WithMany("RoomRules")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)

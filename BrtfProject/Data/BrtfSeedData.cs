@@ -632,7 +632,7 @@ namespace BrtfProject.Data
                     context.Bookings.AddRange(
                     new Booking
                     {
-                        RoomId = 1,
+                        RoomName= "Edit 13",
 
                         UserId = 1,
                         StartdateTime = DateTime.Parse("1955-09-01"),

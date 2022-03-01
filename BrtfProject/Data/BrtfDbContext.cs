@@ -46,6 +46,9 @@ namespace BrtfProject.Data
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+
+
             modelBuilder.Entity<Room>()
                 .HasMany<Booking>(d => d.Bookings)
                 .WithOne(p => p.Room)

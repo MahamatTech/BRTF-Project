@@ -91,7 +91,7 @@ namespace BrtfProject.Data.BRMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     RoomId = table.Column<int>(nullable: false),
                     RuleName = table.Column<string>(maxLength: 100, nullable: false),
-                    RuleDescription = table.Column<string>(nullable: true)
+                    RuleDescription = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,10 +110,18 @@ namespace BrtfProject.Data.BRMigrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoomId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    RoomName = table.Column<string>(maxLength: 100, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    SpecialNote = table.Column<string>(nullable: true),
                     StartdateTime = table.Column<DateTime>(nullable: false),
-                    EndDateTime = table.Column<DateTime>(nullable: false)
+                    EndDateTime = table.Column<DateTime>(nullable: false),
+                    Email = table.Column<string>(maxLength: 255, nullable: false),
+                    AreaName = table.Column<string>(maxLength: 50, nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false),
+                    RepeatEndDateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
