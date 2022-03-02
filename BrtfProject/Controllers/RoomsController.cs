@@ -10,9 +10,12 @@ using BrtfProject.Models;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System.IO;
+using BrtfProject.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrtfProject.Controllers
 {
+    [Authorize]
     public class RoomsController : Controller
     {
         private readonly BrtfDbContext _context;
@@ -22,8 +25,9 @@ namespace BrtfProject.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin, Super-Admin")]
         // GET: Rooms
-        public async Task<IActionResult> Index(string SearchString, int? AreaId, string actionButton, string sortDirection = "asc", string sortField = "Room")
+        public async Task<IActionResult> Index(string SearchString, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Room")
         {
             string[] sortOptions = new[] { "Room", "Area" };
 
@@ -33,7 +37,6 @@ namespace BrtfProject.Controllers
 
             var rooms =from r in _context.Rooms
                 .Include(r => r.Area)
-                .AsNoTracking()
                 select r;
             if (AreaId.HasValue)
             {
@@ -48,6 +51,7 @@ namespace BrtfProject.Controllers
 
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
             {
+                page = 1;
                 if (actionButton != "Filter")//Change of sort is requested
                 {
                     if (actionButton == sortField) //Reverse order on same field
@@ -88,10 +92,18 @@ namespace BrtfProject.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Room>.CreateAsync(rooms.AsNoTracking(), page ?? 1, pageSize);
 
-            return View(await rooms.ToListAsync());
+            return View(pagedData);
+        }
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
         }
 
+        [Authorize(Roles = "Admin, Super-Admin")]
         // GET: Rooms/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -123,6 +135,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Create([Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (ModelState.IsValid)
@@ -136,6 +149,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms/Edit/5
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -157,6 +171,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (id != room.ID)
@@ -189,6 +204,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms/Delete/5
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -210,6 +226,7 @@ namespace BrtfProject.Controllers
         // POST: Rooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var room = await _context.Rooms.FindAsync(id);

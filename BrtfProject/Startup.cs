@@ -1,9 +1,12 @@
 using BrtfProject.Data;
+using BrtfProject.Utilities;
+using BrtfProject.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +42,13 @@ namespace BrtfProject
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //**** Uncomment below code to start the email system,
+            //**** Also need an email for the appsettings
+            //services.AddSingleton<IEmailConfiguration>(Configuration
+            //    .GetSection("EmailConfiguration").Get<EmailConfiguration>());
+
+            //services.AddTransient<IEmailSender, EmailSender>();
 
             services.Configure<IdentityOptions>(options =>
             {

@@ -204,10 +204,8 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<bool>("Purge")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("StudentID")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                    b.Property<int>("StudentID")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
