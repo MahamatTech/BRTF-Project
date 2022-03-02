@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
+using System.IO;
 
 namespace BrtfProject.Controllers
 {
     public class RoomsController : Controller
     {
         private readonly BrtfDbContext _context;
-
+        public static bool isenable;
         public RoomsController(BrtfDbContext context)
         {
             _context = context;
@@ -213,6 +216,59 @@ namespace BrtfProject.Controllers
             _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
+        {
+            //Note: This is a very basic example and has 
+            //no ERROR HANDLING.  It also assumes that
+            //duplicate values are allowed, both in the 
+            //uploaded data and the DbSet.
+            ExcelPackage excel;
+            using (var memoryStream = new MemoryStream())
+            {
+                await theExcel.CopyToAsync(memoryStream);
+                excel = new ExcelPackage(memoryStream);
+            }
+            var workSheet = excel.Workbook.Worksheets[0];
+            var start = workSheet.Dimension.Start;
+            var end = workSheet.Dimension.End;
+
+            //Start a new list to hold imported objects
+            List<Room> rooms = new List<Room>();
+
+           
+
+            for (int row = start.Row + 1; row <= end.Row; row++)
+            {
+                
+                if (workSheet.Cells[row, 1].Text != "" && workSheet.Cells[row, 2].Text != "" && workSheet.Cells[row, 3].Text != "" && workSheet.Cells[row, 4].Text != "" && workSheet.Cells[row, 5].Text != "" )
+                { // Row by row...
+                    
+                    if(workSheet.Cells[row, 5].Text.ToLower() == "true")
+                    {
+                        isenable = true;
+                    }
+                    else if(workSheet.Cells[row, 5].Text.ToLower() == "false")
+                    {
+                        isenable = false;
+                    }
+                    Room a = new Room
+                    {
+                        name = workSheet.Cells[row, 1].Text,
+                        description = workSheet.Cells[row, 2].Text,
+                        capacity = workSheet.Cells[row, 3].Text,
+                        AreaId = Convert.ToInt32(workSheet.Cells[row, 4].Text),
+                        IsEnable = isenable
+                    };
+
+                    rooms.Add(a);
+                }
+            }
+            _context.Rooms.AddRange(rooms);
+            _context.SaveChanges();
+            return RedirectToAction("Index","Rooms");
         }
 
         private SelectList AreaSelectList(int? selectedId)

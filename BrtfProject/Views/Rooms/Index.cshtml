@@ -8,6 +8,33 @@
     <a asp-action="Create">Create Room</a>
 </p>
 
+<div class="card mb-sm-3">
+    <div class="form-horizontal">
+        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" id="filterToggle" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+            Upload Data
+        </button>
+        <div class="collapse @(ViewData["Upload"])" id="collapseFilter">
+            <h4 class="card-header" id="UserImport">Import Rooms</h4>
+            <div class="card-body">
+                <br />
+                <form asp-action="InsertFromExcel" asp-controller="Rooms" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="control-label">Upload Excel File:</label>
+                        <input type="file" class="" name="theExcel" /><br />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="submit" value="Upload Data" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
     <input type="hidden" name="sortField" value="@ViewData["sortField"]" />
