@@ -635,7 +635,7 @@ namespace BrtfProject.Data
                         new User
                         {
 
-                            StudentID = "011678908",
+                            StudentID = 1,
                             ID = 1,
                             FirstName = "David ",
                             MiddleName = "Smith",
