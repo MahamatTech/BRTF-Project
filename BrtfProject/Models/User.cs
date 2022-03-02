@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrtfProject.Models
 {
-    public class User
+    public class User : IValidatableObject
     {
         public User()
         {
@@ -41,8 +41,8 @@ namespace BrtfProject.Models
 
         [Display(Name = "Student #")]
         [Required(ErrorMessage = "You cannot leave the student number blank.")]
-        [StringLength(50, ErrorMessage = "The student number cannot be more than 50 characters long.")]
-        public string StudentID { get; set; }
+        [Range(1, 2147483648, ErrorMessage = "The student number cannot be a negative or 0.")]
+        public int StudentID { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "You cannot leave the first name blank.")]
@@ -71,6 +71,13 @@ namespace BrtfProject.Models
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (!Email.Contains("@ncstudents.niagaracollege.ca"))
+            {
+                yield return new ValidationResult("Email must be from niagara college", new[] { "Email" });
+            }
+        }
     }
 }
 

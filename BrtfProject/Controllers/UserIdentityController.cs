@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System.IO;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace BrtfProject.Controllers
 {
@@ -19,18 +20,74 @@ namespace BrtfProject.Controllers
     {
         private readonly BrtfDbContext _context;
         private readonly ApplicationDbContext _identityContext;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public UserIdentityController(BrtfDbContext context, ApplicationDbContext identityContext)
+        public UserIdentityController(BrtfDbContext context, ApplicationDbContext identityContext, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _identityContext = identityContext;
+            _userManager = userManager;
         }
 
         // GET: UserIdentity
         [Authorize(Roles = "Admin, Super-Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string actionButton, string sortDirection = "asc", string sortField = "User")
         {
-            return View(await _context.Users.ToListAsync());
+            string[] sortOptions = new[] { "Student ID", "Full Name", "Email" };
+
+            var users = (from u in _context.Users
+                .Include(u => u.ProgramTerm)
+                select u).AsNoTracking();
+
+            if (!String.IsNullOrEmpty(actionButton))
+            {
+                if (sortOptions.Contains(actionButton))
+                {
+                    if(actionButton == sortField)
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;
+                }
+            }
+
+            if (sortField == "Student ID")
+            {
+                if (sortDirection == "asc")
+                {
+                    users = users.OrderBy(u => u.StudentID);
+                }
+                else
+                {
+                    users = users.OrderByDescending(u => u.StudentID);
+                }
+            }
+            else if (sortField == "Full Name")
+            {
+                if (sortDirection == "asc")
+                {
+                    users = users.OrderBy(u => u.FirstName).ThenBy(u => u.LastName).ThenBy(u => u.MiddleName);
+                }
+                else
+                {
+                    users = users.OrderByDescending(u => u.FirstName).ThenByDescending(u => u.LastName).ThenByDescending(u => u.MiddleName);
+                }
+            }
+            else
+            {
+                if (sortDirection == "asc")
+                {
+                    users = users.OrderBy(u => u.Email);
+                }
+                else
+                {
+                    users = users.OrderByDescending(u => u.Email);
+                }
+            }
+
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+            return View(await users.ToListAsync());
         }
 
         //// GET: UserIdentity/Details/5
@@ -124,12 +181,10 @@ namespace BrtfProject.Controllers
             }
         }
         [HttpPost]
+
+        [Authorize(Roles = "Admin, Super-Admin")]
         public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
         {
-            //Note: This is a very basic example and has 
-            //no ERROR HANDLING.  It also assumes that
-            //duplicate values are allowed, both in the 
-            //uploaded data and the DbSet.
             ExcelPackage excel;
             if(theExcel != null)
             {
@@ -147,18 +202,76 @@ namespace BrtfProject.Controllers
 
                 for (int row = start.Row; row <= end.Row; row++)
                 {
-                    if (workSheet.Cells[row, 1].Text != "" && workSheet.Cells[row, 2].Text != "" && workSheet.Cells[row, 3].Text != "" && workSheet.Cells[row, 4].Text != "" && workSheet.Cells[row, 7].Text != "" && workSheet.Cells[row, 10].Text != "")
+                    //Check if columns 1, 2, 4, 7, and 10 are empty
+                    //These columns are important as they are required fields
+                    //If columns are empty, the program skips to the next row
+                    if (workSheet.Cells[row, 1].Text != "" && workSheet.Cells[row, 2].Text != "" && workSheet.Cells[row, 4].Text != "" && workSheet.Cells[row, 7].Text != "" && workSheet.Cells[row, 10].Text != "")
                     {
-                        // Row by row...
-                        User a = new User
+                        if (workSheet.Cells[row, 1].Text.Contains("ID") | workSheet.Cells[row, 2].Text.Contains("Name") | workSheet.Cells[row, 7].Text.Contains("Email") | workSheet.Cells[row, 1].Text.Contains("Term"))
                         {
-                            StudentID = workSheet.Cells[row, 1].Text,
-                            FirstName = workSheet.Cells[row, 2].Text,
-                            MiddleName = workSheet.Cells[row, 3].Text,
-                            LastName = workSheet.Cells[row, 4].Text,
-                            Email = workSheet.Cells[row, 7].Text
-                        };
-                        users.Add(a);
+                            continue;
+                        }
+                        else
+                        {
+                            //Create a string for the Program Term spot
+                            //Take the Program Term and find it using firstordefaultasync
+                            //Then assign that Program ID to the user
+                            string PTerm = workSheet.Cells[row, 10].Text;
+                            ProgramTerm b = await _context.ProgramTerms.FirstOrDefaultAsync(u => u.Term == PTerm);
+                            int PId;
+                            try
+                            {
+                                PId = b.ID;
+                            }
+                            catch
+                            {
+                                PId = 1;
+                            }
+
+                            //Creation of the user using the uploaded data
+                            User a = new User
+                            {
+                                StudentID = Int32.Parse(workSheet.Cells[row, 1].Text),
+                                FirstName = workSheet.Cells[row, 2].Text,
+                                MiddleName = workSheet.Cells[row, 3].Text,
+                                LastName = workSheet.Cells[row, 4].Text,
+                                Email = workSheet.Cells[row, 7].Text,
+                                ProgramTermId = PId
+                            };
+
+                            //This section is for checking the user after they have been initialized.
+                            //badCheck is used as a way to determine if the user can or cannot be put in.
+                            //If the user's ID or Email is already in the system, they are not let in.
+                            //If the user's Email is not from niagara college, they are not let in.
+                            bool badCheck = false;
+
+                            foreach (User u in _context.Users)
+                            {
+                                if (u.StudentID == a.StudentID | u.Email == a.Email)
+                                {
+                                    badCheck = true;
+                                }
+                            }
+
+                            if (!a.Email.Contains("@ncstudents.niagaracollege.ca"))
+                            {
+                                badCheck = true;
+                            }
+
+                            if (badCheck != true)
+                            {
+                                try
+                                {
+                                    users.Add(a);
+                                    var user = new IdentityUser { UserName = a.Email, Email = a.Email };
+                                    var result = await _userManager.CreateAsync(user, "password");
+                                }
+                                catch
+                                {
+                                    return NotFound();
+                                }
+                            }
+                        }
                     }
                 }
                 _context.Users.AddRange(users);
@@ -168,7 +281,49 @@ namespace BrtfProject.Controllers
             return RedirectToAction("Index", "UserIdentity");
         }
 
+        [Authorize(Roles = "Admin, Super-Admin")]
+        public IActionResult DownloadTemplate()
+        {
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("User Template");
 
+                workSheet.Cells[1, 1].Value = "Student ID";
+                workSheet.Cells[1, 2].Value = "First Name";
+                workSheet.Cells[1, 3].Value = "Middle Name";
+                workSheet.Cells[1, 4].Value = "Last Name";
+                workSheet.Cells[1, 7].Value = "Email";
+                workSheet.Cells[1, 10].Value = "Program Term";
+
+                var syncIOFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();
+                if (syncIOFeature != null)
+                {
+                    syncIOFeature.AllowSynchronousIO = true;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.Headers["content-disposition"] = "attachment;  filename=Template.xlsx";
+                        excel.SaveAs(memoryStream);
+                        memoryStream.WriteTo(Response.Body);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Byte[] theData = excel.GetAsByteArray();
+                        string filename = "Template.xlsx";
+                        string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        return File(theData, mimeType, filename);
+                    }
+                    catch (Exception)
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+            return NotFound();
+        }
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.ID == id);
