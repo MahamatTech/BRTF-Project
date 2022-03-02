@@ -22,7 +22,7 @@ namespace BrtfProject.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            var brtfDbContext = _context.Bookings.Include(b => b.Room).Include(b => b.User);
+            var brtfDbContext = _context.Bookings.Include(b => b.Area).Include(b => b.Room).Include(b => b.User);
             return View(await brtfDbContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace BrtfProject.Controllers
             }
 
             var booking = await _context.Bookings
+                .Include(b => b.Area)
                 .Include(b => b.Room)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -49,6 +50,7 @@ namespace BrtfProject.Controllers
         // GET: Bookings/Create
         public IActionResult Create()
         {
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity");
             ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email");
             return View();
@@ -59,7 +61,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,UserId,RoomName,FirstName,MiddleName,LastName,SpecialNote,StartdateTime,EndDateTime,Email,AreaName,IsEnabled,RepeatEndDateTime")] Booking booking)
+        public async Task<IActionResult> Create([Bind("UserId,RoomID,SpecialNote,StartdateTime,EndDateTime,Email,AreaId,IsEnabled,RepeatEndDateTime")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +69,7 @@ namespace BrtfProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
             ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email", booking.UserId);
             return View(booking);
@@ -85,6 +88,7 @@ namespace BrtfProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
             ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email", booking.UserId);
             return View(booking);
@@ -95,7 +99,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,UserId,RoomName,FirstName,MiddleName,LastName,SpecialNote,StartdateTime,EndDateTime,Email,AreaName,IsEnabled,RepeatEndDateTime")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,UserId,RoomID,FirstName,MiddleName,LastName,SpecialNote,StartdateTime,EndDateTime,Email,AreaId,IsEnabled,RepeatEndDateTime")] Booking booking)
         {
             if (id != booking.ID)
             {
@@ -122,6 +126,7 @@ namespace BrtfProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
             ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email", booking.UserId);
             return View(booking);
@@ -136,6 +141,7 @@ namespace BrtfProject.Controllers
             }
 
             var booking = await _context.Bookings
+                .Include(b => b.Area)
                 .Include(b => b.Room)
                 .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.ID == id);

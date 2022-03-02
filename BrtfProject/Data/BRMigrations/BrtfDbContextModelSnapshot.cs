@@ -41,10 +41,8 @@ namespace BrtfProject.Data.BRMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AreaName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                    b.Property<int>("AreaId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -76,10 +74,8 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<DateTime>("RepeatEndDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("RoomName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.Property<int>("RoomID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SpecialNote")
                         .HasColumnType("TEXT");
@@ -91,6 +87,8 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AreaId");
 
                     b.HasIndex("UserId");
 
@@ -223,6 +221,12 @@ namespace BrtfProject.Data.BRMigrations
 
             modelBuilder.Entity("BrtfProject.Models.Booking", b =>
                 {
+                    b.HasOne("BrtfProject.Models.Area", "Area")
+                        .WithMany("Bookings")
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BrtfProject.Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")

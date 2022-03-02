@@ -111,7 +111,7 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(nullable: false),
-                    RoomName = table.Column<string>(maxLength: 100, nullable: false),
+                    RoomID = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     MiddleName = table.Column<string>(maxLength: 50, nullable: false),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
@@ -119,13 +119,19 @@ namespace BrtfProject.Data.BRMigrations
                     StartdateTime = table.Column<DateTime>(nullable: false),
                     EndDateTime = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),
-                    AreaName = table.Column<string>(maxLength: 50, nullable: false),
+                    AreaId = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
                     RepeatEndDateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bookings", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Bookings_Areas_AreaId",
+                        column: x => x.AreaId,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bookings_Rooms_UserId",
                         column: x => x.UserId,
@@ -139,6 +145,11 @@ namespace BrtfProject.Data.BRMigrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_AreaId",
+                table: "Bookings",
+                column: "AreaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_UserId",

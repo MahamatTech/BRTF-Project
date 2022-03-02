@@ -11,12 +11,9 @@ namespace BrtfProject.Models
     public class Booking
     {
         public int ID { get; set; }
-        public Room Room { get; set; }
+        public int UserId{ get; set; }
         public User User { get; set; }
 
-
-        [Display(Name = "UserName")]
-        public int UserId{ get; set; }
 
 
         public string FullName
@@ -30,10 +27,12 @@ namespace BrtfProject.Models
             }
         }
 
-        [Display(Name = "RoomName")]
-        [Required(ErrorMessage = "You cannot leave the room name blank.")]
-        [StringLength(100, ErrorMessage = "Too Big!")]
-        public string RoomName { get; set; }
+        [Display(Name = "Room")]
+        [Required(ErrorMessage = "You must select the Room")]
+        public int RoomID { get; set; }
+        public Room Room { get; set; }
+
+
 
         [Display(Name = "FirstName")]
         [Required(ErrorMessage = "You cannot leave the FirstName blank.")]
@@ -63,6 +62,7 @@ namespace BrtfProject.Models
         public DateTime StartdateTime { get; set; }
 
 
+        
         [Required(ErrorMessage = "End date must be greater than start dat.")]
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
@@ -75,10 +75,8 @@ namespace BrtfProject.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Display(Name = "Area")]
-        [Required(ErrorMessage = "You cannot leave the Area name blank.")]
-        [StringLength(50, ErrorMessage = "Area name cannot be more than 50 characters long.")]
-        public string AreaName { get; set; }
+        public int AreaId { get; set; }
+        public Area Area { get; set; }
 
 
         [Display(Name = "Repeat")]
@@ -102,6 +100,7 @@ namespace BrtfProject.Models
         public DateTime RepeatEndDateTime { get; set; }
 
 
+       
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (EndDateTime.Value < DateTime.Today)

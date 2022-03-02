@@ -12,6 +12,8 @@ namespace BrtfProject.Models
         {
             Rooms = new HashSet<Room>();
 
+
+
         }
         public int ID { get; set; }
 
@@ -26,5 +28,7 @@ namespace BrtfProject.Models
 
 
         public ICollection<Room> Rooms { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
+
     }
 }

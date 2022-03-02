@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220301040457_Initial")]
+    [Migration("20220302175059_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,10 +43,8 @@ namespace BrtfProject.Data.BRMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AreaName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
+                    b.Property<int>("AreaId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -78,10 +76,8 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<DateTime>("RepeatEndDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("RoomName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.Property<int>("RoomID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SpecialNote")
                         .HasColumnType("TEXT");
@@ -93,6 +89,8 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AreaId");
 
                     b.HasIndex("UserId");
 
@@ -225,6 +223,12 @@ namespace BrtfProject.Data.BRMigrations
 
             modelBuilder.Entity("BrtfProject.Models.Booking", b =>
                 {
+                    b.HasOne("BrtfProject.Models.Area", "Area")
+                        .WithMany("Bookings")
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BrtfProject.Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("UserId")

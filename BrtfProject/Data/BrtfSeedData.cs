@@ -115,7 +115,7 @@ namespace BrtfProject.Data
                         IsEnabled = true
 
 
-                    }, 
+                    },
                     new Area
                     {
                         AreaName = "",
@@ -129,7 +129,7 @@ namespace BrtfProject.Data
                         IsEnabled = true
 
 
-                    }, 
+                    },
                     new Area
                     {
                         AreaName = "Edit 13 BRTF1435 & 3Yr TV",
@@ -443,28 +443,28 @@ namespace BrtfProject.Data
                 }
 
 
-                // Look for any Patients.  Since we can't have patients without Doctors.
+                // Look for any Rooms.
                 if (!context.Rooms.Any())
                 {
                     context.Rooms.AddRange(
 
 
                     new Room
-                        {  
+                    {
                         name = "Edit 13  ",
                         description = "This Suite Contains: Media Composer, Adobe Suite, DaVinci Resolve, Pro Tools",
                         capacity = "20",
-                      
-                        AreaId= context.Areas.FirstOrDefault(a => a.AreaName == "Edit 13 BRTF1435 & 3Yr TV" && a.IsEnabled == true).ID
+
+                        AreaId = context.Areas.FirstOrDefault(a => a.AreaName == "Edit 13 BRTF1435 & 3Yr TV" && a.IsEnabled == true).ID
 
 
                     },
                      new Room
-                     {   
+                     {
                          name = "Edit 15",
                          description = "Media Composer, Pro Tools, DaVinci Resolve, Creative Suite",
                          capacity = "30",
-                        
+
                          AreaId = context.Areas.FirstOrDefault(a => a.AreaName == "Edit 6 3rd Year only" && a.IsEnabled == true).ID
 
                      },
@@ -475,7 +475,7 @@ namespace BrtfProject.Data
                         name = "Edit 6",
                         description = "Media Composer, Pro Tools, Resolve and Creative Suite",
                         capacity = "20",
-                        
+
                     },
                     new Room
                     {
@@ -483,7 +483,7 @@ namespace BrtfProject.Data
                         name = "Edit 9",
                         description = "Media Composer, Pro Tools, DaVinci Resolve and Creative Suite",
                         capacity = "10"
-                       
+
                     },
                     new Room
                     {
@@ -498,7 +498,7 @@ namespace BrtfProject.Data
                         name = "Edit 14",
                         description = "Suites are bookable by 2nd Year students and 3rd year Presentation students.",
                         capacity = "10"
-                       
+
                     },
                     new Room
                     {
@@ -529,7 +529,7 @@ namespace BrtfProject.Data
                         capacity = "10"
                     },
                     new Room
-                    { 
+                    {
                         AreaId = 11,
                         name = "Film Studio V001",
                         description = "no data",
@@ -627,28 +627,58 @@ namespace BrtfProject.Data
                     });
 
                 }
+                if (!context.Users.Any())
+                {
+                    context.Users.AddRange(
+
+
+                        new User
+                        {
+
+                            StudentID = "011678908",
+                            ID = 1,
+                            FirstName = "David ",
+                            MiddleName = "Smith",
+                            LastName = "Obi",
+                            ProgramTermId = 1,
+
+                            Email = "adoum@outlook.com",
+
+                            //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
+
+
+
+
+                        });
+                    context.SaveChanges();
+                }
                 if (!context.Bookings.Any())
                 {
                     context.Bookings.AddRange(
-                    new Booking
-                    {
-                        RoomName= "Edit 13",
 
-                        UserId = 1,
-                        StartdateTime = DateTime.Parse("1955-09-01"),
-                        EndDateTime = DateTime.Parse("1955-09-01"),
 
-                        
+                        new Booking
+                        {
 
-                    });
+                            UserId =1,
+                            RoomID=1,
+                            FirstName = "David ",
+                            MiddleName = "Smith",
+                            LastName = "Obi",
+                            SpecialNote="",
+                            Email = "David@outlook.com",
+
+                            //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
+
+
+
+
+                        });
                     context.SaveChanges();
                 }
 
             }
 
-        }
-    
-}
-}
+            }
 
-   
+        } }
