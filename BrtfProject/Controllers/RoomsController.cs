@@ -20,9 +20,13 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index(string SearchString, int? AreaId)
+        public async Task<IActionResult> Index(string SearchString, int? AreaId, string actionButton, string sortDirection = "asc", string sortField = "Room")
         {
+            string[] sortOptions = new[] { "Room", "Area" };
+
             PopulateDropDownLists();
+
+            ViewData["Filtering"] = "";  //Assume not filtering
 
             var rooms =from r in _context.Rooms
                 .Include(r => r.Area)
@@ -31,11 +35,57 @@ namespace BrtfProject.Controllers
             if (AreaId.HasValue)
             {
                 rooms = rooms.Where(p => p.AreaId == AreaId);
+                ViewData["Filtering"] = " show";
             }
             if (!String.IsNullOrEmpty(SearchString))
             {
                 rooms = rooms.Where(p => p.name.ToUpper().Contains(SearchString.ToUpper()));
+                ViewData["Filtering"] = " show";
             }
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "Area")
+            {
+                if (sortDirection == "asc")
+                {
+                    rooms= rooms
+                        .OrderBy(p => p.Area.AreaName);
+                }
+                else
+                {
+                    rooms = rooms
+                        .OrderByDescending(p => p.Area.AreaName);
+                }
+            }
+            else if (sortField == "Room")
+            {
+                if (sortDirection == "asc")
+                {
+                    rooms = rooms
+                        .OrderBy(p => p.name);
+                }
+                else
+                {
+                    rooms = rooms
+                        .OrderByDescending(p => p.name);
+                }
+            }
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+
             return View(await rooms.ToListAsync());
         }
 
