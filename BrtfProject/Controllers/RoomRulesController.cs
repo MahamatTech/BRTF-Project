@@ -22,7 +22,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules
-     [Authorize(Roles = "User")]
+     [Authorize]
         public async Task<IActionResult> Index(string SearchString,
             int? page, int? pageSizeID, string actionButton, int? RoomId)
         {
@@ -58,7 +58,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Details/5
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -77,7 +77,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Create
-     [Authorize(Roles = "User")]
+     [Authorize]
         public IActionResult Create()
         {
             ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable==true), "ID", "name");
@@ -89,7 +89,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-     [Authorize(Roles = "User")]
+     [Authorize]
         public async Task<IActionResult> Create([Bind("id,RoomId,RuleName,RuleDescription")] RoomRules roomRules)
         {
             if (ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Edit/5
-     [Authorize(Roles = "User")]
+     [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -126,7 +126,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-     [Authorize(Roles = "User")]
+     [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("id,RoomId,RuleName,RuleDescription")] RoomRules roomRules)
         {
             if (id != roomRules.id)
@@ -158,7 +158,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: RoomRules/Delete/5
-     [Authorize(Roles = "User")]
+     [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

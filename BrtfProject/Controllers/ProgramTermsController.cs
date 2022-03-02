@@ -22,7 +22,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Index(string SearchStringInfo,
             int? page, int? pageSizeID, string actionButton, string SearchStringTerm)
         {
@@ -52,7 +52,7 @@ namespace BrtfProject.Controllers
             return this.ControllerContext.RouteData.Values["controller"].ToString();
         }
         // GET: ProgramTerms/Details/5
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -71,7 +71,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Create
-       [Authorize(Roles = "User")]
+       [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -82,7 +82,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Create([Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
         {
             if (ModelState.IsValid)
@@ -95,7 +95,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Edit/5
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,7 +116,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
         {
             if (id != programTerm.ID)
@@ -148,7 +148,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: ProgramTerms/Delete/5
-       [Authorize(Roles = "User")]
+       [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
