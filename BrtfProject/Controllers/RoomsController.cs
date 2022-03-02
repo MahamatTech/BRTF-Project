@@ -10,6 +10,7 @@ using BrtfProject.Models;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System.IO;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -23,7 +24,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms
-        public async Task<IActionResult> Index(string SearchString, int? AreaId, string actionButton, string sortDirection = "asc", string sortField = "Room")
+        public async Task<IActionResult> Index(string SearchString, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Room")
         {
             string[] sortOptions = new[] { "Room", "Area" };
 
@@ -33,7 +34,6 @@ namespace BrtfProject.Controllers
 
             var rooms =from r in _context.Rooms
                 .Include(r => r.Area)
-                .AsNoTracking()
                 select r;
             if (AreaId.HasValue)
             {
@@ -48,6 +48,7 @@ namespace BrtfProject.Controllers
 
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
             {
+                page = 1;
                 if (actionButton != "Filter")//Change of sort is requested
                 {
                     if (actionButton == sortField) //Reverse order on same field
@@ -88,8 +89,15 @@ namespace BrtfProject.Controllers
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Room>.CreateAsync(rooms.AsNoTracking(), page ?? 1, pageSize);
 
-            return View(await rooms.ToListAsync());
+            return View(pagedData);
+        }
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
         }
 
         // GET: Rooms/Details/5
