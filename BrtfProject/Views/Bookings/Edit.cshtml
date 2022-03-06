@@ -20,7 +20,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="RoomID" class="control-label"></label>
-                <input asp-for="RoomID" class="form-control" />
+                <select asp-for="RoomID" class="form-control" asp-items="ViewBag.RoomID">
+                    <option value="">Select Room</option>
+                </select>
                 <span asp-validation-for="RoomID" class="text-danger"></span>
             </div>
 
@@ -31,7 +33,7 @@
             </div>
 
 
-           
+
 
 
 
@@ -61,9 +63,20 @@
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="RepeatEndDateTime" class="control-label"></label>
-                <input asp-for="RepeatEndDateTime" class="form-control" />
-                <span asp-validation-for="RepeatEndDateTime" class="text-danger"></span>
+                <label asp-for="RepeatedBooking" class="control-label"></label>
+                <label>
+                    <input id="RepeatedBooking" name="RepeatedBooking" value="Daily" type="radio">
+                    Daily
+                </label>
+                <label>
+                    <input id="RepeatedBooking" name="RepeatedBooking" value="Weekly" type="radio">
+                    Weekly
+                </label>
+                <label>
+                    <input id="RepeatedBooking" name="RepeatedBooking" value="Monthly" type="radio">
+                    Monthly
+                </label>
+                <span asp-validation-for="RepeatedBooking" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

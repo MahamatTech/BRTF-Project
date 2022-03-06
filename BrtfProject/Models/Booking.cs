@@ -35,17 +35,17 @@ namespace BrtfProject.Models
 
 
         [Display(Name = "FirstName")]
-        [Required(ErrorMessage = "You cannot leave the FirstName blank.")]
+        //[Required(ErrorMessage = "You cannot leave the FirstName blank.")]
         [StringLength(50, ErrorMessage = "FirstName can not be more than 50 characteres long!")]
         public string FirstName { get; set; }
 
         [Display(Name = "MiddleName")]
-        [Required(ErrorMessage = "You cannot leave the MiddleName blank.")]
+        //[Required(ErrorMessage = "You cannot leave the MiddleName blank.")]
         [StringLength(50, ErrorMessage = "MiddleName can not be more than 50 characteres long!")]
         public string MiddleName { get; set; }
 
         [Display(Name = "LastName")]
-        [Required(ErrorMessage = "You cannot leave the LastName blank.")]
+        //[Required(ErrorMessage = "You cannot leave the LastName blank.")]
         [StringLength(50, ErrorMessage = "LastName can not be more than 50 characteres long!")]
         public string LastName { get; set; }
 
@@ -56,17 +56,17 @@ namespace BrtfProject.Models
 
 
         [Required(ErrorMessage = "You cannot leave the StartdateTime blank.")]
-        [Display(Name = "StartdateTime")]
+        [Display(Name = "Start Date Time")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartdateTime { get; set; }
 
 
         
-        [Required(ErrorMessage = "End date must be greater than start dat.")]
-        [Display(Name = "End Date")]
+        [Required(ErrorMessage = "End date must be greater than start date.")]
+        [Display(Name = "End Date Time")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? EndDateTime { get; set; }
 
 
@@ -79,9 +79,7 @@ namespace BrtfProject.Models
         public Area Area { get; set; }
 
 
-        [Display(Name = "Repeat")]
-
-
+        [Display(Name = "IsEnabled")]
         public bool IsEnabled { get; set; }
 
         // [Display(Name = "End Date")]
@@ -94,23 +92,26 @@ namespace BrtfProject.Models
 
 
         [Display(Name = "End Date")]
-        [Required(ErrorMessage = "Bck Date Entry is not allowed")]
+      //  [Required(ErrorMessage = "Bck Date Entry is not allowed")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
         public DateTime RepeatEndDateTime { get; set; }
+        [Display(Name = "Repeated Booking")]
+        public string RepeatedBooking { get; set; }
 
-
-       
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (EndDateTime.Value < DateTime.Today)
+            if (EndDateTime.Value < StartdateTime)
             {
                 yield return new ValidationResult("End Date time can not be in the past", new[] { "EndDateTime" });
             }
-
-
-
-
+            //Test date range for startdate
+            if (StartdateTime < DateTime.Today)
+            {
+                yield return new ValidationResult("start date must be greater than today", new[] { "StartdateTime" });
+            }
         }
+
+       
     }
 }

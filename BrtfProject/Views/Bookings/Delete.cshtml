@@ -16,34 +16,14 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.User.Email)
-        </dd class>
-
-
-
-
-
-
-
-
-
+        </dd >
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RoomID)
+            @Html.DisplayNameFor(model => model.Room.name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RoomID)
+            @Html.DisplayFor(model => model.Room.name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Room)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Room.capacity)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+       
        
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SpecialNote)
@@ -82,10 +62,10 @@
             @Html.DisplayFor(model => model.IsEnabled)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RepeatEndDateTime)
+            @Html.DisplayNameFor(model => model.RepeatedBooking)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RepeatEndDateTime)
+            @Html.DisplayFor(model => model.RepeatedBooking)
         </dd>
     </dl>
     

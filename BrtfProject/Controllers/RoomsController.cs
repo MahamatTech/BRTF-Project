@@ -275,7 +275,7 @@ namespace BrtfProject.Controllers
                     {
                         name = workSheet.Cells[row, 1].Text,
                         description = workSheet.Cells[row, 2].Text,
-                        capacity = workSheet.Cells[row, 3].Text,
+                        capacity =Convert.ToInt32(workSheet.Cells[row, 3].Text),
                         AreaId = Convert.ToInt32(workSheet.Cells[row, 4].Text),
                         IsEnable = isenable
                     };

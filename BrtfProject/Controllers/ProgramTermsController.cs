@@ -83,7 +83,7 @@ namespace BrtfProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
        [Authorize]
-        public async Task<IActionResult> Create([Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
+        public async Task<IActionResult> Create(ProgramTerm programTerm)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace BrtfProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
        [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,ProgramInfo,Term")] ProgramTerm programTerm)
+        public async Task<IActionResult> Edit(int id, ProgramTerm programTerm)
         {
             if (id != programTerm.ID)
             {

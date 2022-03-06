@@ -22,13 +22,13 @@ namespace BrtfProject.Models
         }
         public int ID { get; set; }
 
-        [Display(Name = "Name")]
+        [Display(Name = "Room Name")]
         [Required(ErrorMessage = "You cannot leave the room name blank.")]
         [StringLength(100, ErrorMessage = "Too Big!")]
         public string name { get; set; }
 
 
-        [Display(Name = "Description")]
+        [Display(Name = "Room Description")]
         [Required(ErrorMessage = "You cannot leave the description blank.")]
         public string[] Description => new string[] { "Edit 13", "Edit 15", "Edit 6", "Edit 8 V204i" };
 
@@ -44,9 +44,9 @@ namespace BrtfProject.Models
 
         [Required(ErrorMessage = "You cannot leave the room capacity blank.")]
         [Display(Name = "Capacity.")]
-        [StringLength(100, ErrorMessage = "Too many!")]
-        [DisplayFormat(NullDisplayText = "Empty")]
-        public string capacity { get; set; }
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter valid Capacity in integer.")]
+       [DisplayFormat(NullDisplayText = "Empty")]
+        public int capacity { get; set; }
 
 
         public string[] Areas => new string[] { "Edit 13", "Edit 15", "Edit 6", "Edit 8 V204i" };

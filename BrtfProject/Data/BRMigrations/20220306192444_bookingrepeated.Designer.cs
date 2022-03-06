@@ -3,14 +3,16 @@ using System;
 using BrtfProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    partial class BrtfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220306192444_bookingrepeated")]
+    partial class bookingrepeated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,6 +56,7 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
@@ -61,10 +64,12 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
                     b.Property<string>("MiddleName")
+                        .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
