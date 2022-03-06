@@ -64,7 +64,7 @@ namespace BrtfProject.Data.BRMigrations
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StudentID = table.Column<string>(maxLength: 50, nullable: false),
+                    StudentID = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     MiddleName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
@@ -89,9 +89,9 @@ namespace BrtfProject.Data.BRMigrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    RoomId = table.Column<int>(nullable: false),
                     RuleName = table.Column<string>(maxLength: 100, nullable: false),
-                    RuleDescription = table.Column<string>(maxLength: 100, nullable: false)
+                    RuleDescription = table.Column<string>(maxLength: 100, nullable: false),
+                    RoomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

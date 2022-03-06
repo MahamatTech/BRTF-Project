@@ -10,9 +10,8 @@ namespace BrtfProject.Models
     {
 
         public int id { get; set; }
-        [Display(Name = "Room Name")]
-        public int RoomId { get; set; }
-        public Room Room { get; set; }
+        
+
         [Display(Name = "Rule Name")]
         [Required(ErrorMessage = "You cannot leave the rule name blank.")]
         [StringLength(100, ErrorMessage = "Rule name cannot be more than 100 characters long.")]
@@ -22,6 +21,10 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You cannot leave the rule description blank.")]
         [StringLength(100, ErrorMessage = "Rule description cannot be more than 500 characters long.")]
         public string RuleDescription { get; set; }
-        
+
+        [Display(Name = "Room Name")]
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+
     }
 }

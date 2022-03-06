@@ -80,7 +80,7 @@ namespace BrtfProject.Controllers
      [Authorize]
         public IActionResult Create()
         {
-            ViewData["RoomId"] = new SelectList(_context.Rooms.Where(p => p.IsEnable==true), "ID", "name");
+            ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name");
             return View();
         }
 

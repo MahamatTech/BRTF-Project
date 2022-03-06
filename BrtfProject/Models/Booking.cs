@@ -10,7 +10,7 @@ namespace BrtfProject.Models
 {
     public class Booking
     {
-        public int ID { get; set; }
+        public int ID { get; set; }      
         public int UserId{ get; set; }
         public User User { get; set; }
 
