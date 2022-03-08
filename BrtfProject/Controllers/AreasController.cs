@@ -24,20 +24,58 @@ namespace BrtfProject.Controllers
         // GET: Areas
        [Authorize]
         public async Task<IActionResult> Index(string SearchString,
-            int? page, int? pageSizeID, string actionButton, int? AreaId)
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Area")
         {
+            string[] sortOptions = new[] { "Area" };
+
             PopulateDropDownLists();
+
+            ViewData["Filtering"] = "";  //Assume not filtering
+
             var areas = from r in _context.Areas
                  .AsNoTracking()
                         select r;
-            if (AreaId.HasValue)
-            {
-                areas = areas.Where(p => p.ID == AreaId);
-            }
+            
             if (!String.IsNullOrEmpty(SearchString))
             {
                 areas = areas.Where(p => p.AreaName.ToUpper().Contains(SearchString.ToUpper()));
+                ViewData["Filtering"] = " show";
             }
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+           
+
+
+            if (sortField == "Area")
+            {
+                if (sortDirection == "asc")
+                {
+                    areas = areas
+                        .OrderBy(p => p.AreaName);
+                }
+                else
+                {
+                    areas = areas
+                        .OrderByDescending(p => p.AreaName);
+                }
+            }
+
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
             //Handle Paging
             int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
             ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);

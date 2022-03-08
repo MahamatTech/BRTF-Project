@@ -28,16 +28,7 @@ namespace BrtfProject.Models
         public string name { get; set; }
 
 
-        [Display(Name = "Room Description")]
-        [Required(ErrorMessage = "You cannot leave the description blank.")]
-        public string[] Description => new string[] { "Edit 13", "Edit 15", "Edit 6", "Edit 8 V204i" };
-
-        [Display(Name = "Description")]
-        public string description
-        {
-            get; set;
-
-        }
+        
 
         public bool IsEnable{ get; set; }
 

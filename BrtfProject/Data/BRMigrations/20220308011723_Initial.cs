@@ -14,7 +14,8 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AreaName = table.Column<string>(maxLength: 50, nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false)
+                    IsEnabled = table.Column<bool>(nullable: false),
+                    description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,7 +29,9 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ProgramInfo = table.Column<string>(nullable: false),
-                    Term = table.Column<string>(maxLength: 50, nullable: false)
+                    Term = table.Column<string>(maxLength: 50, nullable: false),
+                    ProgramLevel = table.Column<string>(maxLength: 50, nullable: false),
+                    ProgramCode = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,9 +45,8 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(maxLength: 100, nullable: false),
-                    description = table.Column<string>(nullable: true),
                     IsEnable = table.Column<bool>(nullable: false),
-                    capacity = table.Column<string>(maxLength: 100, nullable: false),
+                    capacity = table.Column<int>(nullable: false),
                     AreaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -112,16 +114,17 @@ namespace BrtfProject.Data.BRMigrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(nullable: false),
                     RoomID = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
-                    MiddleName = table.Column<string>(maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    MiddleName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true),
                     SpecialNote = table.Column<string>(nullable: true),
                     StartdateTime = table.Column<DateTime>(nullable: false),
                     EndDateTime = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),
                     AreaId = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
-                    RepeatEndDateTime = table.Column<DateTime>(nullable: false)
+                    RepeatEndDateTime = table.Column<DateTime>(nullable: false),
+                    RepeatedBooking = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

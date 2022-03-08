@@ -30,6 +30,9 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("description")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ID");
 
                     b.ToTable("Areas");
@@ -139,9 +142,6 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.Property<int>("capacity")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("description")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("name")
                         .IsRequired()

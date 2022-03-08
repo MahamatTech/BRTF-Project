@@ -29,7 +29,7 @@ namespace BrtfProject.Controllers
         // GET: Rooms
         public async Task<IActionResult> Index(string SearchString, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Room")
         {
-            string[] sortOptions = new[] { "Room", "Area" };
+            string[] sortOptions = new[] { "Room", "Area", "Enabled?", "Capacity" };
 
             PopulateDropDownLists();
 
@@ -86,6 +86,32 @@ namespace BrtfProject.Controllers
                 {
                     rooms = rooms
                         .OrderByDescending(p => p.name);
+                }
+            }
+            else if (sortField == "Enabled?")
+            {
+                if (sortDirection == "asc")
+                {
+                    rooms = rooms
+                        .OrderBy(p => p.IsEnable);
+                }
+                else
+                {
+                    rooms = rooms
+                        .OrderByDescending(p => p.IsEnable);
+                }
+            }
+            else if (sortField == "Capacity")
+            {
+                if (sortDirection == "asc")
+                {
+                    rooms = rooms
+                        .OrderBy(p => p.capacity);
+                }
+                else
+                {
+                    rooms = rooms
+                        .OrderByDescending(p => p.capacity);
                 }
             }
             //Set sort for next time
@@ -274,7 +300,6 @@ namespace BrtfProject.Controllers
                     Room a = new Room
                     {
                         name = workSheet.Cells[row, 1].Text,
-                        description = workSheet.Cells[row, 2].Text,
                         capacity =Convert.ToInt32(workSheet.Cells[row, 3].Text),
                         AreaId = Convert.ToInt32(workSheet.Cells[row, 4].Text),
                         IsEnable = isenable
