@@ -46,7 +46,8 @@ namespace BrtfProject.Data
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
+            modelBuilder.Entity<InputModel>()
+                .HasNoKey();
 
 
             modelBuilder.Entity<Room>()

@@ -9,6 +9,12 @@ using BrtfProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using BrtfProject.Utilities;
 using BrtfProject.Data;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BrtfProject.Areas.Identity.Pages.Account;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BrtfProject.Controllers
 {
@@ -19,11 +25,24 @@ namespace BrtfProject.Controllers
         //Authenticated user to maintain their own  account details.
 
         private readonly BrtfDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<RegisterModel> _logger;
+        private readonly IEmailSender _emailSender;
 
-        public UserController(BrtfDbContext context)
+        public UserController(BrtfDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<RegisterModel> logger, IEmailSender emailSender)
         {
             _context = context;
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
+            _signInManager = signInManager;
+            _logger = logger;
+            _emailSender = emailSender;
         }
+
+        [BindProperty]
+        public InputModel Input { get; set; }
+        public string ReturnUrl { get; set; }
+        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         // GET: UserAccount
         public IActionResult Index()
@@ -47,8 +66,10 @@ namespace BrtfProject.Controllers
         }
 
         // GET: UserAccount/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync(string returnUrl = null)
         {
+            ReturnUrl = returnUrl;
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
             return View();
         }
@@ -58,16 +79,60 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,Email")] User user)
+        public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,Email")] User user, string returnUrl = null)
         {
-            user.Email = User.Identity.Name;
+            ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            returnUrl = returnUrl ?? Url.Content("~/");
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             try
             {
                 if (ModelState.IsValid)
                 {
+                    //Try to add the new user to the DB, if it succeeds then we move on to attempting to create the user's identity
+                    //This is to stop the user's account from being a failed creation and then the program making their login anyway.
                     _context.Add(user);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details));
+                    var success = await _context.SaveChangesAsync() > 0;
+                    
+                    if(success != false)
+                    {
+                        //Here we create the user's new identity using the input.
+                        //It's nothing (significantly) different from the regular register page but it is all done in one motion in the user controller.
+                        var u = new IdentityUser { UserName = user.Email, Email = user.Email };
+                        var result = await _userManager.CreateAsync(u, Input.Password);
+                        if (result.Succeeded)
+                        {
+                            string msg = "Success: account for " + user.Email + " has been created.";
+                            _logger.LogInformation(msg);
+                            ViewData["msg"] = msg;
+
+                            //_logger.LogInformation("User created a new account with password.");
+
+                            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                            //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                            //var callbackUrl = Url.Page(
+                            //    "/Account/ConfirmEmail",
+                            //    pageHandler: null,
+                            //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                            //    protocol: Request.Scheme);
+
+                            //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                            //if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                            //{
+                            //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                            //}
+                            //else
+                            //{
+                            //    await _signInManager.SignInAsync(user, isPersistent: false);
+                            //    return LocalRedirect(returnUrl);
+                            //}
+                        }
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
                 }
             }
             catch (DbUpdateException)

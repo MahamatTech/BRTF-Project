@@ -92,11 +92,6 @@ namespace BrtfProject.Areas.Identity.Pages.Account
                     {
                         CookieHelper.CookieSet(HttpContext, "userName", emp.FullName, 3200);
                     }
-                    else
-                    {
-                        //What better time to create the profile?
-                        returnUrl = "~/User/Create";
-                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

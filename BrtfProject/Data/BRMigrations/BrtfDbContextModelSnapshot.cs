@@ -98,6 +98,19 @@ namespace BrtfProject.Data.BRMigrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("BrtfProject.Models.InputModel", b =>
+                {
+                    b.Property<string>("ConfirmPassword")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.ToTable("InputModel");
+                });
+
             modelBuilder.Entity("BrtfProject.Models.ProgramTerm", b =>
                 {
                     b.Property<int>("ID")

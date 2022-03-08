@@ -709,21 +709,15 @@ namespace BrtfProject.Data
 
                         new User
                         {
-
                             StudentID = 1,
                             ID = 1,
-                            FirstName = "David ",
-                            MiddleName = "Smith",
-                            LastName = "Obi",
+                            FirstName = "Admin",
+                            MiddleName = "",
+                            LastName = "Smith",
                             ProgramTermId = 1,
-
-                            Email = "adoum@outlook.com",
+                            Email = "admin1@outlook.com",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
-
-
-
-
                         });
                     context.SaveChanges();
                 }
@@ -737,11 +731,11 @@ namespace BrtfProject.Data
 
                             UserId =1,
                             RoomID=1,
-                            FirstName = "David ",
-                            MiddleName = "Smith",
-                            LastName = "Obi",
+                            FirstName = "Admin",
+                            MiddleName = "",
+                            LastName = "Smith",
                             SpecialNote="",
-                            Email = "David@outlook.com",
+                            Email = "admin1@outlook.com",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
 
