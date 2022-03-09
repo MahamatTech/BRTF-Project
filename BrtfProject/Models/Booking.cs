@@ -10,7 +10,9 @@ namespace BrtfProject.Models
 {
     public class Booking
     {
-        public int ID { get; set; }      
+        public int ID { get; set; }
+
+        [Display(Name = "Users")]
         public int UserId{ get; set; }
         public User User { get; set; }
 
@@ -70,11 +72,7 @@ namespace BrtfProject.Models
         public DateTime? EndDateTime { get; set; }
 
 
-        [Required(ErrorMessage = "Email Address is required")]
-        [StringLength(255)]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
+       
         public int AreaId { get; set; }
         public Area Area { get; set; }
 

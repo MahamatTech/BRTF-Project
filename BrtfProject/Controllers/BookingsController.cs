@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+
+
 
 namespace BrtfProject.Controllers
 {
@@ -47,9 +47,11 @@ namespace BrtfProject.Controllers
             return View(booking);
         }
 
-        // GET: Bookings/Create
+        // GET: Bookings/Createdfegwrt34gfgfwfdsa 
         public IActionResult Create()
         {
+
+
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name");
             ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity");

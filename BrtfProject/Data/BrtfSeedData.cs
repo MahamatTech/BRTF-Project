@@ -710,12 +710,10 @@ namespace BrtfProject.Data
                         new User
                         {
                             StudentID = 1,
-                            ID = 1,
-                            FirstName = "Admin",
+                            FirstName = "David",
                             MiddleName = "",
                             LastName = "Smith",
                             ProgramTermId = 1,
-                            Email = "admin1@outlook.com",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
                         });
@@ -735,7 +733,6 @@ namespace BrtfProject.Data
                             MiddleName = "",
                             LastName = "Smith",
                             SpecialNote="",
-                            Email = "admin1@outlook.com",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
 
