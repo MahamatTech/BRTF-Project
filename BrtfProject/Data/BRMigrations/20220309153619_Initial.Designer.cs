@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220309062826_Initial")]
+    [Migration("20220309153619_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,7 +133,12 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("UserGroupID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("UserGroupID");
 
                     b.ToTable("ProgramTerms");
                 });
@@ -171,22 +176,26 @@ namespace BrtfProject.Data.BRMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int>("AreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("RuleDescription")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.Property<DateTime>("EndHour")
+                        .HasColumnType("TEXT");
 
-                    b.Property<string>("RuleName")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.Property<int>("MaxHours")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("RoomID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartHour")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("id");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("RoomID");
 
                     b.ToTable("RoomRules");
                 });
@@ -225,6 +234,9 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("StudentID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("UserGroupID")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ProgramTermId");
@@ -232,7 +244,25 @@ namespace BrtfProject.Data.BRMigrations
                     b.HasIndex("StudentID")
                         .IsUnique();
 
+                    b.HasIndex("UserGroupID");
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("BrtfProject.Models.UserGroup", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserGroupName")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
+
+                    b.ToTable("UserGroups");
                 });
 
             modelBuilder.Entity("BrtfProject.Models.Booking", b =>
@@ -256,6 +286,13 @@ namespace BrtfProject.Data.BRMigrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BrtfProject.Models.ProgramTerm", b =>
+                {
+                    b.HasOne("BrtfProject.Models.UserGroup", null)
+                        .WithMany("ProgramTerms")
+                        .HasForeignKey("UserGroupID");
+                });
+
             modelBuilder.Entity("BrtfProject.Models.Room", b =>
                 {
                     b.HasOne("BrtfProject.Models.Area", "Area")
@@ -267,11 +304,15 @@ namespace BrtfProject.Data.BRMigrations
 
             modelBuilder.Entity("BrtfProject.Models.RoomRules", b =>
                 {
-                    b.HasOne("BrtfProject.Models.Room", "Room")
+                    b.HasOne("BrtfProject.Models.Area", "Area")
                         .WithMany("RoomRules")
-                        .HasForeignKey("RoomId")
+                        .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BrtfProject.Models.Room", null)
+                        .WithMany("RoomRules")
+                        .HasForeignKey("RoomID");
                 });
 
             modelBuilder.Entity("BrtfProject.Models.User", b =>
@@ -281,6 +322,10 @@ namespace BrtfProject.Data.BRMigrations
                         .HasForeignKey("ProgramTermId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BrtfProject.Models.UserGroup", null)
+                        .WithMany("Users")
+                        .HasForeignKey("UserGroupID");
                 });
 #pragma warning restore 612, 618
         }

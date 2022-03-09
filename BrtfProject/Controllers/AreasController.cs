@@ -130,7 +130,7 @@ namespace BrtfProject.Controllers
        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,AreaName")] Area area)
+        public async Task<IActionResult> Create([Bind("ID,AreaName,description")] Area area)
         {
             if (ModelState.IsValid)
             {

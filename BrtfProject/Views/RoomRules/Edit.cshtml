@@ -14,19 +14,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="id" />
             <div class="form-group">
-                <label asp-for="RoomId" class="control-label"></label>
-                <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
-                <span asp-validation-for="RoomId" class="text-danger"></span>
+                <label asp-for="StartHour" class="control-label"></label>
+                <input asp-for="StartHour" class="form-control" />
+                <span asp-validation-for="StartHour" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RuleName" class="control-label"></label>
-                <input asp-for="RuleName" class="form-control" />
-                <span asp-validation-for="RuleName" class="text-danger"></span>
+                <label asp-for="EndHour" class="control-label"></label>
+                <input asp-for="EndHour" class="form-control" />
+                <span asp-validation-for="EndHour" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RuleDescription" class="control-label"></label>
-                <input asp-for="RuleDescription" class="form-control" />
-                <span asp-validation-for="RuleDescription" class="text-danger"></span>
+                <label asp-for="MaxHours" class="control-label"></label>
+                <input asp-for="MaxHours" class="form-control" />
+                <span asp-validation-for="MaxHours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AreaId" class="control-label"></label>
+                <select asp-for="AreaId" class="form-control" asp-items="ViewBag.AreaId"></select>
+                <span asp-validation-for="AreaId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

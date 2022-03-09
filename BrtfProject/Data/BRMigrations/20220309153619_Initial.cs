@@ -34,19 +34,16 @@ namespace BrtfProject.Data.BRMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProgramTerms",
+                name: "UserGroups",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ProgramInfo = table.Column<string>(nullable: false),
-                    Term = table.Column<string>(maxLength: 50, nullable: false),
-                    ProgramLevel = table.Column<string>(maxLength: 50, nullable: false),
-                    ProgramCode = table.Column<string>(maxLength: 50, nullable: false)
+                    UserGroupName = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProgramTerms", x => x.ID);
+                    table.PrimaryKey("PK_UserGroups", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,6 +69,58 @@ namespace BrtfProject.Data.BRMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProgramTerms",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProgramInfo = table.Column<string>(nullable: false),
+                    Term = table.Column<string>(maxLength: 50, nullable: false),
+                    ProgramLevel = table.Column<string>(maxLength: 50, nullable: false),
+                    ProgramCode = table.Column<string>(maxLength: 50, nullable: false),
+                    UserGroupID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProgramTerms", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ProgramTerms_UserGroups_UserGroupID",
+                        column: x => x.UserGroupID,
+                        principalTable: "UserGroups",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoomRules",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StartHour = table.Column<DateTime>(nullable: false),
+                    EndHour = table.Column<DateTime>(nullable: false),
+                    MaxHours = table.Column<int>(nullable: false),
+                    AreaId = table.Column<int>(nullable: false),
+                    RoomID = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoomRules", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_RoomRules_Areas_AreaId",
+                        column: x => x.AreaId,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoomRules_Rooms_RoomID",
+                        column: x => x.RoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -83,7 +132,8 @@ namespace BrtfProject.Data.BRMigrations
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
                     ProgramTermId = table.Column<int>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),
-                    Purge = table.Column<bool>(nullable: false)
+                    Purge = table.Column<bool>(nullable: false),
+                    UserGroupID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,27 +144,12 @@ namespace BrtfProject.Data.BRMigrations
                         principalTable: "ProgramTerms",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoomRules",
-                columns: table => new
-                {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RuleName = table.Column<string>(maxLength: 100, nullable: false),
-                    RuleDescription = table.Column<string>(maxLength: 100, nullable: false),
-                    RoomId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoomRules", x => x.id);
                     table.ForeignKey(
-                        name: "FK_RoomRules_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
+                        name: "FK_Users_UserGroups_UserGroupID",
+                        column: x => x.UserGroupID,
+                        principalTable: "UserGroups",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,9 +205,19 @@ namespace BrtfProject.Data.BRMigrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoomRules_RoomId",
+                name: "IX_ProgramTerms_UserGroupID",
+                table: "ProgramTerms",
+                column: "UserGroupID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomRules_AreaId",
                 table: "RoomRules",
-                column: "RoomId");
+                column: "AreaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoomRules_RoomID",
+                table: "RoomRules",
+                column: "RoomID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_AreaId",
@@ -189,6 +234,11 @@ namespace BrtfProject.Data.BRMigrations
                 table: "Users",
                 column: "StudentID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UserGroupID",
+                table: "Users",
+                column: "UserGroupID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -213,6 +263,9 @@ namespace BrtfProject.Data.BRMigrations
 
             migrationBuilder.DropTable(
                 name: "Areas");
+
+            migrationBuilder.DropTable(
+                name: "UserGroups");
         }
     }
 }

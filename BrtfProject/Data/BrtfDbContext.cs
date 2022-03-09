@@ -30,7 +30,7 @@ namespace BrtfProject.Data
         public DbSet<ProgramTerm> ProgramTerms { get; set; }
 
         public DbSet<Area> Areas { get; set; }
-
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

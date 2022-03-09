@@ -10,23 +10,22 @@ using BrtfProject.Models;
 
 namespace BrtfProject.Controllers
 {
-    public class RoomRulesController : Controller
+    public class UserGroupsController : Controller
     {
         private readonly BrtfDbContext _context;
 
-        public RoomRulesController(BrtfDbContext context)
+        public UserGroupsController(BrtfDbContext context)
         {
             _context = context;
         }
 
-        // GET: RoomRules
+        // GET: UserGroups
         public async Task<IActionResult> Index()
         {
-            var brtfDbContext = _context.RoomRules.Include(r => r.Area);
-            return View(await brtfDbContext.ToListAsync());
+            return View(await _context.UserGroups.ToListAsync());
         }
 
-        // GET: RoomRules/Details/5
+        // GET: UserGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var roomRules = await _context.RoomRules
-                .Include(r => r.Area)
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (roomRules == null)
+            var userGroup = await _context.UserGroups
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (userGroup == null)
             {
                 return NotFound();
             }
 
-            return View(roomRules);
+            return View(userGroup);
         }
 
-        // GET: RoomRules/Create
+        // GET: UserGroups/Create
         public IActionResult Create()
         {
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
             return View();
         }
 
-        // POST: RoomRules/Create
+        // POST: UserGroups/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,StartHour,EndHour,MaxHours,AreaId")] RoomRules roomRules)
+        public async Task<IActionResult> Create([Bind("ID,UserGroupName")] UserGroup userGroup)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(roomRules);
+                _context.Add(userGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", roomRules.AreaId);
-            return View(roomRules);
+            return View(userGroup);
         }
 
-        // GET: RoomRules/Edit/5
+        // GET: UserGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var roomRules = await _context.RoomRules.FindAsync(id);
-            if (roomRules == null)
+            var userGroup = await _context.UserGroups.FindAsync(id);
+            if (userGroup == null)
             {
                 return NotFound();
             }
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", roomRules.AreaId);
-            return View(roomRules);
+            return View(userGroup);
         }
 
-        // POST: RoomRules/Edit/5
+        // POST: UserGroups/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,StartHour,EndHour,MaxHours,AreaId")] RoomRules roomRules)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,UserGroupName")] UserGroup userGroup)
         {
-            if (id != roomRules.id)
+            if (id != userGroup.ID)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace BrtfProject.Controllers
             {
                 try
                 {
-                    _context.Update(roomRules);
+                    _context.Update(userGroup);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomRulesExists(roomRules.id))
+                    if (!UserGroupExists(userGroup.ID))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace BrtfProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", roomRules.AreaId);
-            return View(roomRules);
+            return View(userGroup);
         }
 
-        // GET: RoomRules/Delete/5
+        // GET: UserGroups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace BrtfProject.Controllers
                 return NotFound();
             }
 
-            var roomRules = await _context.RoomRules
-                .Include(r => r.Area)
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (roomRules == null)
+            var userGroup = await _context.UserGroups
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (userGroup == null)
             {
                 return NotFound();
             }
 
-            return View(roomRules);
+            return View(userGroup);
         }
 
-        // POST: RoomRules/Delete/5
+        // POST: UserGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var roomRules = await _context.RoomRules.FindAsync(id);
-            _context.RoomRules.Remove(roomRules);
+            var userGroup = await _context.UserGroups.FindAsync(id);
+            _context.UserGroups.Remove(userGroup);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomRulesExists(int id)
+        private bool UserGroupExists(int id)
         {
-            return _context.RoomRules.Any(e => e.id == id);
+            return _context.UserGroups.Any(e => e.ID == id);
         }
     }
 }

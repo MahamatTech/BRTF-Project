@@ -11,6 +11,7 @@ namespace BrtfProject.Models
         public Area()
         {
             Rooms = new HashSet<Room>();
+            RoomRules = new HashSet<RoomRules>();
 
 
 
@@ -32,6 +33,8 @@ namespace BrtfProject.Models
 
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+
+        public ICollection<RoomRules> RoomRules { get; set; }
 
     }
 }
