@@ -59,16 +59,16 @@ namespace BrtfProject.Models
 
         [Required(ErrorMessage = "You cannot leave the StartdateTime blank.")]
         [Display(Name = "Start Date Time")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
+       // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime StartdateTime { get; set; }
 
 
         
         [Required(ErrorMessage = "End date must be greater than start date.")]
         [Display(Name = "End Date Time")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? EndDateTime { get; set; }
 
 
