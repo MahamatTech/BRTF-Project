@@ -10,7 +10,12 @@
 <table class="table">
     <thead>
         <tr>
-           
+            <th>
+                @Html.DisplayNameFor(model => model.User.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.RoomID)
@@ -37,30 +42,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.RoomID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Room.name)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartdateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDateTime)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartdateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDateTime)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepeatEndDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepeatedBooking)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatEndDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatedBooking)
+            </td>
 
-            </tr>
+        </tr>
         }
     </tbody>
 </table>
