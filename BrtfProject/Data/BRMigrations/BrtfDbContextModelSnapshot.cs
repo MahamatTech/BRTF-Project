@@ -47,11 +47,6 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("AreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(255);
-
                     b.Property<DateTime?>("EndDateTime")
                         .IsRequired()
                         .HasColumnType("TEXT");

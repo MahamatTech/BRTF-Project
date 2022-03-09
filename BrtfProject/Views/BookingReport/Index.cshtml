@@ -4,13 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Booking Report Index</h1>
 
 
 <table class="table">
     <thead>
         <tr>
-            
+
             <th>
                 @Html.DisplayNameFor(model => model.RoomID)
             </th>
@@ -23,7 +23,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndDateTime)
             </th>
-           
+
             <th>
                 @Html.DisplayNameFor(model => model.RepeatEndDateTime)
             </th>
@@ -34,31 +34,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.name)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.StartdateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDateTime)
-            </td>
-          
-            <td>
-                @Html.DisplayFor(modelItem => item.RepeatEndDateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RepeatedBooking)
-            </td>
-           
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartdateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepeatEndDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepeatedBooking)
+                </td>
+
+            </tr>
+        }
     </tbody>
 </table>

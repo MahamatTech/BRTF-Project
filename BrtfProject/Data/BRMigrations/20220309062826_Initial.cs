@@ -23,6 +23,17 @@ namespace BrtfProject.Data.BRMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "InputModel",
+                columns: table => new
+                {
+                    Password = table.Column<string>(maxLength: 100, nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProgramTerms",
                 columns: table => new
                 {
@@ -120,7 +131,6 @@ namespace BrtfProject.Data.BRMigrations
                     SpecialNote = table.Column<string>(nullable: true),
                     StartdateTime = table.Column<DateTime>(nullable: false),
                     EndDateTime = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(maxLength: 255, nullable: false),
                     AreaId = table.Column<int>(nullable: false),
                     IsEnabled = table.Column<bool>(nullable: false),
                     RepeatEndDateTime = table.Column<DateTime>(nullable: false),
@@ -185,6 +195,9 @@ namespace BrtfProject.Data.BRMigrations
         {
             migrationBuilder.DropTable(
                 name: "Bookings");
+
+            migrationBuilder.DropTable(
+                name: "InputModel");
 
             migrationBuilder.DropTable(
                 name: "RoomRules");

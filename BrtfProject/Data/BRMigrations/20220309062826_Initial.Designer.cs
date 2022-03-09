@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220308011723_Initial")]
+    [Migration("20220309062826_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,11 +48,6 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.Property<int>("AreaId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(255);
 
                     b.Property<DateTime?>("EndDateTime")
                         .IsRequired()
@@ -98,6 +93,19 @@ namespace BrtfProject.Data.BRMigrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("BrtfProject.Models.InputModel", b =>
+                {
+                    b.Property<string>("ConfirmPassword")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.ToTable("InputModel");
                 });
 
             modelBuilder.Entity("BrtfProject.Models.ProgramTerm", b =>
