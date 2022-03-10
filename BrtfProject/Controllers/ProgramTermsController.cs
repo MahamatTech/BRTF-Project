@@ -27,6 +27,7 @@ namespace BrtfProject.Controllers
             int? page, int? pageSizeID, string actionButton, string SearchStringTerm)
         {
             var terms = from r in _context.ProgramTerms
+                        .Include(p=> p.UserGroup)
                  .AsNoTracking()
                         select r;
             if (!String.IsNullOrEmpty(SearchStringInfo))
@@ -61,6 +62,7 @@ namespace BrtfProject.Controllers
             }
 
             var programTerm = await _context.ProgramTerms
+                .Include(r => r.UserGroup)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (programTerm == null)
             {
@@ -74,6 +76,7 @@ namespace BrtfProject.Controllers
        [Authorize]
         public IActionResult Create()
         {
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             return View();
         }
 
@@ -91,6 +94,7 @@ namespace BrtfProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             return View(programTerm);
         }
 
@@ -108,6 +112,7 @@ namespace BrtfProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserGroupId"] = new SelectList(_context.Areas, "ID", "UserGroupName");
             return View(programTerm);
         }
 
@@ -144,6 +149,7 @@ namespace BrtfProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserGroupId"] = new SelectList(_context.Areas, "ID", "UserGroupName");
             return View(programTerm);
         }
 
@@ -157,6 +163,7 @@ namespace BrtfProject.Controllers
             }
 
             var programTerm = await _context.ProgramTerms
+                .Include(r => r.UserGroup)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (programTerm == null)
             {

@@ -71,6 +71,7 @@ namespace BrtfProject.Controllers
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             return View();
         }
 
@@ -82,6 +83,7 @@ namespace BrtfProject.Controllers
         public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,Email")] User user, string returnUrl = null)
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             try
@@ -147,6 +149,7 @@ namespace BrtfProject.Controllers
         public async Task<IActionResult> Edit()
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
 
             var user = await _context.Users
                 .Where(c => c.Email == User.Identity.Name)

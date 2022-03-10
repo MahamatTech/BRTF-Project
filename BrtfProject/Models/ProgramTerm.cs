@@ -33,6 +33,11 @@ namespace BrtfProject.Models
 
         public string ProgramCode { get; set; }
 
+        [Required]
+        [Display(Name = "User Group")]
+        public int UserGroupId { get; set; }
+        public UserGroup UserGroup { get; set; }
+
         public ICollection<User> Users { get; set; }
     }
 }

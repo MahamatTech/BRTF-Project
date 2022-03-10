@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220309153619_Initial")]
+    [Migration("20220310032710_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,12 +133,12 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("UserGroupID")
+                    b.Property<int>("UserGroupId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("UserGroupID");
+                    b.HasIndex("UserGroupId");
 
                     b.ToTable("ProgramTerms");
                 });
@@ -234,7 +234,7 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("StudentID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserGroupID")
+                    b.Property<int>("UserGroupId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
@@ -244,7 +244,7 @@ namespace BrtfProject.Data.BRMigrations
                     b.HasIndex("StudentID")
                         .IsUnique();
 
-                    b.HasIndex("UserGroupID");
+                    b.HasIndex("UserGroupId");
 
                     b.ToTable("Users");
                 });
@@ -288,9 +288,11 @@ namespace BrtfProject.Data.BRMigrations
 
             modelBuilder.Entity("BrtfProject.Models.ProgramTerm", b =>
                 {
-                    b.HasOne("BrtfProject.Models.UserGroup", null)
+                    b.HasOne("BrtfProject.Models.UserGroup", "UserGroup")
                         .WithMany("ProgramTerms")
-                        .HasForeignKey("UserGroupID");
+                        .HasForeignKey("UserGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BrtfProject.Models.Room", b =>
@@ -323,9 +325,11 @@ namespace BrtfProject.Data.BRMigrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BrtfProject.Models.UserGroup", null)
+                    b.HasOne("BrtfProject.Models.UserGroup", "UserGroup")
                         .WithMany("Users")
-                        .HasForeignKey("UserGroupID");
+                        .HasForeignKey("UserGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

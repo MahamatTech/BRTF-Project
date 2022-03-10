@@ -49,6 +49,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ProgramCode)
                 </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserGroup.UserGroupName)
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -67,6 +70,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ProgramCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserGroup.UserGroupName)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

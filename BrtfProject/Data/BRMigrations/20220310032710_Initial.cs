@@ -78,17 +78,17 @@ namespace BrtfProject.Data.BRMigrations
                     Term = table.Column<string>(maxLength: 50, nullable: false),
                     ProgramLevel = table.Column<string>(maxLength: 50, nullable: false),
                     ProgramCode = table.Column<string>(maxLength: 50, nullable: false),
-                    UserGroupID = table.Column<int>(nullable: true)
+                    UserGroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProgramTerms", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_ProgramTerms_UserGroups_UserGroupID",
-                        column: x => x.UserGroupID,
+                        name: "FK_ProgramTerms_UserGroups_UserGroupId",
+                        column: x => x.UserGroupId,
                         principalTable: "UserGroups",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -133,7 +133,7 @@ namespace BrtfProject.Data.BRMigrations
                     ProgramTermId = table.Column<int>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),
                     Purge = table.Column<bool>(nullable: false),
-                    UserGroupID = table.Column<int>(nullable: true)
+                    UserGroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,11 +145,11 @@ namespace BrtfProject.Data.BRMigrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Users_UserGroups_UserGroupID",
-                        column: x => x.UserGroupID,
+                        name: "FK_Users_UserGroups_UserGroupId",
+                        column: x => x.UserGroupId,
                         principalTable: "UserGroups",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,9 +205,9 @@ namespace BrtfProject.Data.BRMigrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProgramTerms_UserGroupID",
+                name: "IX_ProgramTerms_UserGroupId",
                 table: "ProgramTerms",
-                column: "UserGroupID");
+                column: "UserGroupId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoomRules_AreaId",
@@ -236,9 +236,9 @@ namespace BrtfProject.Data.BRMigrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserGroupID",
+                name: "IX_Users_UserGroupId",
                 table: "Users",
-                column: "UserGroupID");
+                column: "UserGroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

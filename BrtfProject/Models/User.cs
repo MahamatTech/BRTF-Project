@@ -84,7 +84,14 @@ namespace BrtfProject.Models
 
         public bool Purge { get; set; }
 
+        [Required]
+        [Display(Name = "User Group")]
+        public int UserGroupId { get; set; }
+        public UserGroup UserGroup { get; set; }
+
         public ICollection<Booking> Bookings { get; set; }
+
+        
 
         [NotMapped]
         public InputModel Input { get; set; }
