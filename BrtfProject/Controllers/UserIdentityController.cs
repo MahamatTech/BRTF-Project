@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using System.IO;
 using Microsoft.AspNetCore.Http.Features;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -31,13 +32,35 @@ namespace BrtfProject.Controllers
 
         // GET: UserIdentity
         [Authorize(Roles = "Admin, Super-Admin")]
-        public async Task<IActionResult> Index(string actionButton, string sortDirection = "asc", string sortField = "User")
+        public async Task<IActionResult> Index(string actionButton,  string SearchFirstName,string SearchLastName,string SearchProgramTerm,
+           string SearchEmail , int? page, int? pageSizeID, string sortField = "User", string sortDirection = "asc")
         {
             string[] sortOptions = new[] { "Student ID", "Full Name", "Email" };
 
             var users = (from u in _context.Users
                 .Include(u => u.ProgramTerm)
                 select u).AsNoTracking();
+
+
+            if (!String.IsNullOrEmpty(SearchFirstName))
+            {
+                users = users.Where(p => p.FirstName.ToUpper().Contains(SearchFirstName.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchLastName))
+            {
+                users = users.Where(p => p.LastName.ToUpper().Contains(SearchLastName.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchProgramTerm))
+            {
+                users = users.Where(p => p.ProgramTerm.ProgramInfo.ToUpper().Contains(SearchProgramTerm.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchEmail))
+            {
+                users = users.Where(p => p.Email.ToUpper().Contains(SearchEmail.ToUpper()));
+            }
+
+
+
 
             if (!String.IsNullOrEmpty(actionButton))
             {
@@ -87,9 +110,19 @@ namespace BrtfProject.Controllers
 
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
-            return View(await users.ToListAsync());
-        }
 
+
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<User>.CreateAsync(users.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+        }
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
+        }
         //// GET: UserIdentity/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{

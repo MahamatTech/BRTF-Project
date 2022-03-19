@@ -24,8 +24,10 @@ namespace BrtfProject.Controllers
         // GET: ProgramTerms
        [Authorize]
         public async Task<IActionResult> Index(string SearchStringInfo,
-            int? page, int? pageSizeID, string actionButton, string SearchStringTerm)
+            int? page, int? pageSizeID, string actionButton, string SearchStringTerm,string SearchProgramLevel,
+            string SearchProgramCode,int? UserGroupId)
         {
+            PopulateDropDownLists();
             var terms = from r in _context.ProgramTerms
                         .Include(p=> p.UserGroup)
                  .AsNoTracking()
@@ -37,6 +39,19 @@ namespace BrtfProject.Controllers
             if (!String.IsNullOrEmpty(SearchStringTerm))
             {
                 terms = terms.Where(p => p.Term.ToUpper().Contains(SearchStringTerm.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchProgramLevel))
+            {
+                terms = terms.Where(p => p.ProgramLevel.ToUpper().Contains(SearchProgramLevel.ToUpper()));
+            }
+            if (!String.IsNullOrEmpty(SearchProgramCode))
+            {
+                terms = terms.Where(p => p.ProgramCode.ToUpper().Contains(SearchProgramCode.ToUpper()));
+            }
+
+            if (UserGroupId.HasValue)
+            {
+                terms = terms.Where(p => p.UserGroupId == UserGroupId);
             }
             //Handle Paging
             int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
@@ -187,6 +202,17 @@ namespace BrtfProject.Controllers
         private bool ProgramTermExists(int id)
         {
             return _context.ProgramTerms.Any(e => e.ID == id);
+        }
+
+
+        private SelectList UserGroupSelectList(int? selectedId)
+        {
+            return new SelectList(_context.UserGroups
+                .OrderBy(d => d.UserGroupName), "ID", "UserGroupName", selectedId);
+        }
+        private void PopulateDropDownLists(UserGroup userGroup = null)
+        {
+            ViewData["UserGroupId"] = UserGroupSelectList(userGroup?.ID);
         }
     }
 }

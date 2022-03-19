@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -20,11 +21,27 @@ namespace BrtfProject.Controllers
         }
 
         // GET: UserGroups
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchUserGroupName, int? page, int? pageSizeID, string actionButton)
         {
-            return View(await _context.UserGroups.ToListAsync());
-        }
+            var userGroups = from r in _context.UserGroups
+                .AsNoTracking()
+                        select r;
+            if (!String.IsNullOrEmpty(SearchUserGroupName))
+            {
+                userGroups = userGroups.Where(p => p.UserGroupName.ToUpper().Contains(SearchUserGroupName.ToUpper()));
+            }
 
+            //Handle Paging
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<UserGroup>.CreateAsync(userGroups.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+        }
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
+        }
         // GET: UserGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
