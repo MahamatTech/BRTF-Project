@@ -36,15 +36,6 @@ namespace BrtfProject.Controllers
             {
                 terms = terms.Where(p => p.ProgramInfo.ToUpper().Contains(SearchStringInfo.ToUpper()));
             }
-<<<<<<< Updated upstream
-            if (!String.IsNullOrEmpty(SearchStringTerm))
-            {
-                terms = terms.Where(p => p.Term.ToUpper().Contains(SearchStringTerm.ToUpper()));
-            }
-            if (!String.IsNullOrEmpty(SearchProgramLevel))
-            {
-                terms = terms.Where(p => p.ProgramLevel.ToUpper().Contains(SearchProgramLevel.ToUpper()));
-            }
             if (!String.IsNullOrEmpty(SearchProgramCode))
             {
                 terms = terms.Where(p => p.ProgramCode.ToUpper().Contains(SearchProgramCode.ToUpper()));
@@ -54,8 +45,7 @@ namespace BrtfProject.Controllers
             {
                 terms = terms.Where(p => p.UserGroupId == UserGroupId);
             }
-=======
->>>>>>> Stashed changes
+
             //Handle Paging
             int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
             ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
@@ -120,6 +110,7 @@ namespace BrtfProject.Controllers
        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             if (id == null)
             {
                 return NotFound();
@@ -130,7 +121,6 @@ namespace BrtfProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserGroupId"] = new SelectList(_context.Areas, "ID", "UserGroupName");
             return View(programTerm);
         }
 
@@ -142,6 +132,7 @@ namespace BrtfProject.Controllers
        [Authorize]
         public async Task<IActionResult> Edit(int id, ProgramTerm programTerm)
         {
+            ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             if (id != programTerm.ID)
             {
                 return NotFound();
@@ -167,7 +158,6 @@ namespace BrtfProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserGroupId"] = new SelectList(_context.Areas, "ID", "UserGroupName");
             return View(programTerm);
         }
 

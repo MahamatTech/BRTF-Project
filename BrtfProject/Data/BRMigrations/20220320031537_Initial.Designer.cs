@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220320001134_Initial")]
+    [Migration("20220320031537_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

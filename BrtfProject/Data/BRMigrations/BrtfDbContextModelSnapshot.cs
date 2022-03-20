@@ -121,16 +121,6 @@ namespace BrtfProject.Data.BRMigrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("ProgramLevel")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Term")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(50);
-
                     b.Property<int>("UserGroupId")
                         .HasColumnType("INTEGER");
 
@@ -198,6 +188,20 @@ namespace BrtfProject.Data.BRMigrations
                     b.ToTable("RoomRules");
                 });
 
+            modelBuilder.Entity("BrtfProject.Models.Term", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Terms");
+                });
+
             modelBuilder.Entity("BrtfProject.Models.User", b =>
                 {
                     b.Property<int>("ID")
@@ -213,6 +217,9 @@ namespace BrtfProject.Data.BRMigrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
+
+                    b.Property<bool>("LastLevel")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -232,6 +239,12 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("StudentID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("TermId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TermLevel")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("UserGroupId")
                         .HasColumnType("INTEGER");
 
@@ -241,6 +254,8 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.HasIndex("StudentID")
                         .IsUnique();
+
+                    b.HasIndex("TermId");
 
                     b.HasIndex("UserGroupId");
 
@@ -321,6 +336,12 @@ namespace BrtfProject.Data.BRMigrations
                         .WithMany("Users")
                         .HasForeignKey("ProgramTermId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BrtfProject.Models.Term", "Term")
+                        .WithMany("Users")
+                        .HasForeignKey("TermId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BrtfProject.Models.UserGroup", "UserGroup")
