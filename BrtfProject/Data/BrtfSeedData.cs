@@ -691,16 +691,40 @@ namespace BrtfProject.Data
                     context.SaveChanges();
                 }
 
+                if (!context.UserGroups.Any())
+                {
+                    context.UserGroups.AddRange(
+                    new UserGroup
+                    {
+                        UserGroupName = "Admin"
+                    },
+                    new UserGroup
+                    {
+                        UserGroupName = "Student"
+                    });
+                    context.SaveChanges();
+                }
+
+                if (!context.Terms.Any())
+                {
+                    context.Terms.AddRange(
+                    new Term
+                    {
+                        Code = 1214
+                    });
+                    context.SaveChanges();
+                }
+
                 if (!context.ProgramTerms.Any())
                 {
                     context.ProgramTerms.AddRange(
                     new ProgramTerm
                     {
-                        ID = 1,
-                        ProgramInfo = "music",
-                        Term = "1402"
+                        ProgramInfo = "Broadcasting: Radion, TV & Film",
+                        ProgramCode = "PO122",
+                        UserGroupId = 1
                     });
-
+                    context.SaveChanges();
                 }
                 if (!context.Users.Any())
                 {
@@ -709,11 +733,16 @@ namespace BrtfProject.Data
 
                         new User
                         {
-                            StudentID = 1,
-                            FirstName = "David",
+                            StudentID = 0,
+                            FirstName = "Admin",
                             MiddleName = "",
-                            LastName = "Smith",
+                            LastName = "Universal",
+                            LastLevel = false,
+                            TermLevel = 0,
                             ProgramTermId = 1,
+                            TermId = 1,
+                            Email = "admin1@outlook.com",
+                            UserGroupId = 1,
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
                         });
@@ -731,7 +760,7 @@ namespace BrtfProject.Data
                             RoomID=1,
                             FirstName = "Admin",
                             MiddleName = "",
-                            LastName = "Smith",
+                            LastName = "Universal",
                             SpecialNote="",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID

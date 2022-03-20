@@ -73,9 +73,20 @@ namespace BrtfProject.Models
         [StringLength(50, ErrorMessage = "Last name cannot be more than 50 characters long.")]
         public string LastName { get; set; }
 
+        [Display(Name = "Last Level")]
+        public bool LastLevel { get; set; }
+        
+        [Display(Name = "Student Level")]
+        [Required(ErrorMessage = "You must input an integer for the student level.")]
+        public int TermLevel { get; set; }
+
         [Display(Name = "ProgramTerm")]
         public int ProgramTermId { get; set; }
         public ProgramTerm ProgramTerm { get; set; }
+
+        [Display(Name = "ProgramTerm")]
+        public int TermId { get; set; }
+        public Term Term { get; set; }
 
         [Required(ErrorMessage = "Email Address is required, you cannot leave it blank.")]
         [StringLength(255, ErrorMessage = "Email address is too lengthy, must be less than 255 characters.")]
@@ -90,7 +101,6 @@ namespace BrtfProject.Models
         public UserGroup UserGroup { get; set; }
 
         public ICollection<Booking> Bookings { get; set; }
-
         
 
         [NotMapped]

@@ -249,16 +249,29 @@ namespace BrtfProject.Controllers
                             //Create a string for the Program Term spot
                             //Take the Program Term and find it using firstordefaultasync
                             //Then assign that Program ID to the user
-                            string PTerm = workSheet.Cells[row, 10].Text;
-                            ProgramTerm b = await _context.ProgramTerms.FirstOrDefaultAsync(u => u.Term == PTerm);
-                            int PId;
+                            int TId = 1;
+                            int PId = 1;
                             try
                             {
-                                PId = b.ID;
+                                Term b = await _context.Terms.FirstOrDefaultAsync(u => u.Code == Int32.Parse(workSheet.Cells[row, 10].Text));
+                                TId = b.ID;
+
+                                ProgramTerm c = await _context.ProgramTerms.FirstOrDefaultAsync(u => u.ProgramCode == workSheet.Cells[row, 5].Text);
+                                PId = c.ID;
                             }
                             catch
                             {
-                                PId = 1;
+                                
+                            }
+
+                            bool lvl = false;
+                            if(workSheet.Cells[row, 9].Text == "Y" | workSheet.Cells[row, 9].Text == "y")
+                            {
+                                lvl = true;
+                            }
+                            else
+                            {
+                                lvl = false;
                             }
 
                             //Creation of the user using the uploaded data
@@ -268,8 +281,11 @@ namespace BrtfProject.Controllers
                                 FirstName = workSheet.Cells[row, 2].Text,
                                 MiddleName = workSheet.Cells[row, 3].Text,
                                 LastName = workSheet.Cells[row, 4].Text,
+                                ProgramTermId = PId,
                                 Email = workSheet.Cells[row, 7].Text,
-                                ProgramTermId = PId
+                                TermLevel = Int32.Parse(workSheet.Cells[row, 8].Text),
+                                LastLevel = lvl,
+                                TermId = TId
                             };
 
                             //This section is for checking the user after they have been initialized.
@@ -325,7 +341,11 @@ namespace BrtfProject.Controllers
                 workSheet.Cells[1, 2].Value = "First Name";
                 workSheet.Cells[1, 3].Value = "Middle Name";
                 workSheet.Cells[1, 4].Value = "Last Name";
+                workSheet.Cells[1, 5].Value = "Program Code";
+                workSheet.Cells[1, 6].Value = "Program Description";
                 workSheet.Cells[1, 7].Value = "Email";
+                workSheet.Cells[1, 8].Value = "Student Level";
+                workSheet.Cells[1, 9].Value = "Last Level (Y/N)";
                 workSheet.Cells[1, 10].Value = "Program Term";
 
                 var syncIOFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();

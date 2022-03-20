@@ -71,6 +71,7 @@ namespace BrtfProject.Controllers
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["TermId"] = new SelectList(_context.Terms, "ID", "Code");
             ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             return View();
         }
@@ -80,9 +81,10 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,Email")] User user, string returnUrl = null)
+        public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,TermId,UserGroupId,Email,LastLevel")] User user, string returnUrl = null)
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["TermId"] = new SelectList(_context.Terms, "ID", "Code");
             ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -149,6 +151,7 @@ namespace BrtfProject.Controllers
         public async Task<IActionResult> Edit()
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
+            ViewData["TermId"] = new SelectList(_context.Terms, "ID", "Code");
             ViewData["UserGroupId"] = new SelectList(_context.UserGroups, "ID", "UserGroupName");
 
             var user = await _context.Users

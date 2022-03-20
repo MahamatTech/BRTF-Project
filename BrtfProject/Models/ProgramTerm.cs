@@ -19,18 +19,9 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You cannot leave the program info blank.")]
         public string ProgramInfo { get; set; }
 
-        [Display(Name = "Program Term")]
-        [Required(ErrorMessage = "You cannot leave the term blank.")]
-        [StringLength(50, ErrorMessage = "Term cannot be more than 50 characters long.")]
-        public string Term { get; set; }
-        [Display(Name = "Program Level")]
-        [Required(ErrorMessage = "You cannot leave the Program Level blank.")]
-        [StringLength(50, ErrorMessage = "Program Level cannot be more than 50 characters long.")]
-        public string ProgramLevel { get; set; }
         [Display(Name = "Program Code")]
         [Required(ErrorMessage = "You cannot leave the program code blank.")]
         [StringLength(50, ErrorMessage = "Program code cannot be more than 50 characters long.")]
-
         public string ProgramCode { get; set; }
 
         [Required]

@@ -28,7 +28,7 @@ namespace BrtfProject.Data
         public DbSet<Booking> Bookings { get; set; }
 
         public DbSet<ProgramTerm> ProgramTerms { get; set; }
-
+        public DbSet<Term> Terms { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
 
@@ -44,6 +44,12 @@ namespace BrtfProject.Data
                 .HasMany<Booking>(d => d.Bookings)
                 .WithOne(p => p.User)
                 .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Term>()
+                .HasMany<User>(u => u.Users)
+                .WithOne(t => t.Term)
+                .HasForeignKey(t => t.TermId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<InputModel>()

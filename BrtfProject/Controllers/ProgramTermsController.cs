@@ -36,6 +36,7 @@ namespace BrtfProject.Controllers
             {
                 terms = terms.Where(p => p.ProgramInfo.ToUpper().Contains(SearchStringInfo.ToUpper()));
             }
+<<<<<<< Updated upstream
             if (!String.IsNullOrEmpty(SearchStringTerm))
             {
                 terms = terms.Where(p => p.Term.ToUpper().Contains(SearchStringTerm.ToUpper()));
@@ -53,6 +54,8 @@ namespace BrtfProject.Controllers
             {
                 terms = terms.Where(p => p.UserGroupId == UserGroupId);
             }
+=======
+>>>>>>> Stashed changes
             //Handle Paging
             int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
             ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
