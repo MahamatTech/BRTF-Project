@@ -34,6 +34,19 @@ namespace BrtfProject.Data.BRMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Terms",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Code = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Terms", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserGroups",
                 columns: table => new
                 {
@@ -75,8 +88,6 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ProgramInfo = table.Column<string>(nullable: false),
-                    Term = table.Column<string>(maxLength: 50, nullable: false),
-                    ProgramLevel = table.Column<string>(maxLength: 50, nullable: false),
                     ProgramCode = table.Column<string>(maxLength: 50, nullable: false),
                     UserGroupId = table.Column<int>(nullable: false)
                 },
@@ -130,7 +141,10 @@ namespace BrtfProject.Data.BRMigrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: false),
                     MiddleName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastLevel = table.Column<bool>(nullable: false),
+                    TermLevel = table.Column<int>(nullable: false),
                     ProgramTermId = table.Column<int>(nullable: false),
+                    TermId = table.Column<int>(nullable: false),
                     Email = table.Column<string>(maxLength: 255, nullable: false),
                     Purge = table.Column<bool>(nullable: false),
                     UserGroupId = table.Column<int>(nullable: false)
@@ -144,6 +158,12 @@ namespace BrtfProject.Data.BRMigrations
                         principalTable: "ProgramTerms",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Users_Terms_TermId",
+                        column: x => x.TermId,
+                        principalTable: "Terms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Users_UserGroups_UserGroupId",
                         column: x => x.UserGroupId,
@@ -236,6 +256,11 @@ namespace BrtfProject.Data.BRMigrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_TermId",
+                table: "Users",
+                column: "TermId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_UserGroupId",
                 table: "Users",
                 column: "UserGroupId");
@@ -260,6 +285,9 @@ namespace BrtfProject.Data.BRMigrations
 
             migrationBuilder.DropTable(
                 name: "ProgramTerms");
+
+            migrationBuilder.DropTable(
+                name: "Terms");
 
             migrationBuilder.DropTable(
                 name: "Areas");
