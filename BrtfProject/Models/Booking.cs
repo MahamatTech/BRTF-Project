@@ -90,8 +90,8 @@ namespace BrtfProject.Models
 
 
        
-        [Display(Name = "Repeated Booking")]
-        public string RepeatedBooking { get; set; }
+       // [Display(Name = "Repeated Booking")]
+        //public string RepeatedBooking { get; set; }
 
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {

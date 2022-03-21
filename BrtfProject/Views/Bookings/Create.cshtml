@@ -47,6 +47,7 @@
             <div class="form-group">
                 <label asp-for="StartdateTime" class="control-label"></label>
                 <input asp-for="StartdateTime" class="form-control" />
+
                 <span asp-validation-for="StartdateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,22 +57,7 @@
             </div>
 
 
-            <div class="form-group">
-                <label asp-for="RepeatedBooking" class="control-label"></label>
-                <label>
-                    <input id="RepeatedBooking" name="RepeatedBooking" value="Daily" type="radio">
-                    Daily
-                </label>
-                <label>
-                    <input id="RepeatedBooking" name="RepeatedBooking" value="Weekly" type="radio">
-                    Weekly
-                </label>
-                <label>
-                    <input id="RepeatedBooking" name="RepeatedBooking" value="Yearly" type="radio">
-                    Yearly
-                </label>
-                <span asp-validation-for="RepeatedBooking" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
