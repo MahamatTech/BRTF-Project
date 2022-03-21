@@ -17,6 +17,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Area.AreaName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Room.name)
             </th>
@@ -32,13 +36,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndDateTime)
             </th>
-           
-            <th>
-                @Html.DisplayNameFor(model => model.Area.AreaName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsEnabled)
-            </th>
+
+
+
             <th>
                 @Html.DisplayNameFor(model => model.RepeatedBooking)
             </th>
@@ -46,10 +46,15 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Area.AreaName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Room.name)
@@ -64,23 +69,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDateTime)
             </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.Area.AreaName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsEnabled)
-            </td>
-            
+
+
+
+
             <td>
                 @Html.DisplayFor(modelItem => item.RepeatedBooking)
             </td>
-<td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>
+

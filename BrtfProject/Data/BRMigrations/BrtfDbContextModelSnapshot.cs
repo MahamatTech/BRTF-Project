@@ -55,9 +55,6 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
@@ -65,9 +62,6 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
-
-                    b.Property<DateTime>("RepeatEndDateTime")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("RepeatedBooking")
                         .HasColumnType("TEXT");

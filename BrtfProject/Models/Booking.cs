@@ -8,7 +8,7 @@ using BrtfProject.Models;
 
 namespace BrtfProject.Models
 {
-    public class Booking
+    public class Booking : IValidatableObject
     {
         public int ID { get; set; }
 
@@ -28,6 +28,11 @@ namespace BrtfProject.Models
                     + LastName;
             }
         }
+
+        public int AreaId { get; set; }
+        public Area Area { get; set; }
+
+
 
         [Display(Name = "Room")]
         [Required(ErrorMessage = "You must select the Room")]
@@ -73,12 +78,7 @@ namespace BrtfProject.Models
 
 
        
-        public int AreaId { get; set; }
-        public Area Area { get; set; }
-
-
-        [Display(Name = "IsEnabled")]
-        public bool IsEnabled { get; set; }
+       
 
         // [Display(Name = "End Date")]
         //[DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
@@ -89,26 +89,25 @@ namespace BrtfProject.Models
 
 
 
-        [Display(Name = "End Date")]
-      //  [Required(ErrorMessage = "Bck Date Entry is not allowed")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
-        public DateTime RepeatEndDateTime { get; set; }
+       
         [Display(Name = "Repeated Booking")]
         public string RepeatedBooking { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            if (EndDateTime.Value < StartdateTime)
+            if (StartdateTime.Date >= EndDateTime)
+            {
+                yield return new ValidationResult("start date must be greater than today", new[] { "StartdateTime" });
+            }
+            if (EndDateTime.Value  <= StartdateTime)
             {
                 yield return new ValidationResult("End Date time can not be in the past", new[] { "EndDateTime" });
             }
             //Test date range for startdate
-            if (StartdateTime < DateTime.Today)
-            {
-                yield return new ValidationResult("start date must be greater than today", new[] { "StartdateTime" });
-            }
-        }
+           
+        
+
+    }
 
        
     }

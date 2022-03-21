@@ -179,6 +179,7 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(nullable: false),
+                    AreaId = table.Column<int>(nullable: false),
                     RoomID = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     MiddleName = table.Column<string>(maxLength: 50, nullable: true),
@@ -186,9 +187,6 @@ namespace BrtfProject.Data.BRMigrations
                     SpecialNote = table.Column<string>(nullable: true),
                     StartdateTime = table.Column<DateTime>(nullable: false),
                     EndDateTime = table.Column<DateTime>(nullable: false),
-                    AreaId = table.Column<int>(nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    RepeatEndDateTime = table.Column<DateTime>(nullable: false),
                     RepeatedBooking = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

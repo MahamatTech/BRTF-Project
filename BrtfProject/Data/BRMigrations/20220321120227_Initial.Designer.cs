@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220320031537_Initial")]
+    [Migration("20220321120227_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,9 +57,6 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
@@ -67,9 +64,6 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<string>("MiddleName")
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
-
-                    b.Property<DateTime>("RepeatEndDateTime")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("RepeatedBooking")
                         .HasColumnType("TEXT");
