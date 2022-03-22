@@ -213,20 +213,16 @@ namespace BrtfProject.Controllers
             //The ProvinceID has been added so we can filter by it.
 
 
-            var query =
-                from r in _context.Rooms.Include(r => r.Area)
-                select r;
-            if (AreaId.HasValue)
-            {
-                query = query.Where(a => a.AreaId == AreaId);
-            }
-            return new SelectList(query.OrderBy(a => a.ID), "ID", "Room", selectedAreaId);
+            var query = from c in _context.Rooms.Include(c => c.Area)
+                        where c.AreaId == AreaId.GetValueOrDefault()
+                        select c;
+            return new SelectList(query.OrderBy(p => p.name), "ID", "name", selectedAreaId);
         }
 
         private void PopulateDropDownLists(Booking booking = null)
         {
             ViewData["AreaId"] = AreaSelectList(booking?.AreaId);
-            ViewData["ID"] = RoomsSelectList(booking?.AreaId, booking?.ID);
+            ViewData["RoomID"] = RoomsSelectList(booking?.AreaId, booking?.RoomID);
         }
 
         [HttpGet]

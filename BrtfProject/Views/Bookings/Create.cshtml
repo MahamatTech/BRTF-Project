@@ -87,10 +87,10 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/refreshDDL.js"></script>
     <script type="text/javascript">
-        $('#ID').change(function () {
-            var selectedArea = $("#ID").val();
+        $('#AreaId').change(function () {
+            var selectedArea = $("#AreaId").val();
             var URL = "/Bookings/GetRooms/" + selectedArea;
-            refreshDDL('ID', URL, true);
+            refreshDDL('RoomID', URL, true);
         });
     </script>
 

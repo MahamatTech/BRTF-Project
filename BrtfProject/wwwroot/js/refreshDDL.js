@@ -11,6 +11,7 @@ function refreshDDL(ddl_ID, URL, showNoDataMsg, noDataMsg, addDefault, defaultTe
     var theDDL = $("#" + ddl_ID);
     $(function () {
         $.getJSON(URL, function (data) {
+            console.log(data);
             if (data !== null && !jQuery.isEmptyObject(data)) {
                 theDDL.empty();
                 if (addDefault) {
