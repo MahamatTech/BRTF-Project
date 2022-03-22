@@ -70,6 +70,25 @@ namespace BrtfProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Booking booking)
         {
+            var userroom = await _context.Bookings
+                .Where(c => c.RoomID == booking.RoomID)
+                .Where(d=>d.UserId==booking.UserId)
+                .FirstOrDefaultAsync();
+            if (userroom != null)
+            {
+                string msg = "Duplicate booking of same Room and User exists ";
+                ViewData["msg"] = msg;
+                return View();
+            }
+            var droom = await _context.Bookings
+                .Where(c => c.RoomID == booking.RoomID)
+                .FirstOrDefaultAsync();
+            if (droom != null)
+            {
+                string msg = "Duplicate booking of same Room exists with User : "+droom.User.FormalName;
+                ViewData["msg"] = msg;
+                return View();
+            }
             if (ModelState.IsValid)
             {
                 if(booking.Area.FunctionalRules.MaxHours != 0)
