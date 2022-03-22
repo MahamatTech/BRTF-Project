@@ -13,19 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StartHour" class="control-label"></label>
-                <input asp-for="StartHour" class="form-control" />
-                <span asp-validation-for="StartHour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndHour" class="control-label"></label>
-                <input asp-for="EndHour" class="form-control" />
-                <span asp-validation-for="EndHour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxHours" class="control-label"></label>
-                <input asp-for="MaxHours" class="form-control" />
-                <span asp-validation-for="MaxHours" class="text-danger"></span>
+                <label asp-for="rule" class="control-label"></label>
+                <input asp-for="rule" class="form-control" />
+                <span asp-validation-for="rule" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AreaId" class="control-label"></label>

@@ -12,9 +12,6 @@ namespace BrtfProject.Models
         {
             Rooms = new HashSet<Room>();
             RoomRules = new HashSet<RoomRules>();
-
-
-
         }
         public int ID { get; set; }
 
@@ -33,8 +30,11 @@ namespace BrtfProject.Models
 
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Booking> Bookings { get; set; }
+        public ICollection<RoomRules> RoomRules {get; set;}
 
-        public ICollection<RoomRules> RoomRules { get; set; }
+
+        //Hidden Connection
+        public virtual FunctionalRules FunctionalRules { get; set; }
 
     }
 }
