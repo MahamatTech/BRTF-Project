@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
-using System;
 
 namespace BrtfProject.Controllers
 {
@@ -58,7 +57,9 @@ namespace BrtfProject.Controllers
 
 
 
+
             PopulateDropDownLists();
+
 
             return View();
         }
@@ -69,10 +70,11 @@ namespace BrtfProject.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Booking booking)
+
         {
             var userroom = await _context.Bookings
                 .Where(c => c.RoomID == booking.RoomID)
-                .Where(d=>d.UserId==booking.UserId)
+                .Where(d => d.UserId == booking.UserId)
                 .FirstOrDefaultAsync();
             if (userroom != null)
             {
@@ -85,35 +87,14 @@ namespace BrtfProject.Controllers
                 .FirstOrDefaultAsync();
             if (droom != null)
             {
-                string msg = "Duplicate booking of same Room exists with User : "+droom.User.FormalName;
+                string msg = "Duplicate booking of same Room exists with User : " + droom.User.FormalName;
                 ViewData["msg"] = msg;
-                return View();
             }
+
             if (ModelState.IsValid)
             {
-                if(booking.Area.FunctionalRules.MaxHours != 0)
-                {
-                    //ok so this is a little confusing so i'll comment to explain
-                    //To start, we create a TimeSpan to get the time between the startdate and the enddate.
-                    //Next we make a string of the maxhours added on to 0.
-                    //The reason for the 0. is because TimeSpan puts days and hours together, meaning 1 day and 2 hours is equal to 1.02.
-                    //So if we just want hours, we need to get rid of the 0.
-                    //Then we convert the string we just made into a nullable TimeSpan
-                    //Finally, compare the difference of the start and end date to the max hours of the RoomRules and whoila, a comparison done.
-                    TimeSpan? difference = booking.StartdateTime - booking.EndDateTime;
-                    string con = "0." + booking.Area.FunctionalRules.MaxHours.ToString();
-                    TimeSpan? convert = TimeSpan.Parse(con);
-                    if (difference > convert)
-                    {
-                        string msg = booking.Area.AreaName + " has a maximum allowed booking of " + booking.Area.FunctionalRules.MaxHours + " hours at a time. Please lower your booking hours.";
-                        ViewData["msg"] = msg;
-                    }
-                    else
-                    {
-                        _context.Add(booking);
-                        await _context.SaveChangesAsync();
-                    }
-                }
+                _context.Add(booking);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
@@ -220,7 +201,7 @@ namespace BrtfProject.Controllers
             return _context.Bookings.Any(e => e.ID == id);
         }
 
-        private SelectList AreaSelectList(int?  selectedAreaId)
+        private SelectList AreaSelectList(int? selectedAreaId)
         {
             return new SelectList(_context.Areas
                 .OrderBy(a => a.ID), "ID", "AreaName", selectedAreaId);
@@ -231,10 +212,10 @@ namespace BrtfProject.Controllers
         {
             //The ProvinceID has been added so we can filter by it.
 
-            
-            var query = 
+
+            var query =
                 from r in _context.Rooms.Include(r => r.Area)
-                        select r;
+                select r;
             if (AreaId.HasValue)
             {
                 query = query.Where(a => a.AreaId == AreaId);
