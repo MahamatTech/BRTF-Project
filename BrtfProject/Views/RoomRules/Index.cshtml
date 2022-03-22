@@ -13,13 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartHour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndHour)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxHours)
+                @Html.DisplayNameFor(model => model.rule)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Area)
@@ -31,13 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StartHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndHour)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxHours)
+                @Html.DisplayFor(modelItem => item.rule)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Area.AreaName)

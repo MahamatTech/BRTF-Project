@@ -48,7 +48,7 @@ namespace BrtfProject.Controllers
         // GET: RoomRules/Create
         public IActionResult Create()
         {
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
+            ViewData["AreaId"] = new SelectList(_context.Areas.OrderBy(a => a.AreaName), "ID", "AreaName");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,StartHour,EndHour,MaxHours,AreaId")] RoomRules roomRules)
+        public async Task<IActionResult> Create([Bind("id,rule,AreaId")] RoomRules roomRules)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace BrtfProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", roomRules.AreaId);
+            ViewData["AreaId"] = new SelectList(_context.Areas.OrderBy(a => a.AreaName), "ID", "AreaName", roomRules.AreaId);
             return View(roomRules);
         }
 

@@ -31,6 +31,7 @@ namespace BrtfProject.Data
         public DbSet<Term> Terms { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<FunctionalRules> FunctionalRules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +52,16 @@ namespace BrtfProject.Data
                 .WithOne(t => t.Term)
                 .HasForeignKey(t => t.TermId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Area>()
+                .HasMany(a => a.RoomRules)
+                .WithOne(r => r.Area)
+                .HasForeignKey(r => r.AreaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Area>()
+                .HasOne(a => a.FunctionalRules)
+                .WithOne(f => f.Area);
 
             modelBuilder.Entity<InputModel>()
                 .HasNoKey();

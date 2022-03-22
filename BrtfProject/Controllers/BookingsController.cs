@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
-
-
+using System;
 
 namespace BrtfProject.Controllers
 {
@@ -68,8 +67,29 @@ namespace BrtfProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
+                if(booking.Area.FunctionalRules.MaxHours != 0)
+                {
+                    //ok so this is a little confusing so i'll comment to explain
+                    //To start, we create a TimeSpan to get the time between the startdate and the enddate.
+                    //Next we make a string of the maxhours added on to 0.
+                    //The reason for the 0. is because TimeSpan puts days and hours together, meaning 1 day and 2 hours is equal to 1.02.
+                    //So if we just want hours, we need to get rid of the 0.
+                    //Then we convert the string we just made into a nullable TimeSpan
+                    //Finally, compare the difference of the start and end date to the max hours of the RoomRules and whoila, a comparison done.
+                    TimeSpan? difference = booking.StartdateTime - booking.EndDateTime;
+                    string con = "0." + booking.Area.FunctionalRules.MaxHours.ToString();
+                    TimeSpan? convert = TimeSpan.Parse(con);
+                    if (difference > convert)
+                    {
+                        string msg = booking.Area.AreaName + " has a maximum allowed booking of " + booking.Area.FunctionalRules.MaxHours + " hours at a time. Please lower your booking hours.";
+                        ViewData["msg"] = msg;
+                    }
+                    else
+                    {
+                        _context.Add(booking);
+                        await _context.SaveChangesAsync();
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
