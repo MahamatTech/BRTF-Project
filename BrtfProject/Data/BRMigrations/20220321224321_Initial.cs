@@ -186,8 +186,7 @@ namespace BrtfProject.Data.BRMigrations
                     LastName = table.Column<string>(maxLength: 50, nullable: true),
                     SpecialNote = table.Column<string>(nullable: true),
                     StartdateTime = table.Column<DateTime>(nullable: false),
-                    EndDateTime = table.Column<DateTime>(nullable: false),
-                    RepeatedBooking = table.Column<string>(nullable: true)
+                    EndDateTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

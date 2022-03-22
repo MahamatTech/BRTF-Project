@@ -24,7 +24,10 @@
 
             <div class="form-group">
                 <label asp-for="Area" class="control-label"></label>
-                <select asp-for="AreaId" class="form-control" asp-items="ViewBag.AreaId"></select>
+                <select asp-for="AreaId" class="form-control" asp-items="ViewBag.AreaId">
+                    <option value="">Select Area</option>
+
+                </select>
             </div>
 
             <div class="form-group">
@@ -34,6 +37,19 @@
                 </select>
                 <span asp-validation-for="RoomID" class="text-danger"></span>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             <div class="form-group">
@@ -47,7 +63,6 @@
             <div class="form-group">
                 <label asp-for="StartdateTime" class="control-label"></label>
                 <input asp-for="StartdateTime" class="form-control" />
-
                 <span asp-validation-for="StartdateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -56,8 +71,6 @@
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
             </div>
 
-
-           
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -71,5 +84,14 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/refreshDDL.js"></script>
+    <script type="text/javascript">
+        $('#ID').change(function () {
+            var selectedArea = $("#ID").val();
+            var URL = "/Bookings/GetRooms/" + selectedArea;
+            refreshDDL('ID', URL, true);
+        });
+    </script>
+
 }
 

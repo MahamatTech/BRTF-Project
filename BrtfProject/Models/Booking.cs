@@ -95,13 +95,13 @@ namespace BrtfProject.Models
 
         IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            if (StartdateTime.Date >= EndDateTime)
+            if (StartdateTime >= EndDateTime)
             {
-                yield return new ValidationResult("start date must be greater than today", new[] { "StartdateTime" });
+                yield return new ValidationResult("start date can not be greather or equal to End Date, please select new date Time", new[] { "StartdateTime" });
             }
             if (EndDateTime.Value  <= StartdateTime)
             {
-                yield return new ValidationResult("End Date time can not be in the past", new[] { "EndDateTime" });
+                yield return new ValidationResult("End Date time can not be before or equal to Start Date", new[] { "EndDateTime" });
             }
             //Test date range for startdate
            

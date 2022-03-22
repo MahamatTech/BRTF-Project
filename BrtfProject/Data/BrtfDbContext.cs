@@ -34,6 +34,23 @@ namespace BrtfProject.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+        
+
+
+
+
+            //Add a unique index to the City/Province
+            modelBuilder.Entity<Room>()
+            .HasIndex(r => new { r.ID, r.IsEnable, r.name ,r.capacity,r.AreaId })
+            .IsUnique();
+
+            //Add this so you don't get Cascade Delete
+            modelBuilder.Entity<Area>()
+                .HasMany<Room>(r => r.Rooms)
+                .WithOne(a => a.Area)
+                .HasForeignKey(a => a.AreaId)
+                .OnDelete(DeleteBehavior.Restrict);
             //Schema for Azure
             //modelBuilder.HasDefaultSchema("BR");
             modelBuilder.Entity<User>()

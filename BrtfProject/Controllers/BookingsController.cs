@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
-
-
 
 namespace BrtfProject.Controllers
 {
@@ -47,15 +47,18 @@ namespace BrtfProject.Controllers
             return View(booking);
         }
 
-        // GET: Bookings/Createdfegwrt34gfgfwfdsa 
+        // GET: Bookings/Create
         public IActionResult Create()
         {
-
-
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name");
             ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity");
             ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email");
+
+
+
+            PopulateDropDownLists();
+
             return View();
         }
 
@@ -175,7 +178,47 @@ namespace BrtfProject.Controllers
         {
             return _context.Bookings.Any(e => e.ID == id);
         }
+
+        private SelectList AreaSelectList(int?  selectedAreaId)
+        {
+            return new SelectList(_context.Areas
+                .OrderBy(a => a.ID), "ID", "AreaName", selectedAreaId);
+        }
+
+
+        private SelectList RoomsSelectList(int? AreaId, int? selectedAreaId)
+        {
+            //The ProvinceID has been added so we can filter by it.
+
+            
+            var query = 
+                from r in _context.Rooms.Include(r => r.Area)
+                        select r;
+            if (AreaId.HasValue)
+            {
+                query = query.Where(a => a.AreaId == AreaId);
+            }
+            return new SelectList(query.OrderBy(a => a.ID), "ID", "Room", selectedAreaId);
+        }
+
+        private void PopulateDropDownLists(Booking booking = null)
+        {
+            ViewData["AreaId"] = AreaSelectList(booking?.AreaId);
+            ViewData["ID"] = RoomsSelectList(booking?.AreaId, booking?.ID);
+        }
+
+        [HttpGet]
+        public JsonResult GetRooms(int? ID)
+        {
+            return Json(RoomsSelectList(ID, null));
+        }
+
+
+
     }
 }
+
+
+
 
 

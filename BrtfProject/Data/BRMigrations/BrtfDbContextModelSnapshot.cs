@@ -63,9 +63,6 @@ namespace BrtfProject.Data.BRMigrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<string>("RepeatedBooking")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("RoomID")
                         .HasColumnType("INTEGER");
 
