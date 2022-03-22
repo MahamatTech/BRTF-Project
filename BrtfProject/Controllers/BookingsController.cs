@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
+using BrtfProject.Utilities;
 
 namespace BrtfProject.Controllers
 {
@@ -20,10 +21,129 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? UserId, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Booking")
         {
-            var brtfDbContext = _context.Bookings.Include(b => b.Area).Include(b => b.Room).Include(b => b.User);
-            return View(await brtfDbContext.ToListAsync());
+
+            string[] sortOptions = new[] { "User", "Area", "Room", "StartdateTime", "EndDateTime"};
+
+            PopulateDropDownLists();
+
+            ViewData["Filtering"] = "";  //Assume not filtering
+
+            var bookings = from b in _context.Bookings
+                .Include(b => b.Area)
+                .Include(b => b.Room)
+                .Include(b => b.User)
+                           select b;
+
+            if (UserId.HasValue)
+            {
+                bookings = bookings.Where(p => p.UserId == UserId);
+                ViewData["Filtering"] = " show";
+            }
+            if (AreaId.HasValue)
+            {
+                bookings = bookings.Where(p => p.AreaId == AreaId);
+                ViewData["Filtering"] = " show";
+            }
+
+            
+
+            //Before we sort, see if we have called for a change of filtering or sorting
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
+            {
+                page = 1;
+
+                if (actionButton != "Filter")//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+
+            if (sortField == "User")
+            {
+                if (sortDirection == "asc")
+                {
+                    bookings = bookings
+                        .OrderByDescending(p => p.User.Email);
+                }
+                else
+                {
+                    bookings = bookings
+                        .OrderBy(p => p.User.Email);
+                }
+            }
+            else if (sortField == "Area")
+            {
+                if (sortDirection == "asc")
+                {
+                    bookings = bookings
+                        .OrderByDescending(p => p.Area.AreaName);
+                }
+                else
+                {
+                    bookings = bookings
+                        .OrderBy(p => p.Area.AreaName);
+                }
+            }
+            else if (sortField == "Room")
+            {
+                if (sortDirection == "asc")
+                {
+                    bookings = bookings
+                        .OrderByDescending(p => p.Room.name);
+                }
+                else
+                {
+                    bookings = bookings
+                        .OrderBy(p => p.Room.name);
+                }
+            }
+            else if (sortField == "StartdateTime")
+            {
+                if (sortDirection == "asc")
+                {
+                    bookings = bookings
+                        .OrderByDescending(p => p.StartdateTime);
+                }
+                else
+                {
+                    bookings = bookings
+                        .OrderBy(p => p.StartdateTime);
+                }
+            }
+            else if (sortField == "EndDateTime")
+            {
+                if (sortDirection == "asc")
+                {
+                    bookings = bookings
+                        .OrderByDescending(p => p.EndDateTime);
+                }
+                else
+                {
+                    bookings = bookings
+                        .OrderBy(p => p.EndDateTime);
+                }
+            }
+
+            //Set sort for next time
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Booking>.CreateAsync(bookings.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
+        }
+
+        private string ControllerName()
+        {
+            return this.ControllerContext.RouteData.Values["controller"].ToString();
         }
 
         // GET: Bookings/Details/5
@@ -201,6 +321,15 @@ namespace BrtfProject.Controllers
             return _context.Bookings.Any(e => e.ID == id);
         }
 
+        private SelectList UserSelectList(int? selectedId)
+        {
+            return new SelectList(_context.Users
+                .OrderBy(d => d.Email), "ID", "Email", selectedId);
+        }
+
+
+        
+
         private SelectList AreaSelectList(int? selectedAreaId)
         {
             return new SelectList(_context.Areas
@@ -222,6 +351,7 @@ namespace BrtfProject.Controllers
         private void PopulateDropDownLists(Booking booking = null)
         {
             ViewData["AreaId"] = AreaSelectList(booking?.AreaId);
+            ViewData["UserId"] = UserSelectList(booking?.UserId);
             ViewData["RoomID"] = RoomsSelectList(booking?.AreaId, booking?.RoomID);
         }
 
