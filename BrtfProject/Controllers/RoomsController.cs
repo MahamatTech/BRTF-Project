@@ -43,6 +43,7 @@ namespace BrtfProject.Controllers
                 rooms = rooms.Where(p => p.AreaId == AreaId);
                 ViewData["Filtering"] = " show";
             }
+            
             if (!String.IsNullOrEmpty(SearchString))
             {
                 rooms = rooms.Where(p => p.name.ToUpper().Contains(SearchString.ToUpper()));

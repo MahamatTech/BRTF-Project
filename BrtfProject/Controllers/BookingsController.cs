@@ -8,21 +8,33 @@ using Microsoft.EntityFrameworkCore;
 using BrtfProject.Data;
 using BrtfProject.Models;
 using BrtfProject.Utilities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrtfProject.Controllers
 {
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly BrtfDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public BookingsController(BrtfDbContext context)
+        public BookingsController(BrtfDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Bookings
         public async Task<IActionResult> Index(int? UserId, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Booking")
         {
+            IdentityUser IdentityUser = await _userManager.GetUserAsync(User);
+            string userEmail = IdentityUser?.Email; // will give the user's Email
+
+            var user = await _context.Users
+                .Where(c => c.Email == userEmail)
+                .FirstOrDefaultAsync();
+
 
             string[] sortOptions = new[] { "User", "Area", "Room", "StartdateTime", "EndDateTime"};
 
@@ -35,6 +47,12 @@ namespace BrtfProject.Controllers
                 .Include(b => b.Room)
                 .Include(b => b.User)
                            select b;
+
+            if ((user.Email != "") && (user.Email != "admin1@outlook.com"))
+            {
+                bookings = bookings.Where(p => p.User.Email == user.Email);
+            }
+
 
             if (UserId.HasValue)
             {
