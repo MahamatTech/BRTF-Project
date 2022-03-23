@@ -196,27 +196,31 @@ namespace BrtfProject.Controllers
                 .Where(c => c.RoomID == booking.RoomID)
                 .Where(d => d.UserId == booking.UserId)
                 .FirstOrDefaultAsync();
-            if (userroom != null)
-            {
-                string msg = "Duplicate booking of same Room and User exists ";
-                ViewData["msg"] = msg;
-                return View();
-            }
+
             var droom = await _context.Bookings
                 .Where(c => c.RoomID == booking.RoomID)
                 .FirstOrDefaultAsync();
-            if (droom != null)
+            if (userroom != null)
+            {
+                ModelState.AddModelError("", "Duplicate booking of same Room and User exists ");
+            }
+            else if (droom != null)
             {
                 string msg = "Duplicate booking of same Room exists with User : " + droom.User.FormalName;
-                ViewData["msg"] = msg;
+                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FormalName);
             }
 
-            if (ModelState.IsValid)
+            else
             {
-                _context.Add(booking);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(booking);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
             ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
             ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
