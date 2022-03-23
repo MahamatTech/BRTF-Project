@@ -9,21 +9,20 @@ namespace BrtfProject.Models
 {
     public class FunctionalRules
     {
-        [ForeignKey("Area")]
         public int id { get; set; }
-
-        [Display(Name = "Max Hour")]
         public int MaxHours { get; set; }
-
-        [Display(Name = "Start Hour")]
-        [DataType(DataType.Time)]
-        public DateTime StartHour { get; set; }
-
-        [Display(Name = "End Hour")]
-        [DataType(DataType.Time)]
-        public DateTime EndHour { get; set; }
-
         //Hidden Connection
-        public virtual Area Area { get; set; }
+        public int AreaId { get; set; }
+        public Area Area { get; set; }
+
+
+        //public int MaxBookings { get; set; }
+
+        //[DataType(DataType.Time)]
+        //public DateTime StartHour { get; set; }
+
+        //[DataType(DataType.Time)]
+        //public DateTime EndHour { get; set; }
+
     }
 }

@@ -207,9 +207,12 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Booking booking)
-
+        public async Task<IActionResult> Create([Bind("UserId,AreaId,RoomID,SpecialNote,Startdatetime,EndDateTime")] Booking booking)
         {
+            ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
+            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
+            ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email", booking.UserId);
             var userroom = await _context.Bookings
                 .Where(c => c.RoomID == booking.RoomID)
                 .Where(d => d.UserId == booking.UserId)
@@ -231,18 +234,33 @@ namespace BrtfProject.Controllers
             else
             {
 
-                if (ModelState.IsValid)
+                try
                 {
-                    _context.Add(booking);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    if (ModelState.IsValid)
+                    {
+                        var FindRoom = await _context.Rooms.FirstOrDefaultAsync(m => m.ID == booking.RoomID);
+                        if (FindRoom.MaxHours != 0)
+                        {
+                            TimeSpan? difference = booking.EndDateTime - booking.StartdateTime;
+                            TimeSpan? convert = new TimeSpan(FindRoom.MaxHours, 0, 0);
+                            if (difference > convert)
+                            {
+                                string msg = FindRoom.name + " has a maximum allowed booking of " + FindRoom.MaxHours + " hours at a time. Please lower your booking hours.";
+                                ViewData["msg"] = msg;
+                            }
+                            else
+                            {
+                                _context.Add(booking);
+                                await _context.SaveChangesAsync();
+                            }
+                        }
+                    }
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
             }
-
-            ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
-            ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
-            ViewData["UserId"] = new SelectList(_context.Rooms, "ID", "capacity", booking.UserId);
-            ViewData["UserId"] = new SelectList(_context.Users, "ID", "Email", booking.UserId);
             return View(booking);
         }
 

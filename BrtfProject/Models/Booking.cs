@@ -16,19 +16,6 @@ namespace BrtfProject.Models
         public int UserId{ get; set; }
         public User User { get; set; }
 
-
-
-        public string FullName
-        {
-            get
-            {
-                return FirstName
-                    + (string.IsNullOrEmpty(MiddleName) ? " " :
-                    (" " + (char?)MiddleName[0] + ".").ToUpper())
-                    + LastName;
-            }
-        }
-
         public int AreaId { get; set; }
         public Area Area { get; set; }
 
@@ -38,23 +25,6 @@ namespace BrtfProject.Models
         [Required(ErrorMessage = "You must select the Room")]
         public int RoomID { get; set; }
         public Room Room { get; set; }
-
-
-
-        [Display(Name = "FirstName")]
-        //[Required(ErrorMessage = "You cannot leave the FirstName blank.")]
-        [StringLength(50, ErrorMessage = "FirstName can not be more than 50 characteres long!")]
-        public string FirstName { get; set; }
-
-        [Display(Name = "MiddleName")]
-        //[Required(ErrorMessage = "You cannot leave the MiddleName blank.")]
-        [StringLength(50, ErrorMessage = "MiddleName can not be more than 50 characteres long!")]
-        public string MiddleName { get; set; }
-
-        [Display(Name = "LastName")]
-        //[Required(ErrorMessage = "You cannot leave the LastName blank.")]
-        [StringLength(50, ErrorMessage = "LastName can not be more than 50 characteres long!")]
-        public string LastName { get; set; }
 
 
         [Display(Name = "SpecialNote")]

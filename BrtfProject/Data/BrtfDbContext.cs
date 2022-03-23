@@ -78,7 +78,8 @@ namespace BrtfProject.Data
 
             modelBuilder.Entity<Area>()
                 .HasOne(a => a.FunctionalRules)
-                .WithOne(f => f.Area);
+                .WithOne(f => f.Area)
+                .HasForeignKey<FunctionalRules>(a => a.AreaId);
 
             modelBuilder.Entity<InputModel>()
                 .HasNoKey();

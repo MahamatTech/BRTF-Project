@@ -34,7 +34,7 @@ namespace BrtfProject.Models
 
 
         //Hidden Connection
-        public virtual FunctionalRules FunctionalRules { get; set; }
+        public FunctionalRules FunctionalRules { get; set; }
 
     }
 }

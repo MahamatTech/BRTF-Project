@@ -27,8 +27,8 @@ namespace BrtfProject.Models
         [StringLength(100, ErrorMessage = "Too Big!")]
         public string name { get; set; }
 
+        public int MaxHours { get; set; }
 
-        
 
         public bool IsEnable{ get; set; }
 

@@ -24,189 +24,161 @@ namespace BrtfProject.Data
                     {
                         AreaName = "Edit 13 BRTF1435 & 3Yr TV",
                         IsEnabled = true,
-                        description = "This Suite Contains: Media Composer, Adobe Suite, DaVinci Resolve, Pro Tools. Suites are restricted to 4th TERM FILM/TV or 5th TERM TV STUDENTS ONLY. You can book UP TO 4 hours at a time and have UP TO 3 future booking time-blocks"
-
-
-
+                        description = "This Suite Contains: Media Composer, Adobe Suite, DaVinci Resolve, Pro Tools. Suites are restricted to 4th TERM FILM/TV or 5th TERM TV STUDENTS ONLY. You can book UP TO 4 hours at a time and have UP TO 3 future booking time-blocks",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 4, AreaId = 1 }
                     },
                     new Area
                     {
                         AreaName = "Edit 15 BRTF1435, Term 5",
                         IsEnabled = true,
-                        description = "Media Composer, Pro Tools, DaVinci Resolve, Creative Suite. Suites are bookable by 4th term Film/TV students, or 5th term TV students. You can book UP TO 4 hours at a time."
-
-
-
+                        description = "Media Composer, Pro Tools, DaVinci Resolve, Creative Suite. Suites are bookable by 4th term Film/TV students, or 5th term TV students. You can book UP TO 4 hours at a time.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 4, AreaId = 2 }
                     },
                     new Area
                     {
                         AreaName = "Edit 6 3rd Year only",
                         IsEnabled = true,
-
                         description = "Media Composer, Pro Tools, Resolve and Creative Suite. You can book UP TO 6 hours at a time and UP TO 2 future bookings.",
-
-
-
+                        FunctionalRules = new FunctionalRules() { MaxHours = 6, AreaId = 3 }
                     },
                     new Area
                     {
                         AreaName = "Edit 8 Inside Niagara",
                         IsEnabled = true,
                         description = "Media Composer, Pro Tools, DaVinci Resolve and Creative Suite. You can book up to 2 hours at a time. Bookable by 3rd term Presentation and 4th term TV students.",
-
-
-
+                        FunctionalRules = new FunctionalRules() { MaxHours = 2, AreaId = 4 }
                     },
                     new Area
                     {
                         AreaName = "Edit 9, 10 & 14 2nd Years",
                         IsEnabled = true,
-
                         description = "Media Composer, Pro Tools, DaVinci Resolve and Creative Suite. You can book UP TO 6 hours at a time. Suites are bookable by 2nd Year students and 3rd year Presentation students.",
-
-
+                        FunctionalRules = new FunctionalRules() { MaxHours = 6, AreaId = 5 }
                     },
                      new Area
                      {
                          AreaName = "Edits 1-5 3rd Year Film",
                          IsEnabled = true,
-
                          description = "Pro Tools, Media Composer, DaVinci Resolve, Creative Suite. Suites are restricted to 3RD YEAR FILM STUDENTS Only. All others will not be approved without a signed building pass. You can book UP TO 6 hours at a time and UP TO 3 future bookings.",
-
-
+                         FunctionalRules = new FunctionalRules() { MaxHours = 6, AreaId = 6 }
                      },
 
                     new Area
                     {
                         AreaName = "Film Studio V001",
-                        IsEnabled = true
-
-
+                        IsEnabled = true,
+                        FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 7 }
                     },
 
                     new Area
                     {
                         AreaName = "Green Room",
                         description = "Ready Room typically for those that are preparing for a TV or Film shoot. Max bookable time is 12 hours",
-                        IsEnabled = true
-
+                        IsEnabled = true,
+                        FunctionalRules = new FunctionalRules() { MaxHours = 12, AreaId = 8 }
 
                     }, new Area
                     {
                         AreaName = "MAC Lab V106",
                         IsEnabled = true,
-                        description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers"
-
-
+                        description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 6, AreaId = 9 }
                     },
-                         new Area
-                         {
-                             AreaName = "Mixing Theatre V105",
-                             IsEnabled = true,
-                             description = "Booking is only available after classes until midnight Monday to Friday. Weekends are OFF LIMITS. maximum booking is 8 hours. Special approval must be acquired from Luke Hutton before use."
-
-
-                         },
+                    new Area
+                    {
+                        AreaName = "Mixing Theatre V105",
+                        IsEnabled = true,
+                        description = "Booking is only available after classes until midnight Monday to Friday. Weekends are OFF LIMITS. maximum booking is 8 hours. Special approval must be acquired from Luke Hutton before use.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 8, AreaId = 10 }
+                    },
 
                     new Area
                     {
                         AreaName = "Radio Edit Suites V109",
                         IsEnabled = true,
-                        description = "Edit computers have a maximum booking time of 4 hours at a time. 8 audio edits"
-
+                        description = "Edit computers have a maximum booking time of 4 hours at a time. 8 audio edits",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 4, AreaId = 11 }
 
                     },
                     new Area
                     {
                         AreaName = "Radio Recording Studios V109",
                         IsEnabled = true,
-                        description = "All Studios have phone access for interviews. Announce Booth 1 used for News and Sports. Announce Booth 2 used for Voice Tracking. You can book up to 2 hours in a studio"
-
-
+                        description = "All Studios have phone access for interviews. Announce Booth 1 used for News and Sports. Announce Booth 2 used for Voice Tracking. You can book up to 2 hours in a studio",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 2, AreaId = 12 }
                     },
                     new Area
                     {
                         AreaName = "TV Studio V002",
                         IsEnabled = true,
-                        description = "1st Year Students may reserve the Studio as per their Professor's instructions. ALL Others must obtain approval through Alysha Henderson. Max booking available is 18 hours. V2 TV Studio, Max Bookable Hours 2. V2 GreenRoom, Max Bookable Hours 6. V1 (Old Studio), Max Bookable Hours 2. TV Studio Control Room, Upstairs Control Room, Max Bookable Hours 2."
-
-
+                        description = "1st Year Students may reserve the Studio as per their Professor's instructions. ALL Others must obtain approval through Alysha Henderson. Max booking available is 18 hours. V2 TV Studio, Max Bookable Hours 2. V2 GreenRoom, Max Bookable Hours 6. V1 (Old Studio), Max Bookable Hours 2. TV Studio Control Room, Upstairs Control Room, Max Bookable Hours 2.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 18, AreaId = 13 }
                     },
                     new Area
                     {
                         AreaName = "V110",
-                        IsEnabled = true
-
-
+                        IsEnabled = true,
+                        FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 14 }
                     },
                     new Area
                     {
                         AreaName = "V110 Acting Lab",
                         IsEnabled = true,
-                        description = "You can book UP TO 2 hours at a time. Booking is OFF LIMITS from 12:30am to the end of classes Mon-Fri. For exceptions, approval must be granted by Lori Ravensborg."
-
-
+                        description = "You can book UP TO 2 hours at a time. Booking is OFF LIMITS from 12:30am to the end of classes Mon-Fri. For exceptions, approval must be granted by Lori Ravensborg.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 2, AreaId = 15 }
                     },
                      new Area
                      {
                          AreaName = "V110f Acting Edit",
-                         IsEnabled = true
-
-
+                         IsEnabled = true,
+                         FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 16 }
                      },
                       new Area
                       {
                           AreaName = "V204p Production Planning",
                           IsEnabled = true,
-                          description = "Booking is only available Mon-Friday between 8:30am to 5:30pm. BRTF project meeting room. You can book up to 1 hour."
-
-
+                          description = "Booking is only available Mon-Friday between 8:30am to 5:30pm. BRTF project meeting room. You can book up to 1 hour.",
+                          FunctionalRules = new FunctionalRules() { MaxHours = 1, AreaId = 17 }
                       },
                        new Area
                        {
                            AreaName = "Camera Test",
-                           IsEnabled = false
-
-
+                           IsEnabled = false,
+                           FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 18 }
                        },
                         new Area
                         {
                             AreaName = "Edit 16 BRTF1435, Term 5 TV",
-                            IsEnabled = false
-
-
+                            IsEnabled = false,
+                            FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 19 }
                         },
                           new Area
                           {
                               AreaName = "MultiTrack V1j",
                               IsEnabled = false,
-                              description = "This Suites Contains: P2 Reader, Digitize/Log/Print Deck, SoundTrack, Avid, Final Cut Pro, DiffMerge, Adobe CS Suite, Aspera Connect. NOTE: Sountrack Pro is on all of the Edit Suites and MAC Lab. You can book UP TO 2 hours at a time."
-
-
+                              description = "This Suites Contains: P2 Reader, Digitize/Log/Print Deck, SoundTrack, Avid, Final Cut Pro, DiffMerge, Adobe CS Suite, Aspera Connect. NOTE: Sountrack Pro is on all of the Edit Suites and MAC Lab. You can book UP TO 2 hours at a time.",
+                              FunctionalRules = new FunctionalRules() { MaxHours = 2, AreaId = 20 }
                           },
                     new Area
                     {
                         AreaName = "V011 Assignment/Offload",
                         IsEnabled = false,
-                        description = "Assignment finishing (as opposed to interrupting Mac lab classes) and footage offload before returning your camera media to the Equipment Room. Open Access space for finishing or media transfer. Not bookable for meetings."
-
-
+                        description = "Assignment finishing (as opposed to interrupting Mac lab classes) and footage offload before returning your camera media to the Equipment Room. Open Access space for finishing or media transfer. Not bookable for meetings.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 0, AreaId = 21 }
                     },
                      new Area
                      {
                          AreaName = "V2 and S339 Acting",
                          IsEnabled = false,
-                         description = "You can book UP TO 1 hour at a time."
-
-
+                         description = "You can book UP TO 1 hour at a time.",
+                         FunctionalRules = new FunctionalRules() { MaxHours = 1, AreaId = 22 }
                      },
                     new Area
                     {
                         AreaName = "V3 Demonstration Lab",
                         IsEnabled = false,
-                        description = "You can book UP TO 6 hours at a time."
-
-
+                        description = "You can book UP TO 6 hours at a time.",
+                        FunctionalRules = new FunctionalRules() { MaxHours = 6, AreaId = 23 }
                     }
 
                     );
@@ -223,7 +195,7 @@ namespace BrtfProject.Data
                     new Room
                     {
                         name = "Edit 13",
-
+                        MaxHours = 4,
                         AreaId = 1,
                         IsEnable = true
 
@@ -231,7 +203,7 @@ namespace BrtfProject.Data
                      new Room
                      {
                          name = "Edit 15",
-
+                         MaxHours = 4,
                          AreaId = 2,
                          IsEnable = true
                      },
@@ -240,36 +212,42 @@ namespace BrtfProject.Data
                     {
                         AreaId = 3,
                         name = "Edit 6",
+                        MaxHours = 6,
                         IsEnable = true
                     },
                     new Room
                     {
                         AreaId = 4,
                         name = "Edit 8 V204i",
+                        MaxHours = 2,
                         IsEnable = true
                     },
                     new Room
                     {
                         AreaId = 5,
                         name = "Edit 9",
+                        MaxHours = 6,
                         IsEnable = true
                     },
                     new Room
                     {
                         AreaId = 5,
                         name = "Edit 10",
+                        MaxHours = 6,
                         IsEnable = true
                     },
                     new Room
                     {
                         AreaId = 5,
                         name = "Edit 14",
+                        MaxHours = 6,
                         IsEnable = true
                     },
                     new Room
                     {
                         AreaId = 6,
                         name = "Edit 1/2 Colour Suites",
+                        MaxHours = 6,
                         IsEnable = true
 
                     },
@@ -277,12 +255,14 @@ namespace BrtfProject.Data
                     {
                         AreaId = 6,
                         name = "Edit 3",
+                        MaxHours = 6,
                         IsEnable = false
 
                     }, new Room
                     {
                         AreaId = 6,
                         name = "Edit 4",
+                        MaxHours = 6,
                         IsEnable = false
 
                     },
@@ -290,6 +270,7 @@ namespace BrtfProject.Data
                      {
                          AreaId = 6,
                          name = "Edit 5",
+                         MaxHours = 6,
                          IsEnable = true
 
                      },
@@ -299,18 +280,21 @@ namespace BrtfProject.Data
                       {
                           AreaId = 7,
                           name = "Film Studio V001",
+                          MaxHours = 0,
                           IsEnable = true
                       },
                        new Room
                        {
                            AreaId = 8,
                            name = "Green Room",
+                           MaxHours = 12,
                            IsEnable = true
                        },
                        new Room
                        {
                            AreaId = 9,
                            name = "Computer 1",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -318,6 +302,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 2",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -325,6 +310,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 3",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -332,6 +318,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 4",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -339,6 +326,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 5",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -346,6 +334,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 6",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -360,6 +349,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 8",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -367,6 +357,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 9",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -374,6 +365,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 10",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -381,6 +373,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 11",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -388,6 +381,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 12",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -395,6 +389,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 13",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -402,6 +397,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 14",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -409,6 +405,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 15",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -416,6 +413,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 16",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -423,6 +421,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 9,
                            name = "Computer 17",
+                           MaxHours = 6,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -430,6 +429,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 10,
                            name = "Mixing Theatre V5",
+                           MaxHours = 8,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -437,6 +437,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #1",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -444,6 +445,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #2",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -451,6 +453,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #3",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -458,6 +461,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #4",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -465,6 +469,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #5",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -472,6 +477,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #6",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -479,6 +485,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #7",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -486,6 +493,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #8",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -493,6 +501,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 11,
                            name = "Audio Edit #8",
+                           MaxHours = 4,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -500,6 +509,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Studio & Talk A",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -507,6 +517,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Studio B",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -514,6 +525,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Studio C",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -521,6 +533,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Studio D",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -535,6 +548,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #1",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -542,6 +556,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #2",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -549,6 +564,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #3",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -556,6 +572,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #4",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -563,6 +580,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #5",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -570,6 +588,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #6",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -577,6 +596,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #7",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -584,6 +604,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 12,
                            name = "Audio Edit #8",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -591,6 +612,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 13,
                            name = "V2 TV Studio",
+                           MaxHours = 18,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -598,6 +620,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 13,
                            name = "V2 GreenRoom",
+                           MaxHours = 18,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -605,6 +628,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 13,
                            name = "V1 (Old Studio)",
+                           MaxHours = 18,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -612,6 +636,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 13,
                            name = "TV Studio Control Room",
+                           MaxHours = 18,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -619,6 +644,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 15,
                            name = "Acting Lab V110",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -626,6 +652,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 15,
                            name = "V110g Acting Edit",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -633,6 +660,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 17,
                            name = "V204p Production Planning",
+                           MaxHours = 1,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -640,6 +668,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 18,
                            name = "Red Camera 1",
+                           MaxHours = 0,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -647,6 +676,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 19,
                            name = "Edit 16 Avid/P2/DigLotPrt",
+                           MaxHours = 0,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -654,6 +684,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 20,
                            name = "MultiTrack V1j",
+                           MaxHours = 2,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -661,6 +692,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 21,
                            name = "V011 Assignment/Offload",
+                           MaxHours = 0,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -668,6 +700,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 22,
                            name = "V2 Acting",
+                           MaxHours = 1,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -675,6 +708,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 22,
                            name = "S339",
+                           MaxHours = 1,
                            IsEnable = true,
                            capacity = 17
                        },
@@ -682,6 +716,7 @@ namespace BrtfProject.Data
                        {
                            AreaId = 22,
                            name = "V3 Demonstration Lab",
+                           MaxHours = 1,
                            IsEnable = true,
                            capacity = 17
                        }
@@ -758,9 +793,6 @@ namespace BrtfProject.Data
 
                             UserId =1,
                             RoomID=1,
-                            FirstName = "Admin",
-                            MiddleName = "",
-                            LastName = "Universal",
                             SpecialNote="",
 
                             //ID = context.Users.FirstOrDefault(u => u.StudentID, u. ,u.FullName == "Adoum Mahamat", u).ID
