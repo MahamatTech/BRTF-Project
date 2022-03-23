@@ -207,7 +207,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,AreaId,RoomID,SpecialNote,Startdatetime,EndDateTime")] Booking booking)
+        public async Task<IActionResult> Create([Bind("UserId,AreaId,RoomID,SpecialNote,StartdateTime,EndDateTime")] Booking booking)
         {
             ViewData["RoomId"] = new SelectList(_context.Rooms, "ID", "name", booking.RoomID);
             ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName", booking.AreaId);
@@ -252,6 +252,7 @@ namespace BrtfProject.Controllers
                             {
                                 _context.Add(booking);
                                 await _context.SaveChangesAsync();
+                                return RedirectToAction(nameof(Index));
                             }
                         }
                     }
