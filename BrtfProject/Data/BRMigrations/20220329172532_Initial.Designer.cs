@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220321224321_Initial")]
+    [Migration("20220329172532_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,25 @@ namespace BrtfProject.Data.BRMigrations
                     b.ToTable("Bookings");
                 });
 
+            modelBuilder.Entity("BrtfProject.Models.FunctionalRules", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("EndHour")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MaxHours")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartHour")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.ToTable("FunctionalRules");
+                });
+
             modelBuilder.Entity("BrtfProject.Models.InputModel", b =>
                 {
                     b.Property<string>("ConfirmPassword")
@@ -148,6 +167,9 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.HasIndex("AreaId");
 
+                    b.HasIndex("ID", "IsEnable", "name", "capacity", "AreaId")
+                        .IsUnique();
+
                     b.ToTable("Rooms");
                 });
 
@@ -160,17 +182,13 @@ namespace BrtfProject.Data.BRMigrations
                     b.Property<int>("AreaId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("EndHour")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MaxHours")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("RoomID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("StartHour")
-                        .HasColumnType("TEXT");
+                    b.Property<string>("rule")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
 
                     b.HasKey("id");
 
@@ -292,6 +310,15 @@ namespace BrtfProject.Data.BRMigrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BrtfProject.Models.FunctionalRules", b =>
+                {
+                    b.HasOne("BrtfProject.Models.Area", "Area")
+                        .WithOne("FunctionalRules")
+                        .HasForeignKey("BrtfProject.Models.FunctionalRules", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BrtfProject.Models.ProgramTerm", b =>
                 {
                     b.HasOne("BrtfProject.Models.UserGroup", "UserGroup")
@@ -306,7 +333,7 @@ namespace BrtfProject.Data.BRMigrations
                     b.HasOne("BrtfProject.Models.Area", "Area")
                         .WithMany("Rooms")
                         .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -315,7 +342,7 @@ namespace BrtfProject.Data.BRMigrations
                     b.HasOne("BrtfProject.Models.Area", "Area")
                         .WithMany("RoomRules")
                         .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BrtfProject.Models.Room", null)

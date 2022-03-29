@@ -60,6 +60,26 @@ namespace BrtfProject.Data.BRMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FunctionalRules",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false),
+                    MaxHours = table.Column<int>(nullable: false),
+                    StartHour = table.Column<DateTime>(nullable: false),
+                    EndHour = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FunctionalRules", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_FunctionalRules_Areas_id",
+                        column: x => x.id,
+                        principalTable: "Areas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rooms",
                 columns: table => new
                 {
@@ -78,7 +98,7 @@ namespace BrtfProject.Data.BRMigrations
                         column: x => x.AreaId,
                         principalTable: "Areas",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,9 +128,7 @@ namespace BrtfProject.Data.BRMigrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    StartHour = table.Column<DateTime>(nullable: false),
-                    EndHour = table.Column<DateTime>(nullable: false),
-                    MaxHours = table.Column<int>(nullable: false),
+                    rule = table.Column<string>(maxLength: 500, nullable: false),
                     AreaId = table.Column<int>(nullable: false),
                     RoomID = table.Column<int>(nullable: true)
                 },
@@ -122,7 +140,7 @@ namespace BrtfProject.Data.BRMigrations
                         column: x => x.AreaId,
                         principalTable: "Areas",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RoomRules_Rooms_RoomID",
                         column: x => x.RoomID,
@@ -242,6 +260,12 @@ namespace BrtfProject.Data.BRMigrations
                 column: "AreaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Rooms_ID_IsEnable_name_capacity_AreaId",
+                table: "Rooms",
+                columns: new[] { "ID", "IsEnable", "name", "capacity", "AreaId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_ProgramTermId",
                 table: "Users",
                 column: "ProgramTermId");
@@ -267,6 +291,9 @@ namespace BrtfProject.Data.BRMigrations
         {
             migrationBuilder.DropTable(
                 name: "Bookings");
+
+            migrationBuilder.DropTable(
+                name: "FunctionalRules");
 
             migrationBuilder.DropTable(
                 name: "InputModel");

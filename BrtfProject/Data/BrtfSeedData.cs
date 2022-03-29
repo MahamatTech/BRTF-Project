@@ -87,8 +87,9 @@ namespace BrtfProject.Data
                     new Area
                     {
                         AreaName = "Green Room",
-                        description = "Ready Room typically for those that are preparing for a TV or Film shoot. Max bookable time is 12 hours",
-                        IsEnabled = true
+                        IsEnabled = true,
+                        description = "Ready Room typically for those that are preparing for a TV or Film shoot. Max bookable time is 12 hours" 
+
 
 
                     }, new Area

@@ -10,6 +10,7 @@ using BrtfProject.Models;
 using BrtfProject.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BrtfProject.Controllers
 {
@@ -34,6 +35,9 @@ namespace BrtfProject.Controllers
             var user = await _context.Users
                 .Where(c => c.Email == userEmail)
                 .FirstOrDefaultAsync();
+
+            var userFoundId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userFromUserManager = await _userManager.FindByIdAsync(userFoundId);
 
 
             string[] sortOptions = new[] { "User", "Area", "Room", "StartdateTime", "EndDateTime"};
@@ -64,6 +68,8 @@ namespace BrtfProject.Controllers
                 bookings = bookings.Where(p => p.AreaId == AreaId);
                 ViewData["Filtering"] = " show";
             }
+
+            bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
 
             
 
@@ -210,9 +216,14 @@ namespace BrtfProject.Controllers
         public async Task<IActionResult> Create(Booking booking)
 
         {
+            var userFoundId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userFromUserManager = await _userManager.FindByIdAsync(userFoundId);
+            var creatingUser = await _context.Users.Where(u => u.Email.ToLower() == userFromUserManager.Email.ToLower()).FirstOrDefaultAsync();
+
+
             var userroom = await _context.Bookings
                 .Where(c => c.RoomID == booking.RoomID)
-                .Where(d => d.UserId == booking.UserId)
+                .Where(d => d.UserId == creatingUser.ID)
                 .FirstOrDefaultAsync();
 
             var droom = await _context.Bookings
@@ -224,8 +235,8 @@ namespace BrtfProject.Controllers
             }
             else if (droom != null)
             {
-                string msg = "Duplicate booking of same Room exists with User : " + droom.User.FormalName;
-                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FormalName);
+ 
+                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FullName);
             }
 
             else
@@ -233,6 +244,7 @@ namespace BrtfProject.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    booking.UserId = creatingUser.ID;
                     _context.Add(booking);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
