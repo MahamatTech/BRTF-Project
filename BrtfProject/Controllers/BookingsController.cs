@@ -356,7 +356,7 @@ namespace BrtfProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Super-Admin")]
         public IActionResult DownloadBooking()
         {
             //.ThenInclude(b => b.)
