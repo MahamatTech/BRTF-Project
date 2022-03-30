@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrtfProject.Data.BRMigrations
 {
     [DbContext(typeof(BrtfDbContext))]
-    [Migration("20220329172532_Initial")]
+    [Migration("20220329232549_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,9 +31,6 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("description")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("ID");
 
@@ -157,6 +154,9 @@ namespace BrtfProject.Data.BRMigrations
 
                     b.Property<int>("capacity")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("description")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("name")
                         .IsRequired()

@@ -22,11 +22,7 @@ namespace BrtfProject.Models
 
         public bool IsEnabled { get; set; }
 
-        [Display(Name = "Area Description")]
-        public string description
-        {
-            get; set;
-        }
+        
 
         public ICollection<Room> Rooms { get; set; }
         public ICollection<Booking> Bookings { get; set; }

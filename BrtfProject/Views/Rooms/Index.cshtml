@@ -8,32 +8,7 @@
     <a asp-action="Create">Create Room</a>
 </p>
 
-<div class="card mb-sm-3">
-    <div class="form-horizontal">
-        <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" id="filterToggle" data-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-            Upload Data
-        </button>
-        <div class="collapse @(ViewData["Upload"])" id="collapseFilter">
-            <h4 class="card-header" id="UserImport">Import Rooms</h4>
-            <div class="card-body">
-                <br />
-                <form asp-action="InsertFromExcel" asp-controller="Rooms" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label class="control-label">Upload Excel File:</label>
-                        <input type="file" class="" name="theExcel" /><br />
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="submit" value="Upload Data" class="btn btn-primary" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <form asp-action="Index" method="get">
     <input type="hidden" name="sortDirection" value="@ViewData["sortDirection"]" />
@@ -71,12 +46,15 @@
                 <th>
                     <input type="submit" name="actionButton" value="Room" class="btn btn-link" />
                 </th>
-                
                 <th>
-                    <input type="submit"  name="actionButton" value="Enabled?" class="btn btn-link" />
+                    <input type="submit" disabled="disabled" name="actionButton" value="Description" class="btn btn-link" />
+                </th>
+
+                <th>
+                    <input type="submit" name="actionButton" value="Enabled?" class="btn btn-link" />
                 </th>
                 <th>
-                    <input type="submit"  name="actionButton" value="Capacity" class="btn btn-link" />
+                    <input type="submit" name="actionButton" value="Capacity" class="btn btn-link" />
                 </th>
                 <th>
                     <input type="submit" name="actionButton" value="Area" class="btn btn-link" />
@@ -87,25 +65,28 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsEnable)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.capacity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Area.AreaName)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area.AreaName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

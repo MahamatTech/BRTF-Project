@@ -27,8 +27,12 @@ namespace BrtfProject.Models
         [StringLength(100, ErrorMessage = "Too Big!")]
         public string name { get; set; }
 
+        [Display(Name = "Room Description")]
+        public string description
+        {
+            get; set;
+        }
 
-        
 
         public bool IsEnable{ get; set; }
 

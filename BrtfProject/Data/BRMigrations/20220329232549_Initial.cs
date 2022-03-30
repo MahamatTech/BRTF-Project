@@ -14,8 +14,7 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AreaName = table.Column<string>(maxLength: 50, nullable: false),
-                    IsEnabled = table.Column<bool>(nullable: false),
-                    description = table.Column<string>(nullable: true)
+                    IsEnabled = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,6 +85,7 @@ namespace BrtfProject.Data.BRMigrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     name = table.Column<string>(maxLength: 100, nullable: false),
+                    description = table.Column<string>(nullable: true),
                     IsEnable = table.Column<bool>(nullable: false),
                     capacity = table.Column<int>(nullable: false),
                     AreaId = table.Column<int>(nullable: false)
