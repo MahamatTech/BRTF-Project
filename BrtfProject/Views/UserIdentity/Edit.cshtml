@@ -36,25 +36,52 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TermLevel" class="control-label"></label>
+                <a class="require">*</a>
+                <select asp-for="TermLevel" style="width:350px; height: 35px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label asp-for="ProgramTermId" class="control-label"></label>
                 <a class="require">*</a>
                 <select asp-for="ProgramTermId" class="form-control" asp-items="ViewBag.ProgramTermId"></select>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Purge" /> @Html.DisplayNameFor(model => model.Purge)
-                </label>
-                @{
-                    if (Model.Purge == false)
-                    {
-                        <div><strong>If you select the purge option, their login will be removed from the system. If you ever want to add them back, you must register them again with the same email.</strong></div>
-                    }
-                    else
-                    {
-                        <div><strong>If you deselect this, you will need to register the user under the same email again for them to be able to login.</strong></div>
-                    }
-                }
+            <div class="form-group">
+                <label asp-for="Term" class="control-label"></label>
+                <a class="require">*</a>
+                <select asp-for="TermId" class="form-control" asp-items="ViewBag.TermId"></select>
             </div>
+            <div class="form-group">
+                <label asp-for="UserGroup" class="control-label"></label>
+                <a class="require">*</a>
+                <select asp-for="UserGroupId" class="form-control" asp-items="ViewBag.UserGroupId"></select>
+            </div>
+            @{
+                if (Model.Email != User.Identity.Name)
+                {
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Purge" /> @Html.DisplayNameFor(model => model.Purge)
+                        </label>
+                        @{
+                            if (Model.Purge == false)
+                            {
+                                <div><strong>If you select the purge option, their login will be removed from the system. If you ever want to add them back, you must register them again with the same email.</strong></div>
+                            }
+                            else
+                            {
+                                <div><strong>If you deselect this, you will need to register the user under the same email again for them to be able to login.</strong></div>
+                            }
+                        }
+                    </div>
+                }
+            }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

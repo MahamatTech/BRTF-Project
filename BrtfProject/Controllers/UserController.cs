@@ -109,6 +109,7 @@ namespace BrtfProject.Controllers
                             _logger.LogInformation(msg);
                             ViewData["msg"] = msg;
 
+                            return RedirectToAction(nameof(Index));
                             //_logger.LogInformation("User created a new account with password.");
 
                             //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

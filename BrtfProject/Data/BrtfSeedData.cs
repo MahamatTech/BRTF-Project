@@ -788,6 +788,10 @@ namespace BrtfProject.Data
                     new Term
                     {
                         Code = 1214
+                    },
+                    new Term
+                    {
+                        Code = 1204
                     });
                     context.SaveChanges();
                 }
@@ -799,6 +803,60 @@ namespace BrtfProject.Data
                     {
                         ProgramInfo = "Broadcasting: Radion, TV & Film",
                         ProgramCode = "PO122",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Presentation / Radio",
+                        ProgramCode = "PO163",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "TV Production",
+                        ProgramCode = "PO164",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Film Production",
+                        ProgramCode = "PO165",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Acting for TV & Film",
+                        ProgramCode = "PO198",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Digital Photography",
+                        ProgramCode = "PO795",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Joint BSc Game Programming",
+                        ProgramCode = "P6801",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Join BA Game Design",
+                        ProgramCode = "P6800",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "Game Development",
+                        ProgramCode = "P0441",
+                        UserGroupId = 1
+                    },
+                    new ProgramTerm
+                    {
+                        ProgramInfo = "CST – Network and Cloud Tech",
+                        ProgramCode = "P0474",
                         UserGroupId = 1
                     });
                     context.SaveChanges();

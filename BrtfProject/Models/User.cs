@@ -108,9 +108,9 @@ namespace BrtfProject.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (!Email.Contains("@ncstudents.niagaracollege.ca"))
+            if (!Email.Contains("@ncstudents.niagaracollege.ca") || !Email.Contains("niagaracollege.ca"))
             {
-                yield return new ValidationResult("Email must be from niagara college", new[] { "Email" });
+                yield return new ValidationResult("Email must be from niagara college, using @ncstudents.niagaracollege.ca or @niagaracollege.ca", new[] { "Email" });
             }
         }
     }

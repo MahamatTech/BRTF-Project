@@ -31,14 +31,13 @@ namespace BrtfProject.Data
                 {
                     UserName = "admin1@outlook.com",
                     Email = "admin1@outlook.com"
-
                 };
 
                 IdentityResult result = userManager.CreateAsync(user, "password").Result;
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                    userManager.AddToRoleAsync(user, "Super-Admin").Wait();
                 }
             }
         }

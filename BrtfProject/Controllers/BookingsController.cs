@@ -55,7 +55,8 @@ namespace BrtfProject.Controllers
                 .Include(b => b.User)
                            select b;
 
-            if ((user.Email != "") && (user.Email != "admin1@outlook.com"))
+            var roles = await _userManager.GetRolesAsync(userFromUserManager);
+            if (roles.Count() == 0)
             {
                 bookings = bookings.Where(p => p.User.Email == user.Email);
             }
@@ -72,7 +73,7 @@ namespace BrtfProject.Controllers
                 ViewData["Filtering"] = " show";
             }
 
-            bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
+            //bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
 
 
 
@@ -361,7 +362,7 @@ namespace BrtfProject.Controllers
             //.ThenInclude(b => b.)
             using (ExcelPackage excel = new ExcelPackage())
             {
-                var workSheet = excel.Workbook.Worksheets.Add("User Template");
+                var workSheet = excel.Workbook.Worksheets.Add("Booking Report");
 
                 //Get the appointments
                
@@ -380,7 +381,7 @@ namespace BrtfProject.Controllers
                     using (var memoryStream = new MemoryStream())
                     {
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        Response.Headers["content-disposition"] = "attachment;  filename=Template.xlsx";
+                        Response.Headers["content-disposition"] = "attachment;  filename=Report.xlsx";
                         excel.SaveAs(memoryStream);
                         memoryStream.WriteTo(Response.Body);
                     }
@@ -390,7 +391,7 @@ namespace BrtfProject.Controllers
                     try
                     {
                         Byte[] theData = excel.GetAsByteArray();
-                        string filename = "Template.xlsx";
+                        string filename = "Report.xlsx";
                         string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                         return File(theData, mimeType, filename);
                     }
