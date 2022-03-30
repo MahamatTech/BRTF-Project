@@ -11,6 +11,9 @@ using BrtfProject.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using OfficeOpenXml;
+using Microsoft.AspNetCore.Http.Features;
+using System.IO;
 
 namespace BrtfProject.Controllers
 {
@@ -40,7 +43,7 @@ namespace BrtfProject.Controllers
             var userFromUserManager = await _userManager.FindByIdAsync(userFoundId);
 
 
-            string[] sortOptions = new[] { "User", "Area", "Room", "StartdateTime", "EndDateTime"};
+            string[] sortOptions = new[] { "User", "Area", "Room", "StartdateTime", "EndDateTime" };
 
             PopulateDropDownLists();
 
@@ -71,7 +74,7 @@ namespace BrtfProject.Controllers
 
             bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
 
-            
+
 
             //Before we sort, see if we have called for a change of filtering or sorting
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
@@ -235,8 +238,8 @@ namespace BrtfProject.Controllers
             }
             else if (droom != null)
             {
- 
-                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FullName);
+
+                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FormalName);
             }
 
             else
@@ -344,13 +347,76 @@ namespace BrtfProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
+
             var booking = await _context.Bookings.FindAsync(id);
             _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookingExists(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult DownloadBooking()
+        {
+            //.ThenInclude(b => b.)
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                var workSheet = excel.Workbook.Worksheets.Add("User Template");
+
+                //Get the appointments
+               
+
+                    workSheet.Cells[1, 1].Value = "RoomID";
+                    workSheet.Cells[1, 2].Value = "AreaId";
+                    workSheet.Cells[1, 3].Value = "UserId";
+                    workSheet.Cells[1, 4].Value = "StartdateTime";
+                    workSheet.Cells[1, 5].Value = "EnddateTime";
+                   
+
+                var syncIOFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();
+                if (syncIOFeature != null)
+                {
+                    syncIOFeature.AllowSynchronousIO = true;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.Headers["content-disposition"] = "attachment;  filename=Template.xlsx";
+                        excel.SaveAs(memoryStream);
+                        memoryStream.WriteTo(Response.Body);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Byte[] theData = excel.GetAsByteArray();
+                        string filename = "Template.xlsx";
+                        string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        return File(theData, mimeType, filename);
+                    }
+                    catch (Exception)
+                    {
+                        return NotFound();
+                    }
+                }
+            }
+            return NotFound();
+        }
+        private bool UserExists(int id)
+        {
+            return _context.Users.Any(e => e.ID == id);
+        }
+
+    
+
+
+
+
+
+
+
+
+            private bool BookingExists(int id)
         {
             return _context.Bookings.Any(e => e.ID == id);
         }
@@ -361,10 +427,11 @@ namespace BrtfProject.Controllers
                 .OrderBy(d => d.Email), "ID", "Email", selectedId);
         }
 
+       
 
-        
 
-        private SelectList AreaSelectList(int? selectedAreaId)
+
+            private SelectList AreaSelectList(int? selectedAreaId)
         {
             return new SelectList(_context.Areas
                 .OrderBy(a => a.ID), "ID", "AreaName", selectedAreaId);
