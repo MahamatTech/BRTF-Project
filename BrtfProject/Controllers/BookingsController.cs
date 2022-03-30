@@ -30,7 +30,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index(int? UserId, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Booking")
+        public async Task<IActionResult> Index(int? UserId, int? RoomID, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Booking")
         {
             IdentityUser IdentityUser = await _userManager.GetUserAsync(User);
             string userEmail = IdentityUser?.Email; // will give the user's Email
@@ -122,12 +122,12 @@ namespace BrtfProject.Controllers
                 if (sortDirection == "asc")
                 {
                     bookings = bookings
-                        .OrderByDescending(p => p.Room.name);
+                        .OrderByDescending(p => p.RoomID);
                 }
                 else
                 {
                     bookings = bookings
-                        .OrderBy(p => p.Room.name);
+                        .OrderBy(p => p.RoomID);
                 }
             }
             else if (sortField == "StartdateTime")
