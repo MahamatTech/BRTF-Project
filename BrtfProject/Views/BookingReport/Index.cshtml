@@ -4,24 +4,24 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Booking Report Index</h1>
+<h1>Booking Report</h1>
+
 
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User.Email)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room.name)
+            </th>
+
+
 
             <th>
-                @Html.DisplayNameFor(model => model.RoomID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Room)
+                @Html.DisplayNameFor(model => model.SpecialNote)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartdateTime)
@@ -30,35 +30,61 @@
                 @Html.DisplayNameFor(model => model.EndDateTime)
             </th>
 
+<<<<<<< Updated upstream
 
 
+=======
+            <th>
+                @Html.DisplayNameFor(model => model.Area.AreaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepeatedBooking)
+            </th>
+>>>>>>> Stashed changes
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.name)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.name)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpecialNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartdateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDateTime)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.StartdateTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDateTime)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area.AreaName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsEnabled)
+                </td>
 
+<<<<<<< Updated upstream
          
         </tr>
+=======
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepeatedBooking)
+                </td>
+
+            </tr>
+>>>>>>> Stashed changes
         }
     </tbody>
 </table>
