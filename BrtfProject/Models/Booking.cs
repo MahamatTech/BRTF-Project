@@ -93,11 +93,7 @@ namespace BrtfProject.Models
        // [Display(Name = "Repeated Booking")]
         //public string RepeatedBooking { get; set; }
 
-<<<<<<< Updated upstream
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            if (StartdateTime >= EndDateTime)
-=======
+       
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -108,27 +104,21 @@ namespace BrtfProject.Models
             }
 
             if (EndDateTime.Value < StartdateTime)
->>>>>>> Stashed changes
             {
                 yield return new ValidationResult("start date can not be greather or equal to End Date, please select new date Time", new[] { "StartdateTime" });
             }
-<<<<<<< Updated upstream
             if (EndDateTime.Value  <= StartdateTime)
             {
                 yield return new ValidationResult("End Date time can not be before or equal to Start Date", new[] { "EndDateTime" });
             }
-            //Test date range for startdate
            
         
 
     }
-=======
-            //Test date range for startdate
 
         }
->>>>>>> Stashed changes
 
 
     }
 
-}
+

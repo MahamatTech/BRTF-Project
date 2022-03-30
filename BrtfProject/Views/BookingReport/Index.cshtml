@@ -30,20 +30,12 @@
                 @Html.DisplayNameFor(model => model.EndDateTime)
             </th>
 
-<<<<<<< Updated upstream
 
 
-=======
             <th>
                 @Html.DisplayNameFor(model => model.Area.AreaName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsEnabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RepeatedBooking)
-            </th>
->>>>>>> Stashed changes
+            
             <th></th>
         </tr>
     </thead>
@@ -51,9 +43,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Email)
-                </td>
+               
                 <td>
                     @Html.DisplayFor(modelItem => item.Room.name)
                 </td>
@@ -71,20 +61,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Area.AreaName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsEnabled)
-                </td>
+               </tr>
 
-<<<<<<< Updated upstream
-         
-        </tr>
-=======
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepeatedBooking)
-                </td>
-
-            </tr>
->>>>>>> Stashed changes
         }
     </tbody>
 </table>
