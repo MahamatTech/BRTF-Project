@@ -14,6 +14,7 @@ using System.Security.Claims;
 using OfficeOpenXml;
 using Microsoft.AspNetCore.Http.Features;
 using System.IO;
+using System.Drawing;
 
 namespace BrtfProject.Controllers
 {
@@ -364,15 +365,86 @@ namespace BrtfProject.Controllers
             {
                 var workSheet = excel.Workbook.Worksheets.Add("Booking Report");
 
+              
                 //Get the appointments
-               
 
-                    workSheet.Cells[1, 1].Value = "RoomID";
+
+                workSheet.Cells[1, 1].Value = "RoomID";
                     workSheet.Cells[1, 2].Value = "AreaId";
                     workSheet.Cells[1, 3].Value = "UserId";
                     workSheet.Cells[1, 4].Value = "StartdateTime";
                     workSheet.Cells[1, 5].Value = "EnddateTime";
-                   
+
+
+                //Sample data
+                workSheet.Cells[2, 1].Value = "cstevens@ncstudents.niagaracollege.ca";
+                workSheet.Cells[2, 2].Value = "Edit 13 BRTF1435 & 3Yr TV";
+                workSheet.Cells[2, 3].Value = "Edit13";
+                workSheet.Cells[2, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[2, 5].Value = "3/30/2022 2:00 PM";
+
+                workSheet.Cells[3, 1].Value = "sarcher4@ncstudents.niagaracollege.ca";
+                workSheet.Cells[3, 2].Value = "Edit 15 BRTF1435, Term 5";
+                workSheet.Cells[3, 3].Value = "Edit15";
+                workSheet.Cells[3, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[3, 5].Value = "3/30/2022 2:00 PM";
+
+                workSheet.Cells[4, 1].Value = "maparker1@ncstudents.niagaracollege.ca";
+                workSheet.Cells[4, 2].Value = "Edit 13 BRTF1435 & 3Yr TV";
+                workSheet.Cells[4, 3].Value = "Edit6";
+                workSheet.Cells[4, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[4, 5].Value = "3/30/2022 2:00 PM";
+
+                workSheet.Cells[5, 1].Value = "jblansing@ncstudents.niagaracollege.ca";
+                workSheet.Cells[5, 2].Value = "Edit 9, 10 & 14 2nd Years";
+                workSheet.Cells[5, 3].Value = "Edit9, Edit10, Edit14";
+                workSheet.Cells[5, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[5, 5].Value = "3/30/2022 2:00 PM";
+
+                workSheet.Cells[6, 1].Value = "jgarland@ncstudents.niagaracollege.ca";
+                workSheet.Cells[6, 2].Value = "Edits 1-5 3rd Year Film";
+                workSheet.Cells[6, 3].Value = "Edit 1/2 Colour Suites, Edit 3 (Disabled),Edit 4 (Disabled),Edit 5";
+                workSheet.Cells[6, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[6, 5].Value = "3/30/2022 2:00 PM";
+
+                workSheet.Cells[7, 1].Value = "masimpson@ncstudents.niagaracollege.ca";
+                workSheet.Cells[7, 2].Value = "Film Studio V001";
+                workSheet.Cells[7, 3].Value = "Film Studio V001";
+                workSheet.Cells[7, 4].Value = "3/30/2022 10:30 AM";
+                workSheet.Cells[7, 5].Value = "3/30/2022 2:00 PM";
+
+
+
+                using (ExcelRange headings = workSheet.Cells[2, 1, 2, 5])
+                {
+                    headings.Style.Font.Bold = true;
+                    var fill = headings.Style.Fill;
+                    fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                    fill.BackgroundColor.SetColor(Color.LightBlue);
+                }
+                workSheet.Cells.AutoFitColumns();
+
+                workSheet.Cells[1, 1].Value = "User Data Template";
+                using (ExcelRange Rng = workSheet.Cells[1, 1, 1, 3])
+                {
+                    Rng.Merge = true;
+                    Rng.Style.Font.Bold = true;
+                    Rng.Style.Font.Size = 18;
+                    Rng.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                }
+
+                using (ExcelRange Desc = workSheet.Cells[2, 4, 6, 7])
+                {
+                    Desc.Merge = true;
+                    Desc.Style.Font.Italic = true;
+                    Desc.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
+                }
+                //workSheet.Cells[2, 4, 6, 7].Value = "Birth date should be written as YYYYMMDD, without any slashes. If the birth date is left blank, then the user's password will be left as password and not their birth date.";
+                workSheet.Column(1).Style.Numberformat.Format = "yyyy-mm-dd";
+                workSheet.Column(2).Style.Numberformat.Format = "yyyy-mm-dd";
+                workSheet.Column(3).Style.Numberformat.Format = "yyyy-mm-dd";
+
+
 
                 var syncIOFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();
                 if (syncIOFeature != null)
