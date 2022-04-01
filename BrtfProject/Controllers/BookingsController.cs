@@ -52,10 +52,11 @@ namespace BrtfProject.Controllers
 
             var bookings = from b in _context.Bookings
                 .Include(b => b.Area)
+                .Include(b => b.Area.Rooms)
                 .Include(b => b.Room)
                 .Include(b => b.User)
-                           select b;
-
+                select b;
+          
             var roles = await _userManager.GetRolesAsync(userFromUserManager);
             if (roles.Count() == 0)
             {
@@ -71,6 +72,12 @@ namespace BrtfProject.Controllers
             if (AreaId.HasValue)
             {
                 bookings = bookings.Where(p => p.AreaId == AreaId);
+                ViewData["Filtering"] = " show";
+            }
+
+            if (RoomID.HasValue)
+            {
+                bookings = bookings.Where(p => p.RoomID == RoomID);
                 ViewData["Filtering"] = " show";
             }
 

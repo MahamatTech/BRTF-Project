@@ -42,26 +42,28 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Room.name)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area.Rooms.ToList()[0].name)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.SpecialNote)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartdateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDateTime)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialNote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartdateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDateTime)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Area.AreaName)
-                </td>
-               </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area.AreaName)
+            </td>
+        </tr>
 
         }
     </tbody>

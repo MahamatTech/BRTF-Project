@@ -22,7 +22,7 @@ namespace BrtfProject.Controllers
         // GET: BookingReport
         public async Task<IActionResult> Index()
         {
-            var brtfDbContext = _context.Bookings.Include(b => b.Area).Include(b => b.Room).Include(b => b.User);
+            var brtfDbContext = _context.Bookings.Include(b => b.Area).Include(b => b.Area.Rooms).Include(b => b.Room).Include(b => b.User);
             return View(await brtfDbContext.ToListAsync());
         }
 
