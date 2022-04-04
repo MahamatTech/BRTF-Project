@@ -31,7 +31,9 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Bookings
-        public async Task<IActionResult> Index(int? UserId, int? RoomID, int? AreaId, int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Booking")
+        public async Task<IActionResult> Index(int? UserId, int? RoomID, int? AreaId, int? page, int? pageSizeID, string actionButton,
+            string StartdateTime = "", string EndDateTime = "",
+            string sortDirection = "asc", string sortField = "Booking")
         {
             IdentityUser IdentityUser = await _userManager.GetUserAsync(User);
             string userEmail = IdentityUser?.Email; // will give the user's Email
@@ -49,7 +51,8 @@ namespace BrtfProject.Controllers
             PopulateDropDownLists();
 
             ViewData["Filtering"] = "";  //Assume not filtering
-
+            ViewBag.Startdatetime = StartdateTime;
+            ViewBag.EnddateTime = EndDateTime;
             var bookings = from b in _context.Bookings
                 .Include(b => b.Area)
                 .Include(b => b.Area.Rooms)
@@ -83,7 +86,16 @@ namespace BrtfProject.Controllers
 
             //bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
 
-
+            if (StartdateTime != "")
+            {
+                bookings = bookings.Where(p => p.StartdateTime >= Convert.ToDateTime(StartdateTime));
+                ViewData["Filtering"] = " show";
+            }
+            if (EndDateTime != "")
+            {
+                bookings = bookings.Where(p => p.EndDateTime <= Convert.ToDateTime(EndDateTime));
+                ViewData["Filtering"] = " show";
+            }
 
             //Before we sort, see if we have called for a change of filtering or sorting
             if (!String.IsNullOrEmpty(actionButton)) //Form Submitted so lets sort!
