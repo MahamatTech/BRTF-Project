@@ -32,7 +32,7 @@ namespace BrtfProject.Controllers
 
         // GET: Bookings
         public async Task<IActionResult> Index(int? UserId, int? RoomID, int? AreaId, int? page, int? pageSizeID, string actionButton,
-            string StartdateTime = "", string EndDateTime = "",
+            string StartdateTime, string EndDateTime,
             string sortDirection = "asc", string sortField = "Booking")
         {
             IdentityUser IdentityUser = await _userManager.GetUserAsync(User);
@@ -86,12 +86,12 @@ namespace BrtfProject.Controllers
 
             //bookings = bookings.Where(b => b.User.Email.ToLower() == userFromUserManager.Email.ToLower());
 
-            if (StartdateTime != "")
+            if (StartdateTime != null)
             {
                 bookings = bookings.Where(p => p.StartdateTime >= Convert.ToDateTime(StartdateTime));
                 ViewData["Filtering"] = " show";
             }
-            if (EndDateTime != "")
+            if (EndDateTime != null)
             {
                 bookings = bookings.Where(p => p.EndDateTime <= Convert.ToDateTime(EndDateTime));
                 ViewData["Filtering"] = " show";
