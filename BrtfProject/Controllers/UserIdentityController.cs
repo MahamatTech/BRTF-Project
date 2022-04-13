@@ -147,7 +147,7 @@ namespace BrtfProject.Controllers
         //}
 
         // GET: UserIdentity/Edit/5
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
@@ -172,7 +172,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Edit(int id, bool Purge)
         {
             var userToUpdate = await _context.Users
@@ -222,7 +222,7 @@ namespace BrtfProject.Controllers
         }
         [HttpPost]
 
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
         {
             ExcelPackage excel;

@@ -151,6 +151,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms/Create
+        [Authorize(Roles = "Super-Admin")]
         public IActionResult Create()
         {
             ViewData["AreaId"] = new SelectList(_context.Areas, "ID", "AreaName");
@@ -162,7 +163,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Create([Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (ModelState.IsValid)
@@ -176,7 +177,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms/Edit/5
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -198,7 +199,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,name,description,IsEnable,capacity,EMail,RepeatEndDate,AreaId")] Room room)
         {
             if (id != room.ID)
@@ -231,7 +232,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: Rooms/Delete/5
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -253,7 +254,7 @@ namespace BrtfProject.Controllers
         // POST: Rooms/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var room = await _context.Rooms.FindAsync(id);
@@ -263,6 +264,7 @@ namespace BrtfProject.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> InsertFromExcel(IFormFile theExcel)
         {
             //Note: This is a very basic example and has 

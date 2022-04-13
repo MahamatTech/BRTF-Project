@@ -29,14 +29,16 @@ namespace BrtfProject.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _identityContext;
 
-        public UserController(BrtfDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<RegisterModel> logger, IEmailSender emailSender)
+        public UserController(BrtfDbContext context, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<RegisterModel> logger, IEmailSender emailSender, ApplicationDbContext identityContext)
         {
             _context = context;
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _identityContext = identityContext;
         }
 
         [BindProperty]
@@ -66,6 +68,7 @@ namespace BrtfProject.Controllers
         }
 
         // GET: UserAccount/Create
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> CreateAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
@@ -81,6 +84,7 @@ namespace BrtfProject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Super-Admin")]
         public async Task<IActionResult> Create([Bind("StudentID,FirstName,MiddleName,LastName,ProgramTermId,TermId,UserGroupId,Email,LastLevel")] User user, string returnUrl = null)
         {
             ViewData["ProgramTermId"] = new SelectList(_context.ProgramTerms, "ID", "ProgramInfo");
@@ -206,34 +210,47 @@ namespace BrtfProject.Controllers
 
         }
 
-        //// GET: UserAccount/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: UserAccount/Delete/5
+        [Authorize(Roles = "Super-Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var user = await _context.Users
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    return View(user);
-        //}
+            return View(user);
+        }
 
-        //// POST: UserAccount/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var user = await _context.Users.FindAsync(id);
-        //    _context.Users.Remove(user);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+        // POST: UserAccount/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Super-Admin")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            await DeleteIdentityUser(user.Email);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "UserIdentity");
+        }
+
+        private async Task DeleteIdentityUser(string Email)
+        {
+            var userToDelete = await _identityContext.Users.Where(u => u.Email == Email).FirstOrDefaultAsync();
+            if (userToDelete != null)
+            {
+                _identityContext.Users.Remove(userToDelete);
+                await _identityContext.SaveChangesAsync();
+            }
+        }
 
         private void UpdateUserNameCookie(string userName)
         {

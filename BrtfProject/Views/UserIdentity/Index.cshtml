@@ -121,7 +121,8 @@
                         @Html.DisplayFor(modelItem => item.Purge)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit |</a>
+                        <a asp-controller="User" asp-action="Delete" asp-route-id="@item.ID"> Delete</a>
                     </td>
                 </tr>
             }

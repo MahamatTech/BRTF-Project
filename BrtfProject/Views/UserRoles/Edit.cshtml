@@ -32,7 +32,17 @@
                                 {
                                 @:</tr><tr>
                                 }
-                                if (role.RoleName != "User" && User.Identity.Name != Model.UserName)
+                                if (role.RoleName == "Super-Admin" && User.IsInRole("Super-Admin") && User.Identity.Name != Model.UserName)
+                                {
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedRoles"
+                                               value="@role.RoleName"
+                                               @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
+                                        @role.RoleName @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                                else if (role.RoleName != "User" && role.RoleName != "Super-Admin" && User.Identity.Name != Model.UserName)
                                 {
                                     @:<td>
                                         <input type="checkbox"
