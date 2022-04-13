@@ -494,7 +494,7 @@ namespace BrtfProject.Controllers
                         using (var memoryStream = new MemoryStream())
                         {
                             Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                            Response.Headers["content-disposition"] = "attachment;  filename=Appointments.xlsx";
+                            Response.Headers["content-disposition"] = "attachment;  filename=Bookings.xlsx";
                             excel.SaveAs(memoryStream);
                             memoryStream.WriteTo(Response.Body);
                         }
@@ -504,7 +504,7 @@ namespace BrtfProject.Controllers
                         try
                         {
                             Byte[] theData = excel.GetAsByteArray();
-                            string filename = "Appointments.xlsx";
+                            string filename = "Bookings.xlsx";
                             string mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                             return File(theData, mimeType, filename);
                         }
@@ -556,7 +556,7 @@ namespace BrtfProject.Controllers
            
             
                 Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                Response.Headers["content-disposition"] = "attachment;  filename=Appointments.xlsx";
+                Response.Headers["content-disposition"] = "attachment;  filename=Bookings.xlsx";
             
                 
             
