@@ -9,11 +9,10 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Make a Booking</a>
 </p>
-@if (User.IsInRole("Admin"))
-{
+
     <a asp-action="DownloadBooking" class="btn btn-info float-right">Download Booking Report</a>
 
-}
+
 
 <form asp-action="Index" method="get">
 
