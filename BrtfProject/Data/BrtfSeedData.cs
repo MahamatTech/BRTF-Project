@@ -442,7 +442,7 @@ namespace BrtfProject.Data
                        },
                        new Room
                        {
-                           AreaId = AreaDictionary["MAC Lab V106"],
+                           AreaId = AreaDictionary["MAC Lab V106"], 
                            name = "Computer 17",
                            IsEnable = true,
                            capacity = 17,
