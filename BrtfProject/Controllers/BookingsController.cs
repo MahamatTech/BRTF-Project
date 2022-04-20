@@ -200,22 +200,27 @@ namespace BrtfProject.Controllers
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
+             var booking = await _context.Bookings
                 .Include(b => b.Area)
                 .Include(b => b.Room)
                 .Include(b => b.User)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (booking == null)
             {
                 return NotFound();
             }
 
+
+
             return View(booking);
+           // return View(booking);
         }
 
         // GET: Bookings/Create

@@ -30,16 +30,18 @@ namespace BrtfProject.Controllers
         // GET: BookingReport/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
             var booking = await _context.Bookings
+                .Include(b => b.User)
                 .Include(b => b.Area)
                 .Include(b => b.Room)
-                .Include(b => b.User)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (booking == null)
             {
                 return NotFound();
@@ -47,6 +49,30 @@ namespace BrtfProject.Controllers
 
             return View(booking);
         }
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: BookingReport/Create
         public IActionResult Create()

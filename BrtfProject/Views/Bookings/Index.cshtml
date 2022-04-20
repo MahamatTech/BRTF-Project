@@ -125,9 +125,13 @@
 
 
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.ID"><span class="btn btn-sm btn-outline-primary">Edit</span></a>
+
+
+                        <a asp-action="Details" asp-route-id="@item.ID"><span class="btn btn-sm btn-outline-primary">Details</span></a>
+
+
+                        <a asp-action="Delete" asp-route-id="@item.ID"><span class="btn btn-sm btn-outline-primary">Delete</span></a>                    
                     </td>
                 </tr>
             }

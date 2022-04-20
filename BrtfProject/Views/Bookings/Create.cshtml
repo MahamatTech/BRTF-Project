@@ -16,12 +16,12 @@
 
 
             @*<div class="form-group" >
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId">
-                    <option value="">Select User</option>
-                </select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId">
+                        <option value="">Select User</option>
+                    </select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>*@
 
             <div class="form-group">
                 <label asp-for="Area" class="control-label"></label>
@@ -63,11 +63,14 @@
 
             <div class="form-group">
                 <label asp-for="StartdateTime" class="control-label"></label>
-                <input asp-for="StartdateTime" class="form-control" />
+                @*<input type="date" id="input" />*@
+
+                <input asp-for="StartdateTime" id="form-control" />
                 <span asp-validation-for="StartdateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDateTime" class="control-label"></label>
+                <label asp-for="EndDateTime" id="control-label"></label>
+                @*<input type="date" id="input" />*@
                 <input asp-for="EndDateTime" class="form-control" />
                 <span asp-validation-for="EndDateTime" class="text-danger"></span>
             </div>
@@ -93,6 +96,24 @@
             refreshDDL('RoomID', URL, true);
         });
     </script>
+
+
+                <script>
+                    //Get today date
+                    let date = new Date()
+                    let day = date.getDate();
+                    let month = date.getMonth() + 1;
+                    let year = date.getFullYear(); let fullDate = year + '-0' + month + '-' + day;
+                    console.log(fullDate);
+
+
+
+
+                    document.getElementById('form-control').setAttribute("min", fullDate);
+                </script>
+
+
+
 
 }
 
