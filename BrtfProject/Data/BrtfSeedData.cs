@@ -36,6 +36,11 @@ namespace BrtfProject.Data
                     {
                         AreaName = "Edit 6 3rd Year only",
                         IsEnabled = true,
+                    }, 
+                    new Area
+                    {
+                        AreaName = "Radio Edit Suites V109",
+                        IsEnabled = true,
                     },
                     new Area
                     {
