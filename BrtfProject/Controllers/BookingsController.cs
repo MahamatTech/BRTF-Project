@@ -208,6 +208,8 @@ namespace BrtfProject.Controllers
 
              var booking = await _context.Bookings
                 .Include(b => b.Area)
+                .Include(b => b.Area.Rooms)
+
                 .Include(b => b.Room)
                 .Include(b => b.User)
                 .AsNoTracking()

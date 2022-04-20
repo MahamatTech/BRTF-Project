@@ -298,28 +298,27 @@ namespace BrtfProject.Data
                        new Room
                        {
                            AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer 1",
+                           name = "Computer #1",
+                           description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers",
+
                            IsEnable = true,
 
-                           capacity = 17,
-                           description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers"
-
-                       },
-                       new Room
-                       {
-                           AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer 2",
-                           IsEnable = true,
-                           capacity = 17,
-                           description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers"
 
                        },
                        new Room
                        {
                            AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer 3",
+                           name = "Computer #2",
+                           description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers",
+
                            IsEnable = true,
-                           capacity = 17,
+
+                       },
+                       new Room
+                       {
+                           AreaId = AreaDictionary["MAC Lab V106"],
+                           name = "Computer #3",
+                           IsEnable = true,
                            description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers"
 
                        },
