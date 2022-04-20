@@ -298,8 +298,9 @@ namespace BrtfProject.Data
                        new Room
                        {
                            AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer #1",
+                           name = "Computer 1",
                            description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers",
+                           capacity = 17,
 
                            IsEnable = true,
 
@@ -308,8 +309,9 @@ namespace BrtfProject.Data
                        new Room
                        {
                            AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer #2",
+                           name = "Computer 2",
                            description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers",
+                           capacity = 17,
 
                            IsEnable = true,
 
@@ -317,8 +319,10 @@ namespace BrtfProject.Data
                        new Room
                        {
                            AreaId = AreaDictionary["MAC Lab V106"],
-                           name = "Computer #3",
+                           name = "Computer 3",
                            IsEnable = true,
+                           capacity = 17,
+
                            description = "Max Booking 6-hours. All MACs Contain: MS Office, Adobe Suite, Media Composer, DaVinci Resolve, Pro Tools. 17 computers"
 
                        },
