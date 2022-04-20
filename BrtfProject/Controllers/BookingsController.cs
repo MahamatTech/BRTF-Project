@@ -386,7 +386,7 @@ namespace BrtfProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin, Super-Admin")]
+        [Authorize(Roles = "Super-Admin")]
         public IActionResult DownloadBooking()
         {
             var bookings = from b in _context.Bookings

@@ -8,9 +8,14 @@
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Make a Booking</a>
+
+    @if (User.IsInRole("Super-Admin"))
+    {
+        <a asp-action="DownloadBooking" class="btn btn-info float-right">Download Booking Report</a>
+
+    }
 </p>
 
-    <a asp-action="DownloadBooking" class="btn btn-info float-right">Download Booking Report</a>
 
 
 
