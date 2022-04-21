@@ -261,16 +261,20 @@ namespace BrtfProject.Controllers
                 .FirstOrDefaultAsync();
 
             var droom = await _context.Bookings
+                .Include(b => b.User)
                 .Where(c => c.RoomID == booking.RoomID)
                 .FirstOrDefaultAsync();
+
             if (userroom != null)
             {
-                ModelState.AddModelError("", "Duplicate booking of same Room and User exists ");
+                ModelState.AddModelError("", "This room is already booked by : " + droom.User.FormalName);
             }
             else if (droom != null)
             {
 
-                ModelState.AddModelError("", "Duplicate booking of same Room exists with User : " + droom.User.FormalName);
+                ModelState.AddModelError("", "This room is already booked by : " + droom.User.FormalName);
+               // ModelState.AddModelError(string.Empty, "This rrom is already booked by another user");
+
             }
 
             else
