@@ -23,4 +23,12 @@
     <PackageReference Include="Uno.UI" Version="4.1.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <SourceGeneratorInput Remove="Data\BRMigrations\20220420163016_Initial.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SourceGeneratorInput Remove="Data\BRMigrations\20220420163016_Initial.Designer.cs" />
+  </ItemGroup>
+
 </Project>
